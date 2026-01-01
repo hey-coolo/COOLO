@@ -9,11 +9,12 @@ import ProjectCard from '../components/ProjectCard';
 // --- 1. Structural Grid Hero ---
 const TandemHero: React.FC = () => {
     const { scrollY } = useScroll();
-    const y1 = useTransform(scrollY, [0, 500], [0, 200]);
-    const y2 = useTransform(scrollY, [0, 500], [0, -200]);
+    // Adjusted parallax: move apart slightly to avoid overlap
+    const y1 = useTransform(scrollY, [0, 500], [0, -50]); 
+    const y2 = useTransform(scrollY, [0, 500], [0, 50]);
 
     return (
-        <section className="relative min-h-screen flex flex-col pt-32 bg-brand-offwhite text-brand-navy overflow-hidden">
+        <section className="relative min-h-screen flex flex-col pt-32 pb-16 bg-brand-offwhite text-brand-navy overflow-hidden">
             {/* Background Grid Lines */}
             <div className="absolute inset-0 w-full h-full pointer-events-none">
                 <div className="container mx-auto h-full border-x border-brand-navy/10 relative">
@@ -23,14 +24,22 @@ const TandemHero: React.FC = () => {
             </div>
 
             <div className="container mx-auto px-4 md:px-8 relative z-10 flex-grow flex flex-col justify-center">
-                <div className="mb-12">
-                    {/* Removed mix-blend-multiply for sharper contrast */}
-                    <motion.h1 style={{ y: y1 }} className="text-[18vw] md:text-[15.5vw] font-black uppercase leading-[0.85] tracking-tight text-brand-navy">
-                        STRATEGY
+                <div className="mb-16 md:mb-24 relative">
+                    {/* Top Line */}
+                    <motion.h1 
+                        style={{ y: y1 }} 
+                        className="text-[11vw] md:text-[10.5vw] font-black uppercase leading-[0.95] tracking-tight text-brand-navy mb-2 md:mb-4"
+                    >
+                        BRAND STRATEGY
                     </motion.h1>
-                    <div className="flex justify-between items-center overflow-hidden">
-                        <motion.h1 style={{ y: y2 }} className="text-[18vw] md:text-[15.5vw] font-black uppercase leading-[0.85] tracking-tight text-brand-navy text-right ml-auto">
-                            EXECUTION
+                    
+                    {/* Bottom Line */}
+                    <div className="flex justify-end overflow-hidden">
+                        <motion.h1 
+                            style={{ y: y2 }} 
+                            className="text-[11vw] md:text-[10.5vw] font-black uppercase leading-[0.95] tracking-tight text-brand-navy text-right"
+                        >
+                            <span className="text-brand-purple font-serif italic font-light px-2">&</span> DESIGN EXECUTION
                         </motion.h1>
                     </div>
                 </div>

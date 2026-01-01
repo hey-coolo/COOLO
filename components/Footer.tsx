@@ -2,6 +2,7 @@
 import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import BrandLogo from './BrandLogo';
 
 const Footer: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -40,9 +41,12 @@ const Footer: React.FC = () => {
 
         {/* Footer Meta */}
         <div className="mt-24 pt-8 border-t border-brand-navy/10 flex flex-col md:flex-row justify-between items-center text-brand-navy/60 font-mono text-[10px] uppercase tracking-[0.2em] font-bold">
-          <div className="flex space-x-8 order-2 md:order-1 mt-12 md:mt-0">
-            <span>&copy; {new Date().getFullYear()} COOLO STUDIO</span>
-            <span>STRATEGY &bull; EXECUTION &bull; EDUCATIONAL</span>
+          <div className="flex space-x-8 order-2 md:order-1 mt-12 md:mt-0 items-center">
+             <div className="w-24 opacity-50">
+                <BrandLogo />
+             </div>
+            <span>&copy; {new Date().getFullYear()}</span>
+            <span className="hidden md:inline">&bull; STRATEGY & EXECUTION</span>
           </div>
           <div className="flex space-x-12 order-1 md:order-2">
              <Link to="/journal" className="hover:text-brand-purple transition-colors">Journal</Link>

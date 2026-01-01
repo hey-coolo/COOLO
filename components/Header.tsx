@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { NAV_LINKS } from '../constants';
+import BrandLogo from './BrandLogo';
 
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -26,8 +27,11 @@ const Header: React.FC = () => {
         
         {/* Logo - Hidden on Home Top, Visible otherwise */}
         <div className={`transition-all duration-500 ${showLogo ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'}`}>
-            <Link to="/" className={`text-4xl font-black uppercase tracking-tighter transition-colors duration-500 ${isLightText ? 'text-brand-offwhite drop-shadow-md' : 'text-brand-navy'}`}>
-            COOLO<span className="text-brand-purple">.</span>
+            <Link to="/" className="block w-32">
+                 <BrandLogo 
+                    className="w-full h-auto" 
+                    color={isLightText ? '#F7F7F7' : '#0F0328'} 
+                 />
             </Link>
         </div>
         

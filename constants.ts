@@ -1,6 +1,45 @@
 
 import { Project, TeamMember, JournalPost, ServiceLeg, ProjectCategory, Drop, FirepowerTier, ClarityTier, Script, Resource, Workbook, CourseModule, PartnershipModel } from './types';
 
+// ==========================================
+// ASSET REGISTRY
+// ==========================================
+// To use your own images:
+// 1. Create an 'assets' folder in your src directory.
+// 2. Upload your images there.
+// 3. Change the lines below to: import IMG_NAME from './assets/your-image.jpg';
+// 4. Update the ASSETS object values to use the imported variable.
+// ==========================================
+
+const RAW_IMG_3D_VIZ = 'https://images.unsplash.com/photo-1633167606207-d840b5070fc2?auto=format&fit=crop&q=80&w=1200';
+const RAW_IMG_OOH = 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=1200';
+const RAW_IMG_BRANDING = 'https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&q=80&w=1200';
+const RAW_IMG_PACKAGING = 'https://images.unsplash.com/photo-1589118949245-7d38baf380d6?auto=format&fit=crop&q=80&w=1200';
+const RAW_IMG_FRANCO = 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800';
+const RAW_IMG_ARIANA = 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=800';
+
+export const ASSETS = {
+  hero: {
+    viz: RAW_IMG_3D_VIZ,
+    ooh: RAW_IMG_OOH
+  },
+  services: {
+    clarity: 'https://images.unsplash.com/photo-1470075801209-17f9ec0cada6?auto=format&fit=crop&q=80&w=1200',
+    firepower: 'https://images.unsplash.com/photo-1516937941348-c09e554b9631?auto=format&fit=crop&q=80&w=1200',
+    partnership: 'https://images.unsplash.com/photo-1486718448742-163732cd1544?auto=format&fit=crop&q=80&w=1200'
+  },
+  team: {
+    franco: RAW_IMG_FRANCO,
+    ariana: RAW_IMG_ARIANA
+  },
+  projects: {
+    zero: RAW_IMG_3D_VIZ,
+    ooh: RAW_IMG_OOH,
+    verve: RAW_IMG_PACKAGING,
+    node: RAW_IMG_BRANDING
+  }
+};
+
 export const NAV_LINKS = [
   { name: 'Studio', path: '/about' }, 
   { name: 'Clarity', path: '/clarity' },
@@ -11,14 +50,6 @@ export const NAV_LINKS = [
   { name: 'FAQ', path: '/faq' },
 ];
 
-// High-quality placeholder representations
-const IMG_3D_VIZ = 'https://images.unsplash.com/photo-1633167606207-d840b5070fc2?auto=format&fit=crop&q=80&w=1200';
-const IMG_OOH = 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=1200';
-const IMG_BRANDING = 'https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&q=80&w=1200';
-const IMG_PACKAGING = 'https://images.unsplash.com/photo-1589118949245-7d38baf380d6?auto=format&fit=crop&q=80&w=1200';
-const IMG_FRANCO = 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800';
-const IMG_ARIANA = 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=800';
-
 export const SERVICE_LEGS: ServiceLeg[] = [
   {
     id: 'clarity',
@@ -27,8 +58,7 @@ export const SERVICE_LEGS: ServiceLeg[] = [
     hoverText: 'Strategy, Courses, & The Truth about Branding.',
     visual: 'Minimalist Strategy',
     path: '/clarity',
-    // Abstract white/light architectural
-    imageUrl: 'https://images.unsplash.com/photo-1470075801209-17f9ec0cada6?auto=format&fit=crop&q=80&w=1200' 
+    imageUrl: ASSETS.services.clarity
   },
   {
     id: 'firepower',
@@ -37,8 +67,7 @@ export const SERVICE_LEGS: ServiceLeg[] = [
     hoverText: 'Identity, 3D Viz, & Webflow Builds.',
     visual: 'High-End Execution',
     path: '/firepower',
-    // Dark industrial/mechanical
-    imageUrl: 'https://images.unsplash.com/photo-1516937941348-c09e554b9631?auto=format&fit=crop&q=80&w=1200'
+    imageUrl: ASSETS.services.firepower
   },
   {
     id: 'partner',
@@ -47,8 +76,7 @@ export const SERVICE_LEGS: ServiceLeg[] = [
     hoverText: 'White-Label Execution for Studios.',
     visual: 'Technical Partnership',
     path: '/partnership',
-    // Structural/Architectural
-    imageUrl: 'https://images.unsplash.com/photo-1486718448742-163732cd1544?auto=format&fit=crop&q=80&w=1200'
+    imageUrl: ASSETS.services.partnership
   }
 ];
 
@@ -227,7 +255,7 @@ export const PROJECTS: Project[] = [
     category: '3D Design',
     tags: ['3D Design', 'Octane Render', 'C4D'],
     year: 2024,
-    imageUrl: IMG_3D_VIZ,
+    imageUrl: ASSETS.projects.zero,
     featured: true,
     client: 'Internal Experiment',
     challenge: 'Redefining brand depth through digital materials that feel tangible yet impossible.',
@@ -238,7 +266,7 @@ export const PROJECTS: Project[] = [
         'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=1600',
         'https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?auto=format&fit=crop&q=80&w=1600',
         'https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?auto=format&fit=crop&q=80&w=1600',
-        IMG_3D_VIZ,
+        ASSETS.projects.zero,
         'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1600',
         'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80&w=1600',
         'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&q=80&w=1600',
@@ -263,17 +291,17 @@ export const PROJECTS: Project[] = [
     category: 'Campaign',
     tags: ['OOH', 'Brand Strategy', 'Advertising'],
     year: 2024,
-    imageUrl: IMG_OOH,
+    imageUrl: ASSETS.projects.ooh,
     featured: true,
     client: 'Unmplymnt Co.',
     challenge: 'Creating a cult following through high-contrast, anti-branding OOH displays.',
     role: 'Creative Direction, Campaign Management',
     outcome: 'Sold out first drop in under 12 minutes.',
     detailImages: [
-        IMG_OOH,
+        ASSETS.projects.ooh,
         'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&q=80&w=1600',
         'https://images.unsplash.com/photo-1492551557933-34265f7af79e?auto=format&fit=crop&q=80&w=1600',
-        IMG_PACKAGING,
+        RAW_IMG_PACKAGING,
         'https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&q=80&w=1600',
         'https://images.unsplash.com/photo-1571216682022-793dd1d29c23?auto=format&fit=crop&q=80&w=1600',
         'https://images.unsplash.com/photo-1552345387-f44fc5e19297?auto=format&fit=crop&q=80&w=1600',
@@ -299,16 +327,16 @@ export const PROJECTS: Project[] = [
     category: 'Packaging',
     tags: ['3D Viz', 'Packaging', 'Conceptual'],
     year: 2023,
-    imageUrl: IMG_PACKAGING,
+    imageUrl: ASSETS.projects.verve,
     client: 'Verve NYC',
     challenge: 'Elevating clinical skincare to high-fashion editorial through 3D environments.',
     role: '3D Viz, Packaging Design',
     outcome: 'Successful series A funding presentation.',
     detailImages: [
-        IMG_PACKAGING,
+        ASSETS.projects.verve,
         'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80&w=1600',
         'https://images.unsplash.com/photo-1596462502278-27bfdd403348?auto=format&fit=crop&q=80&w=1600',
-        IMG_3D_VIZ,
+        ASSETS.projects.zero,
         'https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fec?auto=format&fit=crop&q=80&w=1600',
         'https://images.unsplash.com/photo-1629198688000-71f23e745b6e?auto=format&fit=crop&q=80&w=1600',
         'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&q=80&w=1600',
@@ -333,15 +361,15 @@ export const PROJECTS: Project[] = [
     category: 'Brand Identity',
     tags: ['Identity', 'Motion Design', 'Tech'],
     year: 2024,
-    imageUrl: IMG_BRANDING,
+    imageUrl: ASSETS.projects.node,
     client: 'Neural Node',
     challenge: 'Humanizing complex technical systems through fluid design language.',
     role: 'Identity Systems, Motion',
     outcome: 'A flexible OS for a global AI player.',
     detailImages: [
-        IMG_BRANDING,
+        ASSETS.projects.node,
         'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1600',
-        IMG_OOH,
+        ASSETS.projects.ooh,
         'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1600',
         'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=1600',
         'https://images.unsplash.com/photo-1535378437323-95558417815e?auto=format&fit=crop&q=80&w=1600',
@@ -368,7 +396,7 @@ export const TEAM_MEMBERS: { [key: string]: TeamMember } = {
   franco: {
     name: 'Franco',
     title: 'Creative Director',
-    imageUrl: IMG_FRANCO,
+    imageUrl: ASSETS.team.franco,
     instagram: 'what.the.franco',
     bio: [
       "The Brains. Franco specializes in Strategy, Art Direction, and 3D Vision.",
@@ -380,7 +408,7 @@ export const TEAM_MEMBERS: { [key: string]: TeamMember } = {
   ariana: {
     name: 'Ariana',
     title: 'Operations Manager',
-    imageUrl: IMG_ARIANA,
+    imageUrl: ASSETS.team.ariana,
     instagram: 'ariarmndo',
     bio: [
       "The Engine. Ariana manages execution, logistics, and client sanity.",
@@ -396,7 +424,7 @@ export const JOURNAL_POSTS: JournalPost[] = [
     slug: "script-01-micromanagement",
     title: "Script 01: Micromanagement Cycle",
     date: "2024.11.12",
-    imageUrl: IMG_OOH,
+    imageUrl: ASSETS.projects.ooh,
     excerpt: "The client isn't difficult. They are just terrified. Why micromanagement is a symptom of a failed process, not a personality defect.",
     tags: ["Process", "Clients", "Script"],
     readTime: "4 min read",
@@ -407,7 +435,7 @@ export const JOURNAL_POSTS: JournalPost[] = [
     slug: "script-02-budget-uncertainty",
     title: "Script 02: Budget of Uncertainty",
     date: "2024.11.08",
-    imageUrl: IMG_BRANDING,
+    imageUrl: RAW_IMG_BRANDING,
     excerpt: "Indecision is the biggest creative budget tax. Why internal chaos costs more than agency fees.",
     tags: ["Strategy", "Budget", "Management"],
     readTime: "3 min read",
@@ -418,7 +446,7 @@ export const JOURNAL_POSTS: JournalPost[] = [
     slug: "script-06-brand-job",
     title: "Script 06: The Brand's True Job",
     date: "2024.10.30",
-    imageUrl: IMG_PACKAGING,
+    imageUrl: RAW_IMG_PACKAGING,
     excerpt: "Stop overcomplicating it. Your brand has one job: To make the sales conversation shorter.",
     tags: ["Strategy", "Sales"],
     readTime: "2 min read",
@@ -429,7 +457,7 @@ export const JOURNAL_POSTS: JournalPost[] = [
     slug: "script-11-identity-misunderstanding",
     title: "Script 11: Identity vs. Decoration",
     date: "2024.10.15",
-    imageUrl: IMG_3D_VIZ,
+    imageUrl: RAW_IMG_3D_VIZ,
     excerpt: "Why most founders think 'Brand Identity' is a logo, when it's actually a decision-making engine.",
     tags: ["Identity", "Design Theory"],
     readTime: "5 min read",
@@ -440,7 +468,7 @@ export const JOURNAL_POSTS: JournalPost[] = [
     slug: "script-20-ceo-time-waste",
     title: "Script 20: The Aesthetic Trap",
     date: "2024.09.22",
-    imageUrl: IMG_BRANDING,
+    imageUrl: RAW_IMG_BRANDING,
     excerpt: "The dumbest thing a CEO can do is sit in a room and debate font choices. Stop playing art director.",
     tags: ["Efficiency", "Leadership"],
     readTime: "3 min read",
