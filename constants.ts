@@ -4,12 +4,15 @@ import { Project, TeamMember, JournalPost, ServiceLeg, ProjectCategory, Drop, Fi
 // ==========================================
 // ASSET REGISTRY
 // ==========================================
-// To use your own images:
-// 1. Create an 'assets' folder in your src directory.
-// 2. Upload your images there.
-// 3. Change the lines below to: import IMG_NAME from './assets/your-image.jpg';
-// 4. Update the ASSETS object values to use the imported variable.
+// INSTRUCTIONS:
+// 1. Upload your images to the 'assets/images' folder.
+// 2. Import them below (uncomment the examples).
+// 3. Replace the remote URLs in the ASSETS object with your imported variables.
 // ==========================================
+
+// EXAMPLE IMPORTS:
+// import imgHeroViz from '../assets/images/hero-viz.jpg';
+// import imgFranco from '../assets/images/franco.jpg';
 
 const RAW_IMG_3D_VIZ = 'https://images.unsplash.com/photo-1633167606207-d840b5070fc2?auto=format&fit=crop&q=80&w=1200';
 const RAW_IMG_OOH = 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=1200';
@@ -20,7 +23,7 @@ const RAW_IMG_ARIANA = 'https://images.unsplash.com/photo-1494790108377-be9c29b2
 
 export const ASSETS = {
   hero: {
-    viz: RAW_IMG_3D_VIZ,
+    viz: RAW_IMG_3D_VIZ, // Replace with: imgHeroViz
     ooh: RAW_IMG_OOH
   },
   services: {
@@ -29,7 +32,7 @@ export const ASSETS = {
     partnership: 'https://images.unsplash.com/photo-1486718448742-163732cd1544?auto=format&fit=crop&q=80&w=1200'
   },
   team: {
-    franco: RAW_IMG_FRANCO,
+    franco: RAW_IMG_FRANCO, // Replace with: imgFranco
     ariana: RAW_IMG_ARIANA
   },
   projects: {
