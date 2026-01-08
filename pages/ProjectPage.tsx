@@ -43,7 +43,7 @@ const IndividualDraggable: React.FC<{ img: string; initialPos: { top: string; le
                 opacity: 0 
             }}
             animate={{ 
-                opacity: 0.8, 
+                opacity: 0.85, 
                 transition: { duration: 1, delay: Math.random() * 0.5 } 
             }}
             whileHover={{ 
@@ -70,28 +70,34 @@ const IndividualDraggable: React.FC<{ img: string; initialPos: { top: string; le
 
 const ProjectHero: React.FC<{ project: any }> = ({ project }) => {
     const baseImages = project.detailImages || [project.imageUrl];
-    // Create a dense cloud of images
-    const images = [...baseImages, ...baseImages, ...baseImages].slice(0, 18); 
+    // Significantly increased image density as requested
+    const images = [...baseImages, ...baseImages, ...baseImages, ...baseImages].slice(0, 24); 
 
     const positions = [
-        { top: '8%', left: '4%', rotate: -4, s: 0.9 },
-        { top: '15%', left: '58%', rotate: 6, s: 1.1 },
-        { top: '48%', left: '12%', rotate: -2, s: 1.0 },
-        { top: '35%', left: '72%', rotate: 7, s: 0.85 },
-        { top: '72%', left: '18%', rotate: -5, s: 1.15 },
-        { top: '68%', left: '82%', rotate: 3, s: 0.95 },
-        { top: '2%', left: '32%', rotate: 2, s: 1.0 },
-        { top: '52%', left: '42%', rotate: -3, s: 0.85 },
-        { top: '22%', left: '78%', rotate: 5, s: 1.1 },
-        { top: '82%', left: '6%', rotate: -4, s: 1.0 },
-        { top: '12%', left: '-5%', rotate: 1, s: 0.9 },
-        { top: '62%', left: '92%', rotate: -3, s: 1.05 },
-        { top: '-5%', left: '15%', rotate: 8, s: 1.1 },
-        { top: '25%', left: '45%', rotate: -6, s: 0.95 },
-        { top: '90%', left: '35%', rotate: 4, s: 1.2 },
-        { top: '45%', left: '90%', rotate: -2, s: 1.0 },
-        { top: '10%', left: '85%', rotate: 5, s: 0.85 },
-        { top: '75%', left: '50%', rotate: -7, s: 1.1 },
+        { top: '5%', left: '2%', rotate: -4, s: 0.9 },
+        { top: '12%', left: '55%', rotate: 6, s: 1.1 },
+        { top: '45%', left: '8%', rotate: -2, s: 1.0 },
+        { top: '32%', left: '70%', rotate: 7, s: 0.85 },
+        { top: '70%', left: '15%', rotate: -5, s: 1.15 },
+        { top: '65%', left: '80%', rotate: 3, s: 0.95 },
+        { top: '0%', left: '30%', rotate: 2, s: 1.0 },
+        { top: '50%', left: '40%', rotate: -3, s: 0.85 },
+        { top: '20%', left: '75%', rotate: 5, s: 1.1 },
+        { top: '80%', left: '4%', rotate: -4, s: 1.0 },
+        { top: '10%', left: '-8%', rotate: 1, s: 0.9 },
+        { top: '60%', left: '90%', rotate: -3, s: 1.05 },
+        { top: '-8%', left: '12%', rotate: 8, s: 1.1 },
+        { top: '22%', left: '42%', rotate: -6, s: 0.95 },
+        { top: '88%', left: '32%', rotate: 4, s: 1.2 },
+        { top: '42%', left: '88%', rotate: -2, s: 1.0 },
+        { top: '8%', left: '82%', rotate: 5, s: 0.85 },
+        { top: '72%', left: '48%', rotate: -7, s: 1.1 },
+        { top: '30%', left: '5%', rotate: 3, s: 1.0 },
+        { top: '55%', left: '75%', rotate: -5, s: 0.9 },
+        { top: '15%', left: '25%', rotate: 2, s: 1.1 },
+        { top: '85%', left: '65%', rotate: -3, s: 1.05 },
+        { top: '40%', left: '55%', rotate: 6, s: 0.95 },
+        { top: '-2%', left: '70%', rotate: -4, s: 1.0 },
     ];
 
     return (
@@ -209,26 +215,36 @@ const ProcessGallery: React.FC<{ images: string[] }> = ({ images }) => {
     const scrollRef = useRef(null);
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
+    // Reduced height from 300vh to 200vh to eliminate excessive dead space
     const { scrollYProgress } = useScroll({ 
         target: scrollRef,
         offset: ["start start", "end end"] 
     });
     
-    const x = useTransform(scrollYProgress, [0, 1], ["0%", "-75%"]);
+    // Increased horizontal speed slightly since the container is shorter
+    const x = useTransform(scrollYProgress, [0, 1], ["0%", "-85%"]);
 
     useEffect(() => {
         const handleEsc = (e: KeyboardEvent) => {
             if (e.key === 'Escape') setSelectedImage(null);
         };
+        if (selectedImage) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
         window.addEventListener('keydown', handleEsc);
-        return () => window.removeEventListener('keydown', handleEsc);
-    }, []);
+        return () => {
+            window.removeEventListener('keydown', handleEsc);
+            document.body.style.overflow = 'auto';
+        };
+    }, [selectedImage]);
 
     return (
-        <section ref={scrollRef} className="h-[300vh] relative bg-brand-offwhite overflow-hidden border-y border-brand-navy/10">
+        <section ref={scrollRef} className="h-[200vh] relative bg-brand-offwhite overflow-hidden border-y border-brand-navy/10">
             <div className="sticky top-0 h-screen overflow-hidden flex flex-col justify-center">
-                <div className="container mx-auto px-6 md:px-8 mb-12">
-                    <span className="font-mono text-brand-purple uppercase tracking-[0.3em] text-xs font-bold mb-4 block">Visual Audit // Raw Process</span>
+                <div className="container mx-auto px-6 md:px-8 mb-8 md:mb-12">
+                    <span className="font-mono text-brand-purple uppercase tracking-[0.3em] text-[10px] md:text-xs font-bold mb-4 block">Visual Audit // Raw Process</span>
                     <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-brand-navy">The Messy Middle</h2>
                 </div>
                 <div className="w-full overflow-hidden">
@@ -255,31 +271,32 @@ const ProcessGallery: React.FC<{ images: string[] }> = ({ images }) => {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={() => setSelectedImage(null)}
-                        className="fixed inset-0 z-[100] bg-brand-navy/95 backdrop-blur-xl flex items-center justify-center p-6 md:p-24 cursor-zoom-out"
+                        className="fixed inset-0 z-[100] bg-brand-navy/95 backdrop-blur-xl flex items-center justify-center p-4 md:p-12 cursor-zoom-out"
                     >
                         <motion.div 
                             initial={{ scale: 0.9, opacity: 0, y: 20 }}
                             animate={{ scale: 1, opacity: 1, y: 0 }}
                             exit={{ scale: 0.9, opacity: 0, y: 20 }}
                             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-                            className="relative max-w-full max-h-full"
-                            onClick={(e) => e.stopPropagation()}
+                            className="relative w-full h-full flex items-center justify-center pointer-events-none"
                         >
-                            <img 
-                                src={selectedImage} 
-                                className="w-auto h-auto max-w-full max-h-[85vh] shadow-[0_40px_100px_rgba(0,0,0,0.5)] border border-white/10" 
-                                alt="Expanded Detail" 
-                            />
-                            <div className="absolute top-full left-0 mt-8 w-full flex justify-between items-start">
-                                <div className="font-mono text-[10px] uppercase tracking-widest text-brand-offwhite/50 font-bold">
-                                    Logic Inspection // High Resolution
+                            <div className="relative pointer-events-auto" onClick={(e) => e.stopPropagation()}>
+                                <img 
+                                    src={selectedImage} 
+                                    className="block w-auto h-auto max-w-[95vw] max-h-[85vh] shadow-[0_40px_100px_rgba(0,0,0,0.5)] border border-white/10 mx-auto" 
+                                    alt="Expanded Detail" 
+                                />
+                                <div className="absolute top-full left-0 mt-6 w-full flex flex-col md:flex-row justify-between items-center gap-4">
+                                    <div className="font-mono text-[9px] md:text-[10px] uppercase tracking-widest text-brand-offwhite/50 font-bold text-center md:text-left">
+                                        Logic Inspection // High Resolution Capture
+                                    </div>
+                                    <button 
+                                        onClick={() => setSelectedImage(null)}
+                                        className="font-mono text-[10px] uppercase tracking-widest text-brand-yellow font-bold border-b border-brand-yellow pb-1 hover:text-brand-offwhite hover:border-brand-offwhite transition-colors"
+                                    >
+                                        CLOSE_VIEW [ESC]
+                                    </button>
                                 </div>
-                                <button 
-                                    onClick={() => setSelectedImage(null)}
-                                    className="font-mono text-[10px] uppercase tracking-widest text-brand-yellow font-bold border-b border-brand-yellow pb-1 hover:text-brand-offwhite hover:border-brand-offwhite transition-colors"
-                                >
-                                    CLOSE_VIEW
-                                </button>
                             </div>
                         </motion.div>
                     </motion.div>
@@ -328,12 +345,14 @@ const ProjectPage: React.FC = () => {
 
       <ProcessGallery images={story.processImages} />
       
-      <NarrativeSection 
-        step="02 The Gap"
-        title="The Struggle"
-        content={story.gap}
-        isDark={true}
-      />
+      <div className="-mt-1"> {/* Tightening the gap between gallery and next section */}
+        <NarrativeSection 
+            step="02 The Gap"
+            title="The Struggle"
+            content={story.gap}
+            isDark={true}
+        />
+      </div>
 
       <NarrativeSection 
         step="03 The Gamble"
