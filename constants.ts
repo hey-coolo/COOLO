@@ -33,9 +33,9 @@ export const PROJECTS: Project[] = [
     role: 'Strategy, logo & mark system, type system, colour palette, texture & pattern language, apparel branding, art direction.',
     detailImages: [
         'https://raw.githubusercontent.com/hey-coolo/COOLO/refs/heads/main/assets/cases/unmplymnt/detail-1.webp?token=GHSAT0AAAAAADSX62VILXRORDBGFCKIR2EY2LAGA7A',
-        'https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&q=80&w=800',
-        'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=800',
-        'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=800'
+        'https://raw.githubusercontent.com/hey-coolo/COOLO/refs/heads/main/assets/cases/unmplymnt/detail-3.webp?token=GHSAT0AAAAAADSX62VIZYYNXJBXU6Q3YJ742LAGJ4Q',
+        'https://raw.githubusercontent.com/hey-coolo/COOLO/refs/heads/main/assets/cases/unmplymnt/detail-4.webp?token=GHSAT0AAAAAADSX62VJDK4GUXU327EPHWNI2LAGKDA',
+        'https://raw.githubusercontent.com/hey-coolo/COOLO/refs/heads/main/assets/cases/unmplymnt/detail-5.webp?token=GHSAT0AAAAAADSX62VIIIWKR2RFUJWYN5NA2LAGKLQ'
     ],
     story: {
         goal: "UNMPLYNMT began as a belief: that clothing can be more than fashion — it can be a banner for identity, rebellion, and community. We asked a simple, strategic question: What does freedom look like when it isn’t selling anything?",
@@ -43,8 +43,9 @@ export const PROJECTS: Project[] = [
         gamble: "We developed a visual voice that mirrors that attitude: Typographic Brutality, Colour Energy, and Texture as Attitude. A flexible system built to scale across campaigns without diluting its raw power.",
         gain: "Identity done right doesn’t whisper. It moves people. We gave them a visual language that behaves like culture: adaptable, self-aware, and unmistakable. Community turned into culture.",
         processImages: [
-            'https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?auto=format&fit=crop&q=80&w=800', 
-            'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=800'
+            'https://raw.githubusercontent.com/hey-coolo/COOLO/refs/heads/main/assets/cases/unmplymnt/process-1.webp?token=GHSAT0AAAAAADSX62VJX7ZEZDHEJ3JG5LEA2LAGKYA', 
+            'https://raw.githubusercontent.com/hey-coolo/COOLO/refs/heads/main/assets/cases/unmplymnt/process-2.webp?token=GHSAT0AAAAAADSX62VITSNW66ZEI2TUBMXQ2LAGLAA',
+            'https://raw.githubusercontent.com/hey-coolo/COOLO/refs/heads/main/assets/cases/unmplymnt/process-3.webp?token=GHSAT0AAAAAADSX62VJXT5GSUGTYRQVSKJ42LAGLGQ',
         ]
     }
   },
