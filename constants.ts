@@ -27,17 +27,16 @@ export const PROJECTS: Project[] = [
     category: ['Concept & Strategy', 'Naming', 'Brand Identity', 'Content Creation'],
     tags: ['Brutalism', 'Typography', 'Strategy'],
     year: 2025,
-    imageUrl: 'https://raw.githubusercontent.com/hey-coolo/COOLO/refs/heads/main/assets/cases/unmplymnt/Hero.webp?token=GHSAT0AAAAAADSX62VJMDI5SJZUNZVDH4PO2LAGP4Q',
+    imageUrl: 'assets/cases/unmplymnt/Hero.webp',
     featured: true,
     client: 'Internal Project',
     role: 'Strategy, logo & mark system, type system, colour palette, texture & pattern language, apparel branding, art direction.',
     detailImages: [
-        '/assets/cases/unmplynmt/Hero.webp',
-        '/assets/cases/unmplynmt/detail-1.webp',
-        '/assets/cases/unmplynmt/detail-2.webp',
-        '/assets/cases/unmplynmt/detail-3.webp',
-        '/assets/cases/unmplynmt/detail-5.webp',
-        '/assets/cases/unmplynmt/process-2.webp'
+        'assets/cases/unmplymnt/detail-1.webp',
+        'assets/cases/unmplynmt/detail-2.webp',
+        'assets/cases/unmplynmt/detail-3.webp',
+        'assets/cases/unmplynmt/detail-5.webp',
+        'assets/cases/unmplynmt/process-2.webp'
     ],
     story: {
         goal: "UNMPLYNMT began as a belief: that clothing can be more than fashion — it can be a banner for identity, rebellion, and community. We asked a simple, strategic question: What does freedom look like when it isn’t selling anything?",
@@ -45,9 +44,9 @@ export const PROJECTS: Project[] = [
         gamble: "We developed a visual voice that mirrors that attitude: Typographic Brutality, Colour Energy, and Texture as Attitude. A flexible system built to scale across campaigns without diluting its raw power.",
         gain: "Identity done right doesn’t whisper. It moves people. We gave them a visual language that behaves like culture: adaptable, self-aware, and unmistakable. Community turned into culture.",
         processImages: [
-            '/assets/cases/unmplynmt/process-1.webp', 
-            '/assets/cases/unmplynmt/process-3.webp',
-            '/assets/cases/unmplynmt/detail-4.webp'
+            'assets/cases/unmplynmt/process-1.webp', 
+            'assets/cases/unmplynmt/process-3.webp',
+            'assets/cases/unmplynmt/detail-4.webp'
         ]
     }
   },
