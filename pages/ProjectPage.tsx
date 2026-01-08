@@ -70,35 +70,15 @@ const IndividualDraggable: React.FC<{ img: string; initialPos: { top: string; le
 
 const ProjectHero: React.FC<{ project: any }> = ({ project }) => {
     const baseImages = project.detailImages || [project.imageUrl];
-    // Significantly increased image density as requested
-    const images = [...baseImages, ...baseImages, ...baseImages, ...baseImages].slice(0, 24); 
+    // Maximum image density for a truly elite scatter look
+    const images = [...baseImages, ...baseImages, ...baseImages, ...baseImages, ...baseImages].slice(0, 32); 
 
-    const positions = [
-        { top: '5%', left: '2%', rotate: -4, s: 0.9 },
-        { top: '12%', left: '55%', rotate: 6, s: 1.1 },
-        { top: '45%', left: '8%', rotate: -2, s: 1.0 },
-        { top: '32%', left: '70%', rotate: 7, s: 0.85 },
-        { top: '70%', left: '15%', rotate: -5, s: 1.15 },
-        { top: '65%', left: '80%', rotate: 3, s: 0.95 },
-        { top: '0%', left: '30%', rotate: 2, s: 1.0 },
-        { top: '50%', left: '40%', rotate: -3, s: 0.85 },
-        { top: '20%', left: '75%', rotate: 5, s: 1.1 },
-        { top: '80%', left: '4%', rotate: -4, s: 1.0 },
-        { top: '10%', left: '-8%', rotate: 1, s: 0.9 },
-        { top: '60%', left: '90%', rotate: -3, s: 1.05 },
-        { top: '-8%', left: '12%', rotate: 8, s: 1.1 },
-        { top: '22%', left: '42%', rotate: -6, s: 0.95 },
-        { top: '88%', left: '32%', rotate: 4, s: 1.2 },
-        { top: '42%', left: '88%', rotate: -2, s: 1.0 },
-        { top: '8%', left: '82%', rotate: 5, s: 0.85 },
-        { top: '72%', left: '48%', rotate: -7, s: 1.1 },
-        { top: '30%', left: '5%', rotate: 3, s: 1.0 },
-        { top: '55%', left: '75%', rotate: -5, s: 0.9 },
-        { top: '15%', left: '25%', rotate: 2, s: 1.1 },
-        { top: '85%', left: '65%', rotate: -3, s: 1.05 },
-        { top: '40%', left: '55%', rotate: 6, s: 0.95 },
-        { top: '-2%', left: '70%', rotate: -4, s: 1.0 },
-    ];
+    const positions = Array.from({ length: 32 }).map((_, i) => ({
+        top: `${Math.random() * 100}%`,
+        left: `${Math.random() * 100}%`,
+        rotate: Math.random() * 20 - 10,
+        s: 0.8 + Math.random() * 0.5
+    }));
 
     return (
         <div className="relative h-screen w-full overflow-hidden bg-brand-offwhite">
@@ -113,7 +93,7 @@ const ProjectHero: React.FC<{ project: any }> = ({ project }) => {
                     <IndividualDraggable 
                         key={i} 
                         img={img} 
-                        initialPos={positions[i] || { top: '50%', left: '50%', rotate: 0, s: 1 }} 
+                        initialPos={positions[i]} 
                     />
                 ))}
             </motion.div>
@@ -212,17 +192,16 @@ const NarrativeSection: React.FC<{
 }
 
 const ProcessGallery: React.FC<{ images: string[] }> = ({ images }) => {
-    const scrollRef = useRef(null);
+    const targetRef = useRef<HTMLDivElement>(null);
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
-    // Reduced height from 300vh to 200vh to eliminate excessive dead space
-    const { scrollYProgress } = useScroll({ 
-        target: scrollRef,
-        offset: ["start start", "end end"] 
+    // Using a taller height (400vh) makes the locking feel intentional and premium.
+    const { scrollYProgress } = useScroll({
+        target: targetRef,
     });
-    
-    // Increased horizontal speed slightly since the container is shorter
-    const x = useTransform(scrollYProgress, [0, 1], ["0%", "-85%"]);
+
+    // The horizontal translation covers the full width of the extra images.
+    const x = useTransform(scrollYProgress, [0, 1], ["0%", "-80%"]);
 
     useEffect(() => {
         const handleEsc = (e: KeyboardEvent) => {
@@ -231,33 +210,35 @@ const ProcessGallery: React.FC<{ images: string[] }> = ({ images }) => {
         if (selectedImage) {
             document.body.style.overflow = 'hidden';
         } else {
-            document.body.style.overflow = 'auto';
+            document.body.style.overflow = '';
         }
         window.addEventListener('keydown', handleEsc);
         return () => {
             window.removeEventListener('keydown', handleEsc);
-            document.body.style.overflow = 'auto';
+            document.body.style.overflow = '';
         };
     }, [selectedImage]);
 
     return (
-        <section ref={scrollRef} className="h-[200vh] relative bg-brand-offwhite overflow-hidden border-y border-brand-navy/10">
-            <div className="sticky top-0 h-screen overflow-hidden flex flex-col justify-center">
-                <div className="container mx-auto px-6 md:px-8 mb-8 md:mb-12">
-                    <span className="font-mono text-brand-purple uppercase tracking-[0.3em] text-[10px] md:text-xs font-bold mb-4 block">Visual Audit // Raw Process</span>
-                    <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-brand-navy">The Messy Middle</h2>
-                </div>
-                <div className="w-full overflow-hidden">
-                    <motion.div style={{ x }} className="flex gap-4 md:gap-8 px-6 md:px-8 w-max">
-                        {images.concat(images).map((img, i) => (
+        <section ref={targetRef} className="relative h-[400vh] bg-brand-offwhite">
+            <div className="sticky top-0 flex h-screen items-center overflow-hidden">
+                <div className="flex flex-col w-full">
+                    <div className="container mx-auto px-6 md:px-8 mb-12">
+                        <span className="font-mono text-brand-purple uppercase tracking-[0.3em] text-[10px] md:text-xs font-bold mb-4 block">Visual Audit // Raw Process</span>
+                        <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-brand-navy">The Messy Middle</h2>
+                    </div>
+                    
+                    <motion.div style={{ x }} className="flex gap-4 md:gap-12 px-6 md:px-8">
+                        {images.concat(images).concat(images).map((img, i) => (
                             <motion.div 
                                 key={i} 
                                 onClick={() => setSelectedImage(img)}
                                 data-cursor-text="VIEW"
-                                whileHover={{ scale: 0.98 }}
-                                className="w-[300px] md:w-[600px] aspect-[4/3] bg-brand-navy/5 flex-shrink-0 cursor-pointer overflow-hidden group shadow-xl"
+                                whileHover={{ scale: 0.97 }}
+                                className="relative h-[40vh] md:h-[55vh] w-[300px] md:w-[650px] flex-shrink-0 cursor-pointer overflow-hidden shadow-2xl bg-brand-navy/5 group"
                             >
-                                <img src={img} className="w-full h-full object-cover mix-blend-multiply grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" alt="Process" />
+                                <img src={img} className="h-full w-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000" alt="Process" />
+                                <div className="absolute inset-0 bg-brand-navy/10 opacity-0 group-hover:opacity-100 transition-opacity" />
                             </motion.div>
                         ))}
                     </motion.div>
@@ -271,32 +252,31 @@ const ProcessGallery: React.FC<{ images: string[] }> = ({ images }) => {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={() => setSelectedImage(null)}
-                        className="fixed inset-0 z-[100] bg-brand-navy/95 backdrop-blur-xl flex items-center justify-center p-4 md:p-12 cursor-zoom-out"
+                        className="fixed inset-0 z-[9999] bg-brand-navy/90 backdrop-blur-2xl flex items-center justify-center p-4 md:p-12 cursor-zoom-out"
                     >
                         <motion.div 
-                            initial={{ scale: 0.9, opacity: 0, y: 20 }}
+                            initial={{ scale: 0.8, opacity: 0, y: 50 }}
                             animate={{ scale: 1, opacity: 1, y: 0 }}
-                            exit={{ scale: 0.9, opacity: 0, y: 20 }}
-                            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-                            className="relative w-full h-full flex items-center justify-center pointer-events-none"
+                            exit={{ scale: 0.8, opacity: 0, y: 50 }}
+                            transition={{ type: 'spring', damping: 30, stiffness: 200 }}
+                            className="relative max-w-full max-h-full flex flex-col items-center"
+                            onClick={(e) => e.stopPropagation()}
                         >
-                            <div className="relative pointer-events-auto" onClick={(e) => e.stopPropagation()}>
-                                <img 
-                                    src={selectedImage} 
-                                    className="block w-auto h-auto max-w-[95vw] max-h-[85vh] shadow-[0_40px_100px_rgba(0,0,0,0.5)] border border-white/10 mx-auto" 
-                                    alt="Expanded Detail" 
-                                />
-                                <div className="absolute top-full left-0 mt-6 w-full flex flex-col md:flex-row justify-between items-center gap-4">
-                                    <div className="font-mono text-[9px] md:text-[10px] uppercase tracking-widest text-brand-offwhite/50 font-bold text-center md:text-left">
-                                        Logic Inspection // High Resolution Capture
-                                    </div>
-                                    <button 
-                                        onClick={() => setSelectedImage(null)}
-                                        className="font-mono text-[10px] uppercase tracking-widest text-brand-yellow font-bold border-b border-brand-yellow pb-1 hover:text-brand-offwhite hover:border-brand-offwhite transition-colors"
-                                    >
-                                        CLOSE_VIEW [ESC]
-                                    </button>
+                            <img 
+                                src={selectedImage} 
+                                className="w-auto h-auto max-w-[95vw] max-h-[80vh] shadow-[0_50px_150px_rgba(0,0,0,0.6)] border border-white/5" 
+                                alt="Expanded Detail" 
+                            />
+                            <div className="w-full max-w-[95vw] mt-8 flex flex-col md:flex-row justify-between items-center gap-6">
+                                <div className="font-mono text-[10px] uppercase tracking-widest text-brand-offwhite/40 font-bold">
+                                    Logic Inspection // High Resolution Build
                                 </div>
+                                <button 
+                                    onClick={() => setSelectedImage(null)}
+                                    className="font-mono text-[11px] uppercase tracking-widest text-brand-yellow font-black border-b-2 border-brand-yellow pb-1 hover:text-brand-offwhite hover:border-brand-offwhite transition-all"
+                                >
+                                    CLOSE_DOSS_ [ESC]
+                                </button>
                             </div>
                         </motion.div>
                     </motion.div>
@@ -345,14 +325,12 @@ const ProjectPage: React.FC = () => {
 
       <ProcessGallery images={story.processImages} />
       
-      <div className="-mt-1"> {/* Tightening the gap between gallery and next section */}
-        <NarrativeSection 
-            step="02 The Gap"
-            title="The Struggle"
-            content={story.gap}
-            isDark={true}
-        />
-      </div>
+      <NarrativeSection 
+        step="02 The Gap"
+        title="The Struggle"
+        content={story.gap}
+        isDark={true}
+      />
 
       <NarrativeSection 
         step="03 The Gamble"
