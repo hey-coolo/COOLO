@@ -24,7 +24,7 @@ export const PROJECTS: Project[] = [
     title: 'UNMPLYNMT',
     slug: 'unmplynmt',
     description: 'A Brand Built Like Culture, Not a Logo. Brutalist identity system exploring the friction of labor and identity.',
-    category: 'Brand Identity',
+    category: ['Concept & Strategy', 'Naming', 'Brand Identity', 'Content Creation'],
     tags: ['Brutalism', 'Typography', 'Strategy'],
     year: 2025,
     imageUrl: 'https://raw.githubusercontent.com/hey-coolo/COOLO/refs/heads/main/assets/cases/unmplymnt/Hero.webp?token=GHSAT0AAAAAADSX62VJMDI5SJZUNZVDH4PO2LAGP4Q',
@@ -32,10 +32,11 @@ export const PROJECTS: Project[] = [
     client: 'Internal Project',
     role: 'Strategy, logo & mark system, type system, colour palette, texture & pattern language, apparel branding, art direction.',
     detailImages: [
-        'https://raw.githubusercontent.com/hey-coolo/COOLO/refs/heads/main/assets/cases/unmplymnt/detail-1.webp?token=GHSAT0AAAAAADSX62VILXRORDBGFCKIR2EY2LAGA7A',
-        'https://raw.githubusercontent.com/hey-coolo/COOLO/refs/heads/main/assets/cases/unmplymnt/detail-3.webp?token=GHSAT0AAAAAADSX62VIZYYNXJBXU6Q3YJ742LAGJ4Q',
-        'https://raw.githubusercontent.com/hey-coolo/COOLO/refs/heads/main/assets/cases/unmplymnt/detail-4.webp?token=GHSAT0AAAAAADSX62VJDK4GUXU327EPHWNI2LAGKDA',
-        'https://raw.githubusercontent.com/hey-coolo/COOLO/refs/heads/main/assets/cases/unmplymnt/detail-5.webp?token=GHSAT0AAAAAADSX62VIIIWKR2RFUJWYN5NA2LAGKLQ'
+        'https://raw.githubusercontent.com/hey-coolo/COOLO/refs/heads/main/assets/cases/unmplymnt/detail-1.webp?token=GHSAT0AAAAAADSX62VJMC7JLW3OB7NOPQ4Q2LAGSIQ',
+        'https://raw.githubusercontent.com/hey-coolo/COOLO/refs/heads/main/assets/cases/unmplymnt/detail-2.webp?token=GHSAT0AAAAAADSX62VJX6SYHRQWZA3I3I5Y2LAGSRQ',
+        'https://raw.githubusercontent.com/hey-coolo/COOLO/refs/heads/main/assets/cases/unmplymnt/detail-3.webp?token=GHSAT0AAAAAADSX62VJDYM3AUPC3DGRPDCM2LAGTKA',
+        'https://raw.githubusercontent.com/hey-coolo/COOLO/refs/heads/main/assets/cases/unmplymnt/detail-4.webp?token=GHSAT0AAAAAADSX62VJCH3ZUITOU34IEY6I2LAGTVA',
+        'https://raw.githubusercontent.com/hey-coolo/COOLO/refs/heads/main/assets/cases/unmplymnt/process-2.webp?token=GHSAT0AAAAAADSX62VIHFHBNI3VKSH6WKVU2LAGSZQ'
     ],
     story: {
         goal: "UNMPLYNMT began as a belief: that clothing can be more than fashion — it can be a banner for identity, rebellion, and community. We asked a simple, strategic question: What does freedom look like when it isn’t selling anything?",
@@ -43,9 +44,9 @@ export const PROJECTS: Project[] = [
         gamble: "We developed a visual voice that mirrors that attitude: Typographic Brutality, Colour Energy, and Texture as Attitude. A flexible system built to scale across campaigns without diluting its raw power.",
         gain: "Identity done right doesn’t whisper. It moves people. We gave them a visual language that behaves like culture: adaptable, self-aware, and unmistakable. Community turned into culture.",
         processImages: [
-            'https://raw.githubusercontent.com/hey-coolo/COOLO/refs/heads/main/assets/cases/unmplymnt/process-1.webp?token=GHSAT0AAAAAADSX62VJX7ZEZDHEJ3JG5LEA2LAGKYA', 
-            'https://raw.githubusercontent.com/hey-coolo/COOLO/refs/heads/main/assets/cases/unmplymnt/process-2.webp?token=GHSAT0AAAAAADSX62VITSNW66ZEI2TUBMXQ2LAGLAA',
-            'https://raw.githubusercontent.com/hey-coolo/COOLO/refs/heads/main/assets/cases/unmplymnt/process-3.webp?token=GHSAT0AAAAAADSX62VJXT5GSUGTYRQVSKJ42LAGLGQ'
+            'https://raw.githubusercontent.com/hey-coolo/COOLO/refs/heads/main/assets/cases/unmplymnt/process-1.webp?token=GHSAT0AAAAAADSX62VIYRF42LFFOF76TVJQ2LAGULQ', 
+            'https://raw.githubusercontent.com/hey-coolo/COOLO/refs/heads/main/assets/cases/unmplymnt/detail-4.webp?token=GHSAT0AAAAAADSX62VJC22A4DHRGLOEZ2NY2LAGUVA',
+            'https://raw.githubusercontent.com/hey-coolo/COOLO/refs/heads/main/assets/cases/unmplymnt/process-3.webp?token=GHSAT0AAAAAADSX62VJ3TXVK2NHNMFJ7YG42LAGU6A'
         ]
     }
   },
