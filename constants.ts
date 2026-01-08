@@ -1,7 +1,8 @@
 
 import { Project, TeamMember, JournalPost, ServiceLeg, ProjectCategory, Drop, DesignPowerTier, ClarityTier, Script, Resource, Workbook, CourseModule, PartnershipModel } from './types';
 
-const PLACEHOLDER_IMG = 'https://images.unsplash.com/photo-1633167606207-d840b5070fc2?auto=format&fit=crop&q=80&w=1200';
+// PRO TIP: Replace these strings with your direct image links (ending in .jpg, .png, or .webp)
+// If using GitHub: https://raw.githubusercontent.com/username/repo/main/assets/images/file.jpg
 
 export const ASSETS = {
   hero: {
@@ -22,90 +23,142 @@ export const ASSETS = {
 export const PROJECTS: Project[] = [
   {
     id: 1,
-    title: 'The Blueprint Zero',
-    slug: 'blueprint-zero',
-    description: 'A 3D vision for high-end digital identity.',
-    category: '3D Design',
-    tags: ['3D Design', 'Strategy', 'Creative Direction'],
-    year: 2024,
-    imageUrl: 'https://images.unsplash.com/photo-1633167606207-d840b5070fc2?auto=format&fit=crop&q=80&w=1200',
+    title: '-unmplynmt-',
+    slug: 'unmplynmt',
+    description: 'Brutalist identity system exploring the friction of labor and identity.',
+    category: 'Brand Identity',
+    tags: ['Brutalism', 'Typography', 'Strategy'],
+    year: 2025,
+    imageUrl: 'https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?auto=format&fit=crop&q=95&w=1200', // REPLACE_WITH_UNMPLYNMT_IMG
     featured: true,
-    client: 'Internal Initiative',
-    challenge: 'Define brand depth using digital materials that evoke a visceral reaction.',
-    role: 'Art Direction, 3D Execution',
-    outcome: 'A viral visual system that established COOLO\'s technical baseline.',
+    client: 'Internal Project',
+    role: 'Art Direction & Design',
     story: {
-        goal: "Create a visual language that felt like a bridge between physical architecture and digital speed.",
-        gap: "Most 3D renders felt floaty or synthetic. We needed 'mass'.",
-        gamble: "We ignored standard lighting setups, relying entirely on self-emissive geometry to carve out form.",
-        gain: "A signature self-illuminated aesthetic that differentiates our brand from standard flat-design agencies.",
-        processImages: [PLACEHOLDER_IMG, PLACEHOLDER_IMG]
+        goal: "Translate the social friction of unemployment into a premium, architectural visual language.",
+        gap: "Most protest-led branding feels 'cheap'. We needed to prove that raw social commentary could hold high-end design value.",
+        gamble: "Total elimination of secondary colors. We relied entirely on black, white, and extreme typographic scale.",
+        gain: "Establishment of the COOLO 'No Magic' baseline—Logic over decoration.",
+        processImages: ['https://images.unsplash.com/photo-1515462277126-2dd0c162007a?auto=format&fit=crop&q=80&w=800', 'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&q=80&w=800']
     }
   },
   {
     id: 2,
-    title: 'Aura Wellness',
-    slug: 'aura-wellness',
-    description: 'Strategic repositioning for a luxury supplement line.',
-    category: 'Brand Identity',
-    tags: ['Positioning', 'Packaging', 'Strategy'],
+    title: 'Just Boxes',
+    slug: 'just-boxes',
+    description: 'Elevating the structural honesty of material packaging.',
+    category: 'Packaging',
+    tags: ['Packaging', 'Industrial', 'Minimalism'],
     year: 2024,
-    imageUrl: 'https://images.unsplash.com/photo-1556229167-7313023e3547?auto=format&fit=crop&q=80&w=1200',
+    imageUrl: 'https://images.unsplash.com/photo-1530519729491-acf5b58454ba?auto=format&fit=crop&q=95&w=1200', // REPLACE_WITH_JUSTBOXES_IMG
     featured: true,
-    client: 'Aura Collective',
-    challenge: 'Move away from generic wellness aesthetics into high-fashion technical performance.',
-    role: 'Lead Strategist & Art Director',
-    outcome: 'Successful launch into 12 high-end boutique retailers in NYC and LA.',
+    client: 'Just Boxes',
+    role: 'Creative Direction',
     story: {
-        goal: "Redefine wellness as an aesthetic ritual rather than a medical chore.",
-        gap: "The market was saturated with minimalist white bottles. We went deep navy and gold-foil.",
-        gamble: "Using 100% 3D renders for the initial launch campaign instead of physical photography.",
-        gain: "40% lower production costs and a hyper-real aesthetic that competitors couldn't replicate.",
-        processImages: [PLACEHOLDER_IMG, PLACEHOLDER_IMG]
+        goal: "Celebrate cardboard as a primary luxury material.",
+        gap: "Sustainable packaging is often over-designed. We stripped it back to the absolute structural minimum.",
+        gamble: "No plastic coatings. We used structural folding and high-contrast ink to create the 'Premium' feel.",
+        gain: "A signature packaging system that is 100% recyclable and 100% unmistakable.",
+        processImages: ['https://images.unsplash.com/photo-1606206591513-adbf01ac2191?auto=format&fit=crop&q=80&w=800', 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&q=80&w=800']
     }
   },
   {
     id: 3,
-    title: 'Nexus Capital',
-    slug: 'nexus-capital',
-    description: 'Modernizing a private equity firm for a new generation of founders.',
-    category: 'Web Design',
-    tags: ['Webflow', 'UX/UI', 'Corporate Identity'],
-    year: 2023,
-    imageUrl: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=1200',
-    featured: false,
-    client: 'Nexus Partners',
-    challenge: 'Break the stale, blue-and-gray mold of traditional finance.',
-    role: 'Full Digital Build',
-    outcome: 'A technical, high-speed interface that increased founder inquiries by 85%.',
+    title: 'Surfboard v001',
+    slug: 'surfboard-v001',
+    description: 'Technical 3D exploration of hydro-dynamic resin surfacing.',
+    category: '3D Design',
+    tags: ['3D Viz', 'Technical', 'Surfacing'],
+    year: 2022,
+    imageUrl: 'https://images.unsplash.com/photo-1528150177508-7cc0c36cda5c?auto=format&fit=crop&q=95&w=1200', // REPLACE_WITH_SURFBOARD_IMG
+    featured: true,
+    client: 'Technical Study',
+    role: '3D Artist',
     story: {
-        goal: "Translate financial security into digital velocity.",
-        gap: "Corporate sites are slow. We used kinetic typography and custom Webflow interactions to evoke precision.",
-        gamble: "Removing all stock imagery of 'people in suits' and replacing it with abstract geometric art.",
-        gain: "Immediate differentiation from Tier-1 competitors and a massive spike in mobile engagement.",
-        processImages: [PLACEHOLDER_IMG, PLACEHOLDER_IMG]
+        goal: "Mimic the exact light refraction of hand-shaped surfboard resin in a digital environment.",
+        gap: "Generic 3D surfboard renders lack the 'depth' of real glassing. We focused on the subsurface scattering of the material.",
+        gamble: "A 2-week deep dive into a single material shader.",
+        gain: "The creation of our 'Hydro-Logic' shader library, used in all current hardware client builds.",
+        processImages: ['https://images.unsplash.com/photo-1531315630201-bb152f135884?auto=format&fit=crop&q=80&w=800', 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=800']
     }
   },
   {
     id: 4,
-    title: 'Kinetic Labs',
-    slug: 'kinetic-labs',
-    description: 'Motion identity for a specialized biomechanics startup.',
-    category: 'Motion Design',
-    tags: ['Motion', 'Logo Design', 'Video'],
-    year: 2023,
-    imageUrl: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1200',
-    featured: true,
-    client: 'Kinetic Performance',
-    challenge: 'Represent human motion using purely digital geometric data.',
-    role: 'Motion Director',
-    outcome: 'A dynamic logo system that changes state based on live biometric inputs.',
+    title: 'The Cartridges',
+    slug: 'the-cartridges',
+    description: 'Hardware visualization focusing on modular industrial aesthetics.',
+    category: '3D Design',
+    tags: ['Industrial', 'Hardware', 'Lighting'],
+    year: 2021,
+    imageUrl: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=95&w=1200', // REPLACE_WITH_CARTRIDGES_IMG
+    featured: false,
+    client: 'Modular Labs',
+    role: 'Visualization Lead',
     story: {
-        goal: "Design a living brand system.",
-        gap: "Static logos don't represent a company built on movement.",
-        gamble: "A logo that never looks the same twice, driven by a generative algorithm.",
-        gain: "Recognition as a technical pioneer in the bio-tech space.",
-        processImages: [PLACEHOLDER_IMG, PLACEHOLDER_IMG]
+        goal: "Represent complex modularity through simple, high-res geometric lighting.",
+        gap: "Technical products are often shown in flat lighting. We treated these like luxury timepieces.",
+        gamble: "Using pitch-black environments to force focus on material quality.",
+        gain: "A set of high-converting visual assets for a seed-round pitch deck.",
+        processImages: ['https://images.unsplash.com/photo-1558494949-ef010cbdcc51?auto=format&fit=crop&q=80&w=800', 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=800']
+    }
+  },
+  {
+    id: 5,
+    title: 'Jonhey’s Dumpling House',
+    slug: 'jonheys-dumpling-house',
+    description: 'High-energy hospitality branding with a contemporary street-food edge.',
+    category: 'Brand Identity',
+    tags: ['Hospitality', 'Kinetic Type', 'Logo'],
+    year: 2023,
+    imageUrl: 'https://images.unsplash.com/photo-1496116218417-1a781b1c416c?auto=format&fit=crop&q=95&w=1200', // REPLACE_WITH_JONHEYS_IMG
+    featured: true,
+    client: 'Jonhey’s',
+    role: 'Lead Designer',
+    story: {
+        goal: "Break the 'red and gold' hospitality cliché for a younger, urban crowd.",
+        gap: "Dumpling houses usually feel traditional. This one needed to feel like a high-speed streetwear drop.",
+        gamble: "Using neon purple and heavy, distorted typography for a traditional product.",
+        gain: "Immediate cult-status and a visual system that works perfectly on apparel.",
+        processImages: ['https://images.unsplash.com/photo-1547928576-a4a33237cea3?auto=format&fit=crop&q=80&w=800', 'https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&q=80&w=800']
+    }
+  },
+  {
+    id: 6,
+    title: 'Franca Austral',
+    slug: 'franca-austral',
+    description: 'Editorial-led identity design inspired by Southern landscapes.',
+    category: 'Brand Identity',
+    tags: ['Editorial', 'Strategy', 'Nature'],
+    year: 2023,
+    imageUrl: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=95&w=1200', // REPLACE_WITH_FRANCA_IMG
+    featured: false,
+    client: 'Franca Collective',
+    role: 'Art Director',
+    story: {
+        goal: "Capture the vast silence of southern landscapes through typographic negative space.",
+        gap: "Nature brands are often cluttered. We wanted it to feel as open as the land itself.",
+        gamble: "A 60-page brand book with almost zero body copy—relying purely on scale and hierarchy.",
+        gain: "A sophisticated, high-end presence that attracted luxury tourism partners.",
+        processImages: ['https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&q=80&w=800', 'https://images.unsplash.com/photo-1501854140801-50d01698950b?auto=format&fit=crop&q=80&w=800']
+    }
+  },
+  {
+    id: 7,
+    title: 'Traveller to Entrepreneur',
+    slug: 'traveller-entrepreneur',
+    description: 'Strategic repositioning for a high-performance global nomadic brand.',
+    category: 'Strategy',
+    tags: ['Positioning', 'Messaging', 'Narrative'],
+    year: 2021,
+    imageUrl: 'https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?auto=format&fit=crop&q=95&w=1200', // REPLACE_WITH_TRAVELLER_IMG
+    featured: true,
+    client: 'Personal Brand',
+    role: 'Lead Strategist',
+    story: {
+        goal: "Pivot an audience from 'lifestyle travel' to 'business technicality'.",
+        gap: "The travel content was too casual. The brand needed to pivot to high-ticket consulting.",
+        gamble: "Cutting 80% of existing content categories to focus on 'The Grind' as a technical discipline.",
+        gain: "A 300% increase in inbound consulting leads within 90 days of repositioning.",
+        processImages: ['https://images.unsplash.com/photo-1454165833767-027ff33027b6?auto=format&fit=crop&q=80&w=800', 'https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80&w=800']
     }
   }
 ];
@@ -276,7 +329,7 @@ export const PARTNERSHIP_MODELS: PartnershipModel[] = [
 ];
 
 export const PROJECT_CATEGORIES: ProjectCategory[] = [
-  'All', 'Featured', '3D Design', 'Brand Identity', 'Web Design', 'Strategy'
+  'All', 'Featured', '3D Design', 'Brand Identity', 'Web Design', 'Strategy', 'Packaging'
 ];
 
 export const TEAM_MEMBERS: { [key: string]: TeamMember } = {
@@ -337,17 +390,6 @@ export const JOURNAL_POSTS: JournalPost[] = [
     readTime: "5 min read",
     author: "Franco",
     content: "The 'Creative Guru' model is dangerous. It relies on inspiration, which is fickle. We rely on logic, which is defensible. If your strategy can't survive a stress test of 'Why?', it's just decoration."
-  },
-  {
-    slug: "remote-mount-strategy",
-    title: "Remote Firepower",
-    date: "2024.08.15",
-    imageUrl: 'https://images.unsplash.com/photo-1516937941348-c09e554b9631?auto=format&fit=crop&q=80&w=1200',
-    excerpt: "Operating a high-end global studio from Mount Maunganui, NZ.",
-    tags: ["Lifestyle", "Studio Ops", "NZ"],
-    readTime: "4 min read",
-    author: "Ariana",
-    content: "The best talent doesn't live in a cubicle in Shoreditch anymore. By operating from the Mount, we maintain the sanity required to do high-level deep work for global partners."
   }
 ];
 
