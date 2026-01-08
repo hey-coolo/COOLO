@@ -23,7 +23,7 @@ export const ASSETS = {
 export const PROJECTS: Project[] = [
   {
     id: 1,
-    title: '-unmplynmt-',
+    title: 'unmplynmt garments',
     slug: 'unmplynmt',
     description: 'Brutalist identity system exploring the friction of labor and identity.',
     category: 'Brand Identity',
