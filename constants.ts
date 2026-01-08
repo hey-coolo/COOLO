@@ -32,11 +32,12 @@ export const PROJECTS: Project[] = [
     client: 'Internal Project',
     role: 'Strategy, logo & mark system, type system, colour palette, texture & pattern language, apparel branding, art direction.',
     detailImages: [
-        'https://raw.githubusercontent.com/hey-coolo/COOLO/refs/heads/main/assets/cases/unmplymnt/detail-1.webp?token=GHSAT0AAAAAADSX62VJMC7JLW3OB7NOPQ4Q2LAGSIQ',
-        'https://raw.githubusercontent.com/hey-coolo/COOLO/refs/heads/main/assets/cases/unmplymnt/detail-2.webp?token=GHSAT0AAAAAADSX62VJX6SYHRQWZA3I3I5Y2LAGSRQ',
-        'https://raw.githubusercontent.com/hey-coolo/COOLO/refs/heads/main/assets/cases/unmplymnt/detail-3.webp?token=GHSAT0AAAAAADSX62VJDYM3AUPC3DGRPDCM2LAGTKA',
-        'https://raw.githubusercontent.com/hey-coolo/COOLO/refs/heads/main/assets/cases/unmplymnt/detail-4.webp?token=GHSAT0AAAAAADSX62VJCH3ZUITOU34IEY6I2LAGTVA',
-        'https://raw.githubusercontent.com/hey-coolo/COOLO/refs/heads/main/assets/cases/unmplymnt/process-2.webp?token=GHSAT0AAAAAADSX62VIHFHBNI3VKSH6WKVU2LAGSZQ'
+        './assets/cases/unmplynmt/Hero.webp',
+        './assets/cases/unmplynmt/detail-1.webp',
+        './assets/cases/unmplynmt/detail-2.webp',
+        './assets/cases/unmplynmt/detail-3.webp',
+        './assets/cases/unmplynmt/detail-5.webp',
+        './assets/cases/unmplynmt/process-2.webp'
     ],
     story: {
         goal: "UNMPLYNMT began as a belief: that clothing can be more than fashion — it can be a banner for identity, rebellion, and community. We asked a simple, strategic question: What does freedom look like when it isn’t selling anything?",
@@ -44,9 +45,9 @@ export const PROJECTS: Project[] = [
         gamble: "We developed a visual voice that mirrors that attitude: Typographic Brutality, Colour Energy, and Texture as Attitude. A flexible system built to scale across campaigns without diluting its raw power.",
         gain: "Identity done right doesn’t whisper. It moves people. We gave them a visual language that behaves like culture: adaptable, self-aware, and unmistakable. Community turned into culture.",
         processImages: [
-            'https://raw.githubusercontent.com/hey-coolo/COOLO/refs/heads/main/assets/cases/unmplymnt/process-1.webp?token=GHSAT0AAAAAADSX62VIYRF42LFFOF76TVJQ2LAGULQ', 
-            'https://raw.githubusercontent.com/hey-coolo/COOLO/refs/heads/main/assets/cases/unmplymnt/detail-4.webp?token=GHSAT0AAAAAADSX62VJC22A4DHRGLOEZ2NY2LAGUVA',
-            'https://raw.githubusercontent.com/hey-coolo/COOLO/refs/heads/main/assets/cases/unmplymnt/process-3.webp?token=GHSAT0AAAAAADSX62VJ3TXVK2NHNMFJ7YG42LAGU6A'
+            './assets/cases/unmplynmt/process-1.webp', 
+            './assets/cases/unmplynmt/process-3.webp',
+            './assets/cases/unmplynmt/detail-4.webp'
         ]
     }
   },
