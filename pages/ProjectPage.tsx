@@ -1,9 +1,10 @@
-
 import React, { useRef, useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { PROJECTS } from '../constants';
-import AnimatedSection from '../components/AnimatedSection';
+import AnimatedSection from '../components/AnimatedSection'; // Kept this to prevent import errors
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+
+// --- HELPER COMPONENTS ---
 
 const DownArrow: React.FC<{ className?: string; size?: number }> = ({ className = "", size = 42 }) => (
     <motion.div 
@@ -70,6 +71,7 @@ const IndividualDraggable: React.FC<{ img: string; initialPos: { top: string; le
 
 const ProjectHero: React.FC<{ project: any }> = ({ project }) => {
     const baseImages = project.detailImages || [project.imageUrl];
+    // Keep the hero repetition (looks like it was intentional for the "messy" drag effect)
     const images = [...baseImages, ...baseImages, ...baseImages, ...baseImages, ...baseImages].slice(0, 32); 
 
     const positions = Array.from({ length: 32 }).map((_, i) => ({
@@ -190,6 +192,8 @@ const NarrativeSection: React.FC<{
     )
 }
 
+// --- FIXED PROCESS GALLERY ---
+
 const ProcessGallery: React.FC<{ images: string[], onImageSelect: (img: string) => void }> = ({ images, onImageSelect }) => {
     const targetRef = useRef<HTMLDivElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
@@ -206,8 +210,6 @@ const ProcessGallery: React.FC<{ images: string[], onImageSelect: (img: string) 
         offset: ["start start", "end end"]
     });
 
-    // The scroll distance should exactly match the container's horizontal overflow
-    // To avoid dead space, we calculate the x translate based on container width
     const x = useTransform(scrollYProgress, [0, 1], ["0px", `-${horizontalScrollLength}px`]);
 
     return (
@@ -220,7 +222,11 @@ const ProcessGallery: React.FC<{ images: string[], onImageSelect: (img: string) 
                     </div>
                     
                     <motion.div ref={containerRef} style={{ x }} className="flex gap-4 md:gap-12 px-6 md:px-8 w-max">
-                        {images.concat(images).concat(images).map((img, i) => (
+                        {/* FIX IS HERE: 
+                           Removed .concat(images).concat(images) 
+                           Now we just map over 'images' once.
+                        */}
+                        {images.map((img, i) => (
                             <motion.div 
                                 key={i} 
                                 onClick={() => onImageSelect(img)}
@@ -232,7 +238,7 @@ const ProcessGallery: React.FC<{ images: string[], onImageSelect: (img: string) 
                                 <div className="absolute inset-0 bg-brand-navy/10 opacity-0 group-hover:opacity-100 transition-opacity" />
                             </motion.div>
                         ))}
-                        {/* Buffer space at the end to ensure it doesn't snap abruptly */}
+                        {/* Buffer space */}
                         <div className="w-[10vw] flex-shrink-0" />
                     </motion.div>
                 </div>
@@ -241,11 +247,14 @@ const ProcessGallery: React.FC<{ images: string[], onImageSelect: (img: string) 
     );
 }
 
+// --- MAIN PAGE COMPONENT ---
+
 const ProjectPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const currentIndex = PROJECTS.findIndex(p => p.slug === slug);
 
+  // Lock body scroll when popup is open
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
         if (e.key === 'Escape') setSelectedImage(null);
@@ -341,57 +350,4 @@ const ProjectPage: React.FC = () => {
       <section className="bg-brand-navy py-48 md:py-64 relative overflow-hidden group">
         <Link to={`/work/${nextProject.slug}`} className="block relative z-10 text-center p-6">
             <span className="font-mono text-brand-offwhite/50 uppercase tracking-[0.5em] text-[10px] md:text-xs font-black">Next Case File</span>
-            <h3 className="text-5xl md:text-[8vw] font-black uppercase tracking-tighter text-brand-offwhite mt-8 md:mt-12 transition-transform duration-1000 group-hover:scale-95 group-hover:text-brand-yellow break-words">
-                {nextProject.title} &rarr;
-            </h3>
-        </Link>
-        <div className="absolute inset-0 opacity-20 group-hover:opacity-40 transition-opacity duration-700">
-             <img src={nextProject.imageUrl} className="w-full h-full object-cover grayscale" alt="" />
-        </div>
-      </section>
-
-      {/* GLOBAL MODAL - Truly fixed to the viewport eyes */}
-      <AnimatePresence>
-        {selectedImage && (
-            <motion.div 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                onClick={() => setSelectedImage(null)}
-                className="fixed inset-0 z-[99999] bg-brand-navy/95 backdrop-blur-3xl flex items-center justify-center p-4 md:p-12 cursor-zoom-out"
-            >
-                <motion.div 
-                    initial={{ scale: 0.85, opacity: 0, y: 30 }}
-                    animate={{ scale: 1, opacity: 1, y: 0 }}
-                    exit={{ scale: 0.85, opacity: 0, y: 30 }}
-                    transition={{ type: 'spring', damping: 35, stiffness: 250 }}
-                    className="relative w-full h-full flex items-center justify-center"
-                    onClick={(e) => e.stopPropagation()}
-                >
-                    <div className="relative flex flex-col items-center">
-                        <img 
-                            src={selectedImage} 
-                            className="w-auto h-auto max-w-[90vw] max-h-[80vh] shadow-[0_60px_180px_rgba(0,0,0,0.8)] border border-white/5 block mx-auto" 
-                            alt="High Res Detail" 
-                        />
-                        <div className="w-full max-w-[90vw] mt-8 flex flex-col md:flex-row justify-between items-center gap-6 px-4">
-                            <div className="font-mono text-[10px] uppercase tracking-widest text-brand-offwhite/40 font-bold">
-                                Source Inspection // Studio Capture Protocol
-                            </div>
-                            <button 
-                                onClick={() => setSelectedImage(null)}
-                                className="font-mono text-[11px] uppercase tracking-widest text-brand-yellow font-black border-b-2 border-brand-yellow pb-1 hover:text-brand-offwhite hover:border-brand-offwhite transition-all"
-                            >
-                                CLOSE_DOSS_ [ESC]
-                            </button>
-                        </div>
-                    </div>
-                </motion.div>
-            </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-};
-
-export default ProjectPage;
+            <h3 className="text-5xl md:text-[8vw] font-black
