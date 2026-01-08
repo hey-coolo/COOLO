@@ -27,13 +27,13 @@ export const PROJECTS: Project[] = [
     category: ['Concept & Strategy - ', 'Naming - ', 'Brand Identity - ', 'Content Creation - '],
     tags: ['Brutalism', 'Typography', 'Strategy'],
     year: 2025,
-    imageUrl: 'https://github.com/hey-coolo/COOLO/blob/main/assets/cases/unmplymnt/Hero.webp?raw=true',
+    imageUrl: 'https://raw.githubusercontent.com/hey-coolo/COOLO/refs/heads/main/assets/cases/unmplymnt/Hero.webp?token=GHSAT0AAAAAADSX62VIRJY33BMTFCAZSCQE2LAHSPA',
     featured: true,
     client: 'Internal Project',
     role: 'Strategy, logo & mark system, type system, colour palette, texture & pattern language, apparel branding, art direction.',
     detailImages: [
-        'https://github.com/hey-coolo/COOLO/blob/750e88e3cd8dc5e57476af0db02f01e1257c4929/assets/cases/unmplymnt/detail-1.webp',
-        'https://github.com/hey-coolo/COOLO/blob/750e88e3cd8dc5e57476af0db02f01e1257c4929/assets/cases/unmplynmt/detail-2.webp',
+        'img src= hey-coolo/COOLO/refs/heads/main/assets/cases/unmplymnt/detail-1.webp',
+        'https://raw.githubusercontent.com/hey-coolo/COOLO/refs/heads/main/assets/cases/unmplymnt/detail-2.webp?token=GHSAT0AAAAAADSX62VJWDKANEL7CODP5RPA2LAHS6A',
         'https://github.com/hey-coolo/COOLO/blob/750e88e3cd8dc5e57476af0db02f01e1257c4929/assets/cases/unmplynmt/detail-3.webp',
         'https://github.com/hey-coolo/COOLO/blob/750e88e3cd8dc5e57476af0db02f01e1257c4929/assets/cases/unmplynmt/detail-5.webp',
         'https://github.com/hey-coolo/COOLO/blob/750e88e3cd8dc5e57476af0db02f01e1257c4929/assets/cases/unmplynmt/process-2.webp'
