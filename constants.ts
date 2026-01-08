@@ -29,7 +29,7 @@ export const PROJECTS: Project[] = [
     category: 'Brand Identity',
     tags: ['Brutalism', 'Typography', 'Strategy'],
     year: 2025,
-    imageUrl: 'https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?auto=format&fit=crop&q=95&w=1200', // REPLACE_WITH_UNMPLYNMT_IMG
+    imageUrl: 'https://github.com/hey-coolo/COOLO/blob/main/assets/images/Thumbnail_unp.webp', // REPLACE_WITH_UNMPLYNMT_IMG
     featured: true,
     client: 'Internal Project',
     role: 'Art Direction & Design',
