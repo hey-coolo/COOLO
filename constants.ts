@@ -66,9 +66,9 @@ export const PROJECTS: Project[] = [
     client: 'Just Boxes',
     role: 'Creative Direction',
     detailImages: [
+        `${CDN_BASE}/assets/cases/just-boxes/Hero.webp`,
         `${CDN_BASE}/assets/cases/just-boxes/detail-1.webp`,
-        `${CDN_BASE}/assets/cases/just-boxes/detail-2.webp`,
-        `${CDN_BASE}/assets/cases/just-boxes/detail-3.webp`
+        `${CDN_BASE}/assets/cases/just-boxes/detail-2.webp`
     ],
     story: {
         goal: "Celebrate cardboard as a primary luxury material.",
@@ -76,8 +76,8 @@ export const PROJECTS: Project[] = [
         gamble: "No plastic coatings. We used structural folding and high-contrast ink to create the 'Premium' feel.",
         gain: "A signature packaging system that is 100% recyclable and 100% unmistakable.",
         processImages: [
-            `${CDN_BASE}/assets/cases/just-boxes/process-1.webp`, 
-            `${CDN_BASE}/assets/cases/just-boxes/process-2.webp`
+            `${CDN_BASE}/assets/cases/just-boxes/detail-1.webp`, 
+            `${CDN_BASE}/assets/cases/just-boxes/detail-2.webp`
         ]
     }
   },
