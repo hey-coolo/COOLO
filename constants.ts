@@ -2,7 +2,7 @@ import { Project, TeamMember, JournalPost, ServiceLeg, ProjectCategory, Drop, De
 
 // CENTRAL CDN PATH
 // Change this string if you move your repo or change the branch
-const CDN_BASE='https://cdn.jsdelivr.net/gh/hey-coolo/COOLO/';
+const CDN_BASE='https://cdn.jsdelivr.net/gh/hey-coolo/COOLO@main';
 
 export const ASSETS = {
   hero: {
@@ -10,7 +10,7 @@ export const ASSETS = {
     ooh: '${CDN_BASE}/assets/images/hero-ooh.webp'
   },
   services: {
-    clarity: '${CDN_BASE}/assets/services/clarity.webp`,
+    clarity: '${CDN_BASE}/assets/services/clarity.webp',
     designPower: '${CDN_BASE}/assets/services/design-power.webp',
     partnership: '${CDN_BASE}/assets/services/partnership.webp'
   },
@@ -49,7 +49,7 @@ export const PROJECTS: Project[] = [
             '${CDN_BASE}/assets/cases/unmplymnt/process-1.webp',
             '${CDN_BASE}/assets/cases/unmplymnt/process-2.webp',
             '${CDN_BASE}/assets/cases/unmplymnt/process-3.webp',
-            '${CDN_BASE}/assets/cases/unmplymnt/process-5.webp`
+            '${CDN_BASE}/assets/cases/unmplymnt/process-5.webp'
         ]
     }
   },
@@ -89,14 +89,17 @@ export const PROJECTS: Project[] = [
     category: '3D Design',
     tags: ['3D Viz', 'Technical', 'Surfacing'],
     year: 2022,
-    imageUrl: `${CDN_BASE}/assets/cases/surfboard-v001/Hero.webp`,
+    imageUrl: '${CDN_BASE}/assets/cases/surfboard-v001/Hero.webp',
     featured: true,
     client: 'Technical Study',
     role: '3D Artist',
     detailImages: [
-        `${CDN_BASE}/assets/cases/surfboard-v001/detail-1.webp`,
-        `${CDN_BASE}/assets/cases/surfboard-v001/detail-2.webp`,
-        `${CDN_BASE}/assets/cases/surfboard-v001/detail-3.webp`
+        '${CDN_BASE}/assets/cases/surfboard-v001/detail-1.webp',
+        '${CDN_BASE}/assets/cases/surfboard-v001/detail-2.webp',
+        '${CDN_BASE}/assets/cases/surfboard-v001/detail-3.webp',
+        '${CDN_BASE}/assets/cases/surfboard-v001/detail-4.webp',
+        '${CDN_BASE}/assets/cases/surfboard-v001/detail-5.webp'
+      
     ],
     story: {
         goal: "Mimic the exact light refraction of hand-shaped surfboard resin in a digital environment.",
@@ -104,8 +107,8 @@ export const PROJECTS: Project[] = [
         gamble: "A 2-week deep dive into a single material shader.",
         gain: "The creation of our 'Hydro-Logic' shader library, used in all current hardware client builds.",
         processImages: [
-            `${CDN_BASE}/assets/cases/surfboard-v001/process-1.webp`, 
-            `${CDN_BASE}/assets/cases/surfboard-v001/process-2.webp`
+            '${CDN_BASE}/assets/cases/surfboard-v001/process-1.webp', 
+            '${CDN_BASE}/assets/cases/surfboard-v001/process-2.webp'
         ]
     }
   },
