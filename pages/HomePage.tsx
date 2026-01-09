@@ -1,4 +1,4 @@
-import React, { useRef, useState, useMemo, useCallback } from 'react';
+import React, { useRef, useState, useMemo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform, useSpring, useMotionValue, AnimatePresence } from 'framer-motion';
 import { PROJECTS, JOURNAL_POSTS, SERVICE_LEGS } from '../constants';
@@ -28,16 +28,14 @@ interface TrailItem {
     img: string;
 }
 
-const ImageTrail: React.FC = () => {
+const ImageTrail: React.FC<{ containerRef: React.RefObject<HTMLElement> }> = ({ containerRef }) => {
     const [trail, setTrail] = useState<TrailItem[]>([]);
     const lastPos = useRef({ x: 0, y: 0 });
-    const imageIndex = useRef(0);
     const trailCount = useRef(0);
 
     // 1. Gather ALL images and shuffle once
     const allImages = useMemo(() => {
         const all = PROJECTS.flatMap(p => [p.imageUrl, ...(p.detailImages || [])]).filter(Boolean);
-        // Fisher-Yates Shuffle
         for (let i = all.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [all[i], all[j]] = [all[j], all[i]];
@@ -45,51 +43,74 @@ const ImageTrail: React.FC = () => {
         return all;
     }, []);
 
-    const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-        const { clientX, clientY } = e;
-        
-        // Calculate distance from last drop point
-        const dist = Math.hypot(clientX - lastPos.current.x, clientY - lastPos.current.y);
+    useEffect(() => {
+        const handleMouseMove = (e: MouseEvent) => {
+            // Only run if container exists
+            if (!containerRef.current) return;
 
-        // Threshold: Only drop an image every 80px of movement
-        if (dist > 80) {
-            const nextImage = allImages[imageIndex.current % allImages.length];
-            
-            const newItem: TrailItem = {
-                id: trailCount.current++,
-                x: clientX,
-                y: clientY,
-                rotation: Math.random() * 20 - 10, // Random tilt -10 to 10 deg
-                scale: 0.8 + Math.random() * 0.4,  // Random size
-                img: nextImage
-            };
+            const { clientX, clientY } = e;
+            const rect = containerRef.current.getBoundingClientRect();
 
-            setTrail(prev => {
-                // Keep only the last 12 images to prevent DOM overload
-                const newTrail = [...prev, newItem];
-                if (newTrail.length > 12) return newTrail.slice(newTrail.length - 12);
-                return newTrail;
-            });
+            // Check if cursor is strictly inside the Hero Section
+            if (
+                clientX < rect.left || 
+                clientX > rect.right || 
+                clientY < rect.top || 
+                clientY > rect.bottom
+            ) {
+                return;
+            }
 
-            lastPos.current = { x: clientX, y: clientY };
-            imageIndex.current++;
-        }
-    }, [allImages]);
+            // Calculate distance from last drop point
+            const dist = Math.hypot(clientX - lastPos.current.x, clientY - lastPos.current.y);
+
+            // Threshold: Drop an image every 60px of movement
+            if (dist > 60) {
+                const nextImage = allImages[trailCount.current % allImages.length];
+                const id = trailCount.current++;
+                
+                // Calculate position relative to viewport (fixed/absolute positioning logic)
+                // Since the overlay is absolute inset-0 in the relative section, 
+                // we need coordinates relative to the section top-left.
+                const relativeX = clientX - rect.left;
+                const relativeY = clientY - rect.top;
+
+                const newItem: TrailItem = {
+                    id,
+                    x: relativeX,
+                    y: relativeY,
+                    rotation: Math.random() * 20 - 10, // Random tilt
+                    scale: 0.6 + Math.random() * 0.4,  // Random size
+                    img: nextImage
+                };
+
+                setTrail(prev => [...prev, newItem]);
+                lastPos.current = { x: clientX, y: clientY };
+
+                // Auto-remove this specific item after 1 second (1000ms)
+                setTimeout(() => {
+                    setTrail(prev => prev.filter(i => i.id !== id));
+                }, 1000);
+            }
+        };
+
+        // Attach to WINDOW to capture mouse even over "pointer-events-auto" titles
+        window.addEventListener('mousemove', handleMouseMove);
+        return () => window.removeEventListener('mousemove', handleMouseMove);
+    }, [allImages, containerRef]);
 
     return (
-        <div 
-            onMouseMove={handleMouseMove}
-            className="absolute inset-0 z-20 w-full h-full cursor-crosshair overflow-hidden"
-        >
+        <div className="absolute inset-0 z-20 pointer-events-none overflow-hidden">
             <AnimatePresence>
                 {trail.map((item) => (
                     <motion.div
                         key={item.id}
                         initial={{ opacity: 0, scale: 0.5, rotate: item.rotation }}
                         animate={{ opacity: 1, scale: item.scale, rotate: item.rotation }}
-                        exit={{ opacity: 0, scale: 0.2, transition: { duration: 0.5 } }}
+                        exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.3 } }}
                         transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                        className="absolute w-[200px] md:w-[280px] aspect-[4/5] pointer-events-none shadow-2xl bg-white p-2"
+                        // Removed bg-white and p-2 for no border
+                        className="absolute w-[180px] md:w-[260px] aspect-[4/5] shadow-2xl origin-center"
                         style={{
                             left: item.x,
                             top: item.y,
@@ -100,7 +121,7 @@ const ImageTrail: React.FC = () => {
                         <img 
                             src={item.img} 
                             alt="" 
-                            className="w-full h-full object-cover" // Full color by default
+                            className="w-full h-full object-cover" // Full color
                         />
                     </motion.div>
                 ))}
@@ -110,6 +131,8 @@ const ImageTrail: React.FC = () => {
 };
 
 const BrandHero: React.FC = () => {
+    // Ref for the section to track bounds
+    const sectionRef = useRef<HTMLElement>(null);
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
 
@@ -124,11 +147,12 @@ const BrandHero: React.FC = () => {
 
     return (
         <section 
+            ref={sectionRef}
             onMouseMove={handleMouseMove}
             className="relative min-h-screen flex flex-col pt-32 pb-16 bg-brand-offwhite text-brand-navy overflow-hidden"
         >
             {/* The Image Trail Layer */}
-            <ImageTrail />
+            <ImageTrail containerRef={sectionRef} />
 
             {/* Studio Grid Overlay */}
             <div className="absolute inset-0 studio-grid pointer-events-none opacity-[0.03] z-10"></div>
@@ -144,7 +168,7 @@ const BrandHero: React.FC = () => {
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] bg-brand-purple/5 blur-[120px] rounded-full" />
             </motion.div>
 
-            {/* Central Content - z-30 puts it ABOVE the trail so text is readable */}
+            {/* Central Content */}
             <div className="container mx-auto px-6 md:px-8 relative z-30 flex-grow flex flex-col justify-center pointer-events-none">
                 <div className="relative mb-16 md:mb-32">
                     <div className="pointer-events-auto inline-block">
