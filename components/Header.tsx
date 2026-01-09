@@ -11,9 +11,11 @@ const Header: React.FC = () => {
   const location = useLocation();
   
   const isHome = location.pathname === '/';
-  // Force logo visibility if menu is open, otherwise follow scroll rules
+  
+  // Logic: Show logo if not home OR scrolled OR menu is open
   const showLogo = !isHome || isScrolled || isOpen; 
-  // Force dark text if menu is open (since menu background is dark/navy), otherwise follow home rules
+  
+  // Logic: Use light text if home AND top AND menu is closed
   const isLightText = isHome && !isScrolled && !isOpen;
 
   useEffect(() => {
@@ -83,10 +85,13 @@ const Header: React.FC = () => {
           </div>
         </nav>
 
-        {/* Mobile Menu Toggle Button (Replaces the "Inquire" link on mobile) */}
+        {/* Mobile Menu Toggle Button */}
+        {/* This was previously a Link to /contact - changed to a Button to trigger the menu */}
         <button 
             onClick={() => setIsOpen(!isOpen)}
-            className={`md:hidden z-50 p-2 focus:outline-none transition-colors duration-300 ${isOpen ? 'text-brand-offwhite' : (isLightText ? 'text-brand-offwhite' : 'text-brand-navy')}`}
+            className={`md:hidden z-50 p-2 focus:outline-none transition-colors duration-300 ${
+                isOpen ? 'text-brand-offwhite' : (isLightText ? 'text-brand-offwhite' : 'text-brand-navy')
+            }`}
             aria-label="Toggle Menu"
         >
             {isOpen ? <X size={32} /> : <Menu size={32} />}
