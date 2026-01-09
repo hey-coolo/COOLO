@@ -47,12 +47,6 @@ export const ASSETS = {
     franco: francoImg,
     ariana: arianaImg
   },
-  services: {
-      // You can replace these with local imports later if you have them
-      clarity: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=800", 
-      designPower: "https://images.unsplash.com/photo-1600607686527-6fb886090705?auto=format&fit=crop&q=80&w=800",
-      partnership: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&q=80&w=800"
-  }
 };
 
 export const PROJECTS: Project[] = [
