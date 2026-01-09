@@ -1,8 +1,8 @@
 import React from 'react';
 
 // Use the paths to your uploaded images
-const LOGO_LIGHT = '/logo-light.png'; 
-const LOGO_DARK = '/logo-dark.png';
+const LOGO_LIGHT = '/logo-light.svg'; 
+const LOGO_DARK = '/logo-dark.svg';
 
 interface BrandLogoProps {
   className?: string;
