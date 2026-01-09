@@ -1,4 +1,4 @@
-© 2025—Present COOLO. Mount Maunganui.
+© 2024—Present COOLO. Mount Maunganui.
 
 # COOLO
 
