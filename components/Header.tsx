@@ -7,7 +7,7 @@ import BrandLogo from './BrandLogo';
 
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isOpen, setIsOpen] = useState(false); // New: Track mobile menu state
+  const [isOpen, setIsOpen] = useState(false); // Tracks mobile menu state
   const location = useLocation();
   
   const isHome = location.pathname === '/';
@@ -15,7 +15,7 @@ const Header: React.FC = () => {
   // Logic: Show logo if not home OR scrolled OR menu is open
   const showLogo = !isHome || isScrolled || isOpen; 
   
-  // Logic: Use light text if home AND top AND menu is closed (otherwise dark or specific to menu)
+  // Logic: Use light text if home AND top AND menu is closed
   const isLightText = isHome && !isScrolled && !isOpen;
 
   useEffect(() => {
@@ -57,7 +57,7 @@ const Header: React.FC = () => {
             </Link>
         </div>
         
-        {/* Desktop Navigation */}
+        {/* Desktop Navigation (Hidden on Mobile) */}
         <nav className="hidden md:flex items-center space-x-10">
           {NAV_LINKS.map((link) => (
             <NavLink
@@ -85,11 +85,12 @@ const Header: React.FC = () => {
           </div>
         </nav>
 
-        {/* Mobile Menu Toggle Button */}
+        {/* Mobile Menu Toggle Button (Visible on Mobile Only) */}
         <button 
             onClick={() => setIsOpen(!isOpen)}
             className={`md:hidden z-50 p-2 focus:outline-none transition-colors duration-300 ${
-                isOpen ? 'text-brand-offwhite' : (isLightText ? 'text-brand-offwhite' : 'text-brand-navy')
+                // Force white if menu is open (on navy bg) OR if we are on home-top (on video/dark bg)
+                isOpen || isLightText ? 'text-brand-offwhite' : 'text-brand-navy'
             }`}
             aria-label="Toggle Menu"
         >
@@ -97,7 +98,7 @@ const Header: React.FC = () => {
         </button>
       </div>
 
-      {/* Mobile Menu Overlay */}
+      {/* Full Screen Mobile Menu Overlay */}
       <AnimatePresence>
         {isOpen && (
             <motion.div 
