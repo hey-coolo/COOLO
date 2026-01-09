@@ -1,4 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
+import ReactDOM from 'react-dom'; // <--- ADD THIS LINE
+import { useParams, Link } from 'react-router-dom';
+// ... rest of your imports
+import React, { useRef, useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { PROJECTS } from '../constants';
 import AnimatedSection from '../components/AnimatedSection';
@@ -256,6 +260,59 @@ const ProcessGallery: React.FC<{ images: string[], onImageSelect: (img: string) 
         </section>
     );
 }
+
+// ... ProcessGallery code ends here ...
+
+// --- PASTE THIS NEW COMPONENT HERE ---
+const ImageModal: React.FC<{ src: string | null; onClose: () => void }> = ({ src, onClose }) => {
+    return ReactDOM.createPortal(
+        <AnimatePresence>
+            {src && (
+                <motion.div 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    onClick={onClose}
+                    className="fixed inset-0 z-[99999] bg-brand-navy/95 backdrop-blur-3xl flex items-center justify-center p-4 md:p-12 cursor-zoom-out"
+                    style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}
+                >
+                    <motion.div 
+                        initial={{ scale: 0.9, opacity: 0, y: 20 }}
+                        animate={{ scale: 1, opacity: 1, y: 0 }}
+                        exit={{ scale: 0.9, opacity: 0, y: 20 }}
+                        transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+                        className="relative w-full h-full flex items-center justify-center pointer-events-none"
+                    >
+                        <div 
+                            className="relative flex flex-col items-center pointer-events-auto"
+                            onClick={(e) => e.stopPropagation()} 
+                        >
+                            <img 
+                                src={src} 
+                                className="w-auto h-auto max-w-[90vw] max-h-[85vh] object-contain shadow-[0_50px_100px_rgba(0,0,0,0.5)] border border-white/10" 
+                                alt="Full Resolution" 
+                            />
+                            
+                            <div className="w-full mt-6 flex flex-col md:flex-row justify-between items-center gap-6">
+                                <div className="font-mono text-[10px] uppercase tracking-widest text-brand-offwhite/50 font-bold">
+                                    Source Inspection // Studio Capture
+                                </div>
+                                <button 
+                                    onClick={onClose}
+                                    className="font-mono text-[11px] uppercase tracking-widest text-brand-yellow font-black border-b-2 border-brand-yellow pb-1 hover:text-brand-offwhite hover:border-brand-offwhite transition-all"
+                                >
+                                    CLOSE_DOSS_ [ESC]
+                                </button>
+                            </div>
+                        </div>
+                    </motion.div>
+                </motion.div>
+            )}
+        </AnimatePresence>,
+        document.body
+    );
+};
+
 const ProjectPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -364,47 +421,7 @@ const ProjectPage: React.FC = () => {
         </div>
       </section>
 
-      {/* GLOBAL MODAL - Truly fixed to the viewport eyes */}
-      <AnimatePresence>
-        {selectedImage && (
-            <motion.div 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                onClick={() => setSelectedImage(null)}
-                className="fixed inset-0 z-[99999] bg-brand-navy/95 backdrop-blur-3xl flex items-center justify-center p-4 md:p-12 cursor-zoom-out"
-            >
-               <motion.div 
-                    initial={{ scale: 0.85, opacity: 0, y: 30 }}
-                    animate={{ scale: 1, opacity: 1, y: 0 }}
-                    exit={{ scale: 0.85, opacity: 0, y: 30 }}
-                    transition={{ type: 'spring', damping: 35, stiffness: 250 }}
-                    className="relative w-full h-full flex items-center justify-center"
-                    onClick={(e) => e.stopPropagation()}
-                >
-                    <div className="relative flex flex-col items-center">
-                        <img 
-                            src={selectedImage} 
-                            className="w-auto h-auto max-w-[90vw] max-h-[80vh] shadow-[0_60px_180px_rgba(0,0,0,0.8)] border border-white/5 block mx-auto" 
-                            alt="High Res Detail" 
-                        />
-                       <div className="w-full max-w-[90vw] mt-8 flex flex-col md:flex-row justify-between items-center gap-6 px-4">
-                            <div className="font-mono text-[10px] uppercase tracking-widest text-brand-offwhite/40 font-bold">
-                                Source Inspection // Studio Capture Protocol
-                            </div>
-                            <button 
-                                onClick={() => setSelectedImage(null)}
-                                className="font-mono text-[11px] uppercase tracking-widest text-brand-yellow font-black border-b-2 border-brand-yellow pb-1 hover:text-brand-offwhite hover:border-brand-offwhite transition-all"
-                            >
-
-                                CLOSE_DOSS_ [ESC]
-                            </button>
-                        </div>
-                    </div>
-                </motion.div>
-            </motion.div>
-        )}
-      </AnimatePresence>
+<ImageModal src={selectedImage} onClose={() => setSelectedImage(null)} />
    </div>
   );
 };
