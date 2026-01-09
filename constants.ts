@@ -47,6 +47,13 @@ export const ASSETS = {
     franco: francoImg,
     ariana: arianaImg
   },
+  services: {
+    // Replaced Unsplash images with Brand Hex Codes
+    // You can use these in your style props (e.g., backgroundColor: ASSETS.services.clarity)
+      clarity: "#FCC803",      // Brand Yellow
+      designPower: "#3A0888",  // Brand Purple
+      partnership: "#0F0328"   // Brand Navy
+  }
 };
 
 export const PROJECTS: Project[] = [
