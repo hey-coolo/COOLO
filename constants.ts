@@ -466,26 +466,26 @@ export const JOURNAL_POSTS: JournalPost[] = [
 ];
 
 export const FREE_RESOURCES: Resource[] = [
-    {
-        id: '01',
-        title: 'The Clarity Audit',
-        format: 'PDF',
-        desc: 'A 15-point checklist to identify narrative leaks in your current brand.',
-        link: '#'
+    { 
+        id: '01', 
+        title: 'The Clarity Audit', 
+        format: 'PDF', 
+        desc: 'A 15-point checklist to identify narrative leaks in your current brand.', 
+        link: '/docs/audit.pdf' // Points to public/docs/audit.pdf
     },
-    {
-        id: '02',
-        title: 'No Magic Questionnaire',
-        format: 'Notion',
-        desc: 'The exact intake form we use to deconstruct high-growth brands.',
-        link: '#'
+    { 
+        id: '02', 
+        title: 'No Magic Questionnaire', 
+        format: 'PDF', // Changed from Notion to PDF for consistency
+        desc: 'The exact intake form we use to deconstruct high-growth brands.', 
+        link: '/docs/questionnaire.pdf' 
     },
-    {
-        id: '03',
-        title: 'Positioning One-Pager',
-        format: 'Template',
-        desc: 'A minimalist template to define your core value prop on a single page.',
-        link: '#'
+    { 
+        id: '03', 
+        title: 'Positioning One-Pager', 
+        format: 'PDF', // Changed from Template to PDF
+        desc: 'A minimalist template to define your core value prop on a single page.', 
+        link: '/docs/positioning.pdf' 
     }
 ];
 
