@@ -12,10 +12,13 @@ const Header: React.FC = () => {
   
   const isHome = location.pathname === '/';
   
-  // Force logo visibility if menu is open, otherwise follow scroll rules
-  const showLogo = !isHome || isScrolled || isOpen; 
-  
-  // Force light text if menu is open (navy bg), otherwise follow home rules
+  // Logic: 
+  // 1. If Menu is OPEN -> Logo is WHITE (because bg is Navy)
+  // 2. If Scrolled -> Logo is DARK (because bg is white)
+  // 3. If Home & Top -> Logo is WHITE (because bg is image/dark)
+  const logoColor = isOpen ? '#F7F7F7' : (isHome && !isScrolled ? '#F7F7F7' : '#0F0328');
+
+  // Text Logic:
   const isLightText = isHome && !isScrolled && !isOpen;
 
   useEffect(() => {
@@ -39,25 +42,25 @@ const Header: React.FC = () => {
   }, [isOpen]);
 
   return (
+    <>
     <header 
       className={`fixed top-0 w-full z-50 transition-all duration-500 ${
         isScrolled ? 'py-4 bg-brand-offwhite/95 backdrop-blur-md border-b border-brand-navy/5 shadow-sm' : 'py-8 bg-transparent'
       }`}
     >
-      <div className="container mx-auto px-8 flex justify-between items-center relative z-50">
+      <div className="container mx-auto px-6 md:px-8 flex justify-between items-center relative z-50">
         
         {/* Logo */}
-        <div className={`transition-all duration-500 ${showLogo ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'}`}>
-            <Link to="/" className="block w-32" onClick={() => setIsOpen(false)}>
+        <div className="relative z-[60]">
+            <Link to="/" className="block w-24 md:w-32" onClick={() => setIsOpen(false)}>
                  <BrandLogo 
                     className="w-full h-auto" 
-                    // If menu is open, force light color (for navy bg), otherwise use existing logic
-                    color={isOpen ? '#F7F7F7' : (isLightText ? '#F7F7F7' : '#0F0328')} 
+                    color={logoColor}
                  />
             </Link>
         </div>
         
-        {/* Desktop Navigation (Hidden on Mobile) */}
+        {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-10">
           {NAV_LINKS.map((link) => (
             <NavLink
@@ -85,69 +88,79 @@ const Header: React.FC = () => {
           </div>
         </nav>
 
-        {/* Mobile Menu Toggle Button (Visible on Mobile Only) */}
+        {/* Mobile Menu Toggle Button */}
         <button 
             onClick={() => setIsOpen(!isOpen)}
-            className={`md:hidden z-50 p-2 focus:outline-none transition-colors duration-300 ${
-                // Force white if menu is open (on navy bg) OR if we are on home-top (on video/dark bg)
-                isOpen || isLightText ? 'text-brand-offwhite' : 'text-brand-navy'
+            className={`md:hidden z-[60] p-2 focus:outline-none transition-colors duration-300 ${
+                // If menu is open, button must be white. If we are on dark home banner, button must be white.
+                isOpen || (isHome && !isScrolled) ? 'text-brand-offwhite' : 'text-brand-navy'
             }`}
             aria-label="Toggle Menu"
         >
-            {isOpen ? <X size={32} /> : <Menu size={32} />}
+            {isOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
       </div>
+    </header>
 
       {/* Full Screen Mobile Menu Overlay */}
       <AnimatePresence>
         {isOpen && (
             <motion.div 
-                initial={{ opacity: 0, y: "-100%" }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: "-100%" }}
-                transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                className="fixed inset-0 bg-brand-navy z-40 flex flex-col items-center justify-center space-y-8 md:hidden"
+                initial={{ opacity: 0, clipPath: "circle(0% at 100% 0%)" }}
+                animate={{ opacity: 1, clipPath: "circle(150% at 100% 0%)" }}
+                exit={{ opacity: 0, clipPath: "circle(0% at 100% 0%)" }}
+                transition={{ duration: 0.5, ease: [0.19, 1, 0.22, 1] }}
+                className="fixed inset-0 bg-brand-navy z-50 flex flex-col items-center justify-center space-y-6 md:hidden px-8"
             >
-                {NAV_LINKS.map((link, i) => (
-                    <motion.div
-                        key={link.name}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.1 + (i * 0.1) }}
-                    >
-                        <NavLink 
-                            to={link.path}
-                            onClick={() => setIsOpen(false)}
-                            className={({ isActive }) => `font-black text-4xl uppercase tracking-tighter transition-colors ${
-                                isActive ? 'text-brand-yellow' : 'text-brand-offwhite hover:text-brand-yellow'
-                            }`}
+                {/* Decorative Elements */}
+                <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+                    <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-brand-purple rounded-full blur-[100px]"></div>
+                    <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-brand-yellow rounded-full blur-[100px]"></div>
+                </div>
+
+                <div className="flex flex-col items-center gap-6 relative z-10 w-full">
+                    {NAV_LINKS.map((link, i) => (
+                        <motion.div
+                            key={link.name}
+                            initial={{ opacity: 0, y: 40 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.1 + (i * 0.05), duration: 0.5, ease: "easeOut" }}
+                            className="w-full text-center"
                         >
-                            {link.name}
-                        </NavLink>
-                    </motion.div>
-                ))}
-                
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5 }}
-                    className="mt-8 flex flex-col items-center gap-6"
-                >
-                    <span className="font-mono text-[9px] uppercase tracking-widest text-brand-offwhite/50 border border-brand-offwhite/20 px-3 py-1 rounded">
-                        V2.0_ALPHA
-                    </span>
-                    <Link 
-                        to="/contact" 
-                        onClick={() => setIsOpen(false)}
-                        className="font-mono text-sm uppercase tracking-widest px-12 py-4 border-2 border-brand-offwhite text-brand-offwhite font-bold hover:bg-brand-offwhite hover:text-brand-navy transition-all"
+                            <NavLink 
+                                to={link.path}
+                                onClick={() => setIsOpen(false)}
+                                className={({ isActive }) => `block font-black text-4xl uppercase tracking-tighter transition-colors ${
+                                    isActive ? 'text-brand-yellow' : 'text-brand-offwhite hover:text-brand-yellow'
+                                }`}
+                            >
+                                {link.name}
+                            </NavLink>
+                        </motion.div>
+                    ))}
+                    
+                    <motion.div
+                        initial={{ opacity: 0, y: 40 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.5 }}
+                        className="mt-12 flex flex-col items-center gap-8 w-full border-t border-brand-offwhite/10 pt-12"
                     >
-                        Start Project
-                    </Link>
-                </motion.div>
+                        <span className="font-mono text-[9px] uppercase tracking-widest text-brand-offwhite/50 border border-brand-offwhite/20 px-3 py-1 rounded">
+                            V2.0_ALPHA
+                        </span>
+                        <Link 
+                            to="/contact" 
+                            onClick={() => setIsOpen(false)}
+                            className="w-full max-w-xs text-center font-mono text-sm uppercase tracking-widest px-8 py-5 border-2 border-brand-yellow text-brand-yellow font-bold hover:bg-brand-yellow hover:text-brand-navy transition-all"
+                        >
+                            Start Project
+                        </Link>
+                    </motion.div>
+                </div>
             </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </>
   );
 };
 
