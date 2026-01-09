@@ -1,8 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import ReactDOM from 'react-dom'; // <--- ADD THIS LINE
-import { useParams, Link } from 'react-router-dom';
-// ... rest of your imports
-import React, { useRef, useState, useEffect } from 'react';
+import ReactDOM from 'react-dom';
 import { useParams, Link } from 'react-router-dom';
 import { PROJECTS } from '../constants';
 import AnimatedSection from '../components/AnimatedSection';
@@ -261,9 +258,6 @@ const ProcessGallery: React.FC<{ images: string[], onImageSelect: (img: string) 
     );
 }
 
-// ... ProcessGallery code ends here ...
-
-// --- PASTE THIS NEW COMPONENT HERE ---
 const ImageModal: React.FC<{ src: string | null; onClose: () => void }> = ({ src, onClose }) => {
     return ReactDOM.createPortal(
         <AnimatePresence>
