@@ -50,7 +50,8 @@ const ImageTrail: React.FC<{ containerRef: React.RefObject<HTMLElement> }> = ({ 
 
             const rect = containerRef.current.getBoundingClientRect();
 
-            // Safety check: Ensure we are inside bounds (mostly for mouse, touch is usually accurate to target)
+            // Safety check: Ensure we are inside bounds
+            // Note: On mobile, rect changes as you scroll, so this keeps trails relative to the section
             if (
                 clientX < rect.left || 
                 clientX > rect.right || 
@@ -63,8 +64,8 @@ const ImageTrail: React.FC<{ containerRef: React.RefObject<HTMLElement> }> = ({ 
             // Calculate distance from last drop point
             const dist = Math.hypot(clientX - lastPos.current.x, clientY - lastPos.current.y);
 
-            // Threshold: Drop an image every 60px of movement
-            if (dist > 60) {
+            // Lowered threshold to 30 for smoother trails on mobile/touch
+            if (dist > 35) {
                 const nextImage = allImages[trailCount.current % allImages.length];
                 const id = trailCount.current++;
                 
@@ -96,14 +97,15 @@ const ImageTrail: React.FC<{ containerRef: React.RefObject<HTMLElement> }> = ({ 
         };
 
         const handleTouchMove = (e: TouchEvent) => {
-            // We do NOT prevent default here so user can still scroll the page
+            // We use the first touch point
             const touch = e.touches[0];
             handleMove(touch.clientX, touch.clientY);
         };
 
-        // Attach to WINDOW to ensure we catch events even if hovering over other elements
+        // Attach to WINDOW to ensure we catch events generally
         window.addEventListener('mousemove', handleMouseMove);
-        window.addEventListener('touchmove', handleTouchMove, { passive: false });
+        // Passive: true allows scrolling while still capturing the move coordinates
+        window.addEventListener('touchmove', handleTouchMove, { passive: true });
 
         return () => {
             window.removeEventListener('mousemove', handleMouseMove);
@@ -121,7 +123,7 @@ const ImageTrail: React.FC<{ containerRef: React.RefObject<HTMLElement> }> = ({ 
                         animate={{ opacity: 1, scale: item.scale, rotate: item.rotation }}
                         exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.3 } }}
                         transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                        className="absolute w-[180px] md:w-[260px] aspect-[4/5] shadow-2xl origin-center"
+                        className="absolute w-[140px] md:w-[260px] aspect-[4/5] shadow-2xl origin-center"
                         style={{
                             left: item.x,
                             top: item.y,
