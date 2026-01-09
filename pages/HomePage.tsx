@@ -21,13 +21,15 @@ const DownArrow: React.FC<{ className?: string; size?: number }> = ({ className 
 // Replaced IndividualDraggable with FloatingImage
 const FloatingImage: React.FC<{ img: string; initialPos: { top: string; left: string; rotate: number; s: number }; index: number }> = ({ img, initialPos, index }) => {
     const { scrollY } = useScroll();
+    const [isRevealed, setIsRevealed] = useState(false);
+
     // Parallax: Images move at different speeds based on their scale (simulating depth)
     // Larger images (closer) move faster than smaller ones (further away)
     const yParallax = useTransform(scrollY, [0, 1000], [0, -150 * initialPos.s]);
     
     return (
         <motion.div 
-            className="absolute w-[180px] md:w-[320px] aspect-[4/5] shadow-2xl overflow-hidden pointer-events-none bg-white"
+            className="absolute w-[180px] md:w-[320px] aspect-[4/5] shadow-2xl overflow-hidden pointer-events-auto cursor-crosshair bg-white"
             style={{ 
                 top: initialPos.top, 
                 left: initialPos.left, 
@@ -36,10 +38,18 @@ const FloatingImage: React.FC<{ img: string; initialPos: { top: string; left: st
                 zIndex: 10, // Behind the text (z-30)
                 y: yParallax
             }}
+            // Reveal color on hover
+            onMouseEnter={() => setIsRevealed(true)}
             // Ambient floating animation that runs constantly
             animate={{ 
                 y: [0, -20, 0],
                 rotate: [initialPos.rotate, initialPos.rotate + (index % 2 === 0 ? 2 : -2), initialPos.rotate]
+            }}
+            whileHover={{
+                scale: initialPos.s * 1.1,
+                rotate: 0,
+                zIndex: 50,
+                transition: { duration: 0.3, type: "spring", stiffness: 300, damping: 20 }
             }}
             transition={{ 
                 duration: 5 + (index % 4), // Randomize duration slightly
@@ -50,10 +60,10 @@ const FloatingImage: React.FC<{ img: string; initialPos: { top: string; left: st
         >
             <img 
                 src={img} 
-                className="w-full h-full object-cover grayscale opacity-60 mix-blend-multiply" 
+                className={`w-full h-full object-cover transition-all duration-700 ease-out ${isRevealed ? 'grayscale-0 opacity-100 mix-blend-normal' : 'grayscale opacity-60 mix-blend-multiply'}`}
                 alt="Studio Output" 
             />
-            <div className="absolute inset-0 border border-brand-navy/5" />
+            <div className={`absolute inset-0 border transition-colors duration-700 ${isRevealed ? 'border-transparent' : 'border-brand-navy/5'}`} />
         </motion.div>
     );
 };
