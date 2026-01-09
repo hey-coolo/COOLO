@@ -44,14 +44,14 @@ const ImageTrail: React.FC<{ containerRef: React.RefObject<HTMLElement> }> = ({ 
     }, []);
 
     useEffect(() => {
-        const handleMouseMove = (e: MouseEvent) => {
+        // Shared logic for both Mouse and Touch
+        const handleMove = (clientX: number, clientY: number) => {
             // Only run if container exists
             if (!containerRef.current) return;
 
-            const { clientX, clientY } = e;
             const rect = containerRef.current.getBoundingClientRect();
 
-            // Check if cursor is strictly inside the Hero Section
+            // Check bounds (optional for touch since touchmove target is usually specific, but good safety)
             if (
                 clientX < rect.left || 
                 clientX > rect.right || 
@@ -69,9 +69,7 @@ const ImageTrail: React.FC<{ containerRef: React.RefObject<HTMLElement> }> = ({ 
                 const nextImage = allImages[trailCount.current % allImages.length];
                 const id = trailCount.current++;
                 
-                // Calculate position relative to viewport (fixed/absolute positioning logic)
-                // Since the overlay is absolute inset-0 in the relative section, 
-                // we need coordinates relative to the section top-left.
+                // Calculate relative position
                 const relativeX = clientX - rect.left;
                 const relativeY = clientY - rect.top;
 
@@ -94,9 +92,25 @@ const ImageTrail: React.FC<{ containerRef: React.RefObject<HTMLElement> }> = ({ 
             }
         };
 
+        const handleMouseMove = (e: MouseEvent) => {
+            handleMove(e.clientX, e.clientY);
+        };
+
+        const handleTouchMove = (e: TouchEvent) => {
+            // Prevent scrolling while painting (optional, might want to allow scroll if not hitting threshold)
+            // e.preventDefault(); 
+            const touch = e.touches[0];
+            handleMove(touch.clientX, touch.clientY);
+        };
+
         // Attach to WINDOW to capture mouse even over "pointer-events-auto" titles
         window.addEventListener('mousemove', handleMouseMove);
-        return () => window.removeEventListener('mousemove', handleMouseMove);
+        window.addEventListener('touchmove', handleTouchMove, { passive: false }); // Add touch listener
+
+        return () => {
+            window.removeEventListener('mousemove', handleMouseMove);
+            window.removeEventListener('touchmove', handleTouchMove);
+        };
     }, [allImages, containerRef]);
 
     return (
@@ -109,7 +123,6 @@ const ImageTrail: React.FC<{ containerRef: React.RefObject<HTMLElement> }> = ({ 
                         animate={{ opacity: 1, scale: item.scale, rotate: item.rotation }}
                         exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.3 } }}
                         transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                        // Removed bg-white and p-2 for no border
                         className="absolute w-[180px] md:w-[260px] aspect-[4/5] shadow-2xl origin-center"
                         style={{
                             left: item.x,
