@@ -7,15 +7,15 @@ import BrandLogo from './BrandLogo';
 
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isOpen, setIsOpen] = useState(false); // Tracks mobile menu state
+  const [isOpen, setIsOpen] = useState(false); // Mobile menu state
   const location = useLocation();
   
   const isHome = location.pathname === '/';
   
-  // Logic: Show logo if not home OR scrolled OR menu is open
+  // Force logo visibility if menu is open, otherwise follow scroll rules
   const showLogo = !isHome || isScrolled || isOpen; 
   
-  // Logic: Use light text if home AND top AND menu is closed
+  // Force light text if menu is open (navy bg), otherwise follow home rules
   const isLightText = isHome && !isScrolled && !isOpen;
 
   useEffect(() => {
@@ -24,7 +24,7 @@ const Header: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close menu when route changes
+  // Close mobile menu on route change
   useEffect(() => {
     setIsOpen(false);
   }, [location]);
