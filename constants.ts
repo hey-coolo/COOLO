@@ -27,7 +27,7 @@ export const PROJECTS: Project[] = [
     category: ['Concept & Strategy - ', 'Naming - ', 'Brand Identity - ', 'Content Creation - '],
     tags: ['Brutalism', 'Typography', 'Strategy'],
     year: 2025,
-    imageUrl: 'https://github.com/hey-coolo/COOLO/blob/0893b228267c85f3907e365eaadd5315cd89e5cf/assets/cases/unmplymnt/Hero.webp', 
+    imageUrl: 'https://cdn.jsdelivr.net/gh/hey-coolo/COOLO@main/assets/cases/unmplymnt/Hero.webp', 
     featured: true,
     client: 'Internal Project',
     role: 'Strategy, logo & mark system, type system, colour palette, texture & pattern language, apparel branding, art direction.',
