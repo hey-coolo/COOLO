@@ -1,20 +1,22 @@
-
 import { Project, TeamMember, JournalPost, ServiceLeg, ProjectCategory, Drop, DesignPowerTier, ClarityTier, Script, Resource, Workbook, CourseModule, PartnershipModel } from './types';
+
+// CENTRAL CDN PATH
+// Change this string if you move your repo or change the branch
+const CDN_BASE = 'https://cdn.jsdelivr.net/gh/hey-coolo/COOLO@main';
 
 export const ASSETS = {
   hero: {
-    viz: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=2000', 
-    ooh: 'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&q=80&w=2000'
+    viz: `${CDN_BASE}/assets/images/hero-viz.webp`, 
+    ooh: `${CDN_BASE}/assets/images/hero-ooh.webp`
   },
   services: {
-    clarity: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1200',
-    designPower: 'https://images.unsplash.com/photo-1633167606207-d840b5070fc2?auto=format&fit=crop&q=80&w=1200',
-    partnership: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=1200'
+    clarity: `${CDN_BASE}/assets/services/clarity.webp`,
+    designPower: `${CDN_BASE}/assets/services/design-power.webp`,
+    partnership: `${CDN_BASE}/assets/services/partnership.webp`
   },
   team: {
-    // High-fidelity architectural portraits for the senior unit
-    franco: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=1000',
-    ariana: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=1000'
+    franco: `${CDN_BASE}/assets/team/franco.webp`,
+    ariana: `${CDN_BASE}/assets/team/ariana.webp`
   }
 };
 
@@ -27,16 +29,16 @@ export const PROJECTS: Project[] = [
     category: ['Concept & Strategy - ', 'Naming - ', 'Brand Identity - ', 'Content Creation - '],
     tags: ['Brutalism', 'Typography', 'Strategy'],
     year: 2025,
-    imageUrl: 'https://cdn.jsdelivr.net/gh/hey-coolo/COOLO@main/assets/cases/unmplymnt/Hero.webp', 
+    imageUrl: `${CDN_BASE}/assets/cases/unmplymnt/Hero.webp`, 
     featured: true,
     client: 'Internal Project',
     role: 'Strategy, logo & mark system, type system, colour palette, texture & pattern language, apparel branding, art direction.',
     detailImages: [
-        'https://cdn.jsdelivr.net/gh/hey-coolo/COOLO@main/assets/cases/unmplymnt/detail-1.webp',
-        'https://cdn.jsdelivr.net/gh/hey-coolo/COOLO@main/assets/cases/unmplymnt/detail-2.webp',
-        'https://cdn.jsdelivr.net/gh/hey-coolo/COOLO@main/assets/cases/unmplymnt/detail-3.webp',
-        'https://cdn.jsdelivr.net/gh/hey-coolo/COOLO@main/assets/cases/unmplymnt/detail-4.webp',
-        'https://cdn.jsdelivr.net/gh/hey-coolo/COOLO@main/assets/cases/unmplymnt/detail-5.webp'
+        `${CDN_BASE}/assets/cases/unmplymnt/detail-1.webp`,
+        `${CDN_BASE}/assets/cases/unmplymnt/detail-2.webp`,
+        `${CDN_BASE}/assets/cases/unmplymnt/detail-3.webp`,
+        `${CDN_BASE}/assets/cases/unmplymnt/detail-4.webp`,
+        `${CDN_BASE}/assets/cases/unmplymnt/detail-5.webp`
     ],
     story: {
         goal: "UNMPLYNMT began as a belief: that clothing can be more than fashion — it can be a banner for identity, rebellion, and community. We asked a simple, strategic question: What does freedom look like when it isn’t selling anything?",
@@ -44,10 +46,10 @@ export const PROJECTS: Project[] = [
         gamble: "We developed a visual voice that mirrors that attitude: Typographic Brutality, Colour Energy, and Texture as Attitude. A flexible system built to scale across campaigns without diluting its raw power.",
         gain: "Identity done right doesn’t whisper. It moves people. We gave them a visual language that behaves like culture: adaptable, self-aware, and unmistakable. Community turned into culture.",
         processImages: [
-            'https://cdn.jsdelivr.net/gh/hey-coolo/COOLO@main/assets/cases/unmplymnt/process-1.webp', 
-            'https://cdn.jsdelivr.net/gh/hey-coolo/COOLO@main/assets/cases/unmplymnt/process-2.webp',
-            'https://cdn.jsdelivr.net/gh/hey-coolo/COOLO@main/assets/cases/unmplymnt/process-3.webp',
-            'https://cdn.jsdelivr.net/gh/hey-coolo/COOLO@main/assets/cases/unmplymnt/process-4.webp'
+            `${CDN_BASE}/assets/cases/unmplymnt/process-1.webp`, 
+            `${CDN_BASE}/assets/cases/unmplymnt/process-2.webp`,
+            `${CDN_BASE}/assets/cases/unmplymnt/process-3.webp`,
+            `${CDN_BASE}/assets/cases/unmplymnt/process-5.webp`
         ]
     }
   },
@@ -59,14 +61,14 @@ export const PROJECTS: Project[] = [
     category: 'Packaging',
     tags: ['Packaging', 'Industrial', 'Minimalism'],
     year: 2024,
-    imageUrl: 'https://images.unsplash.com/photo-1530124560677-bdaeaeb15001?auto=format&fit=crop&q=80&w=1200',
+    imageUrl: `${CDN_BASE}/assets/cases/just-boxes/Hero.webp`,
     featured: true,
     client: 'Just Boxes',
     role: 'Creative Direction',
     detailImages: [
-        'https://images.unsplash.com/photo-1595079676339-1534801ad6cf?auto=format&fit=crop&q=80&w=800',
-        'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&q=80&w=800',
-        'https://images.unsplash.com/photo-1516962215378-7fa2e137ae93?auto=format&fit=crop&q=80&w=800'
+        `${CDN_BASE}/assets/cases/just-boxes/detail-1.webp`,
+        `${CDN_BASE}/assets/cases/just-boxes/detail-2.webp`,
+        `${CDN_BASE}/assets/cases/just-boxes/detail-3.webp`
     ],
     story: {
         goal: "Celebrate cardboard as a primary luxury material.",
@@ -74,8 +76,8 @@ export const PROJECTS: Project[] = [
         gamble: "No plastic coatings. We used structural folding and high-contrast ink to create the 'Premium' feel.",
         gain: "A signature packaging system that is 100% recyclable and 100% unmistakable.",
         processImages: [
-            'https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?auto=format&fit=crop&q=80&w=800', 
-            'https://images.unsplash.com/photo-1504198453319-5ce911bafcde?auto=format&fit=crop&q=80&w=800'
+            `${CDN_BASE}/assets/cases/just-boxes/process-1.webp`, 
+            `${CDN_BASE}/assets/cases/just-boxes/process-2.webp`
         ]
     }
   },
@@ -87,14 +89,14 @@ export const PROJECTS: Project[] = [
     category: '3D Design',
     tags: ['3D Viz', 'Technical', 'Surfacing'],
     year: 2022,
-    imageUrl: 'https://images.unsplash.com/photo-1528150177508-7cc0c36cda5c?auto=format&fit=crop&q=80&w=1200',
+    imageUrl: `${CDN_BASE}/assets/cases/surfboard-v001/Hero.webp`,
     featured: true,
     client: 'Technical Study',
     role: '3D Artist',
     detailImages: [
-        'https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&q=80&w=800',
-        'https://images.unsplash.com/photo-1531693851695-d859569e577f?auto=format&fit=crop&q=80&w=800',
-        'https://images.unsplash.com/photo-1459749411177-042180ce6a95?auto=format&fit=crop&q=80&w=800'
+        `${CDN_BASE}/assets/cases/surfboard-v001/detail-1.webp`,
+        `${CDN_BASE}/assets/cases/surfboard-v001/detail-2.webp`,
+        `${CDN_BASE}/assets/cases/surfboard-v001/detail-3.webp`
     ],
     story: {
         goal: "Mimic the exact light refraction of hand-shaped surfboard resin in a digital environment.",
@@ -102,8 +104,8 @@ export const PROJECTS: Project[] = [
         gamble: "A 2-week deep dive into a single material shader.",
         gain: "The creation of our 'Hydro-Logic' shader library, used in all current hardware client builds.",
         processImages: [
-            'https://images.unsplash.com/photo-1414442323120-144be03d5f64?auto=format&fit=crop&q=80&w=800', 
-            'https://images.unsplash.com/photo-1469854523086-cc02fe5d8df0?auto=format&fit=crop&q=80&w=800'
+            `${CDN_BASE}/assets/cases/surfboard-v001/process-1.webp`, 
+            `${CDN_BASE}/assets/cases/surfboard-v001/process-2.webp`
         ]
     }
   },
@@ -115,13 +117,13 @@ export const PROJECTS: Project[] = [
     category: '3D Design',
     tags: ['Industrial', 'Hardware', 'Lighting'],
     year: 2021,
-    imageUrl: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=1200',
+    imageUrl: `${CDN_BASE}/assets/cases/the-cartridges/Hero.webp`,
     featured: false,
     client: 'Modular Labs',
     role: 'Visualization Lead',
     detailImages: [
-        'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=800',
-        'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=800'
+        `${CDN_BASE}/assets/cases/the-cartridges/detail-1.webp`,
+        `${CDN_BASE}/assets/cases/the-cartridges/detail-2.webp`
     ],
     story: {
         goal: "Represent complex modularity through simple, high-res geometric lighting.",
@@ -129,8 +131,8 @@ export const PROJECTS: Project[] = [
         gamble: "Using pitch-black environments to force focus on material quality.",
         gain: "A set of high-converting visual assets for a seed-round pitch deck.",
         processImages: [
-            'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=800', 
-            'https://images.unsplash.com/photo-1558494949-ef010cbdcc51?auto=format&fit=crop&q=80&w=800'
+            `${CDN_BASE}/assets/cases/the-cartridges/process-1.webp`, 
+            `${CDN_BASE}/assets/cases/the-cartridges/process-2.webp`
         ]
     }
   },
@@ -142,14 +144,14 @@ export const PROJECTS: Project[] = [
     category: 'Brand Identity',
     tags: ['Hospitality', 'Kinetic Type', 'Logo'],
     year: 2023,
-    imageUrl: 'https://images.unsplash.com/photo-1552611052-33e04de081de?auto=format&fit=crop&q=80&w=1200',
+    imageUrl: `${CDN_BASE}/assets/cases/jonheys-dumpling-house/Hero.webp`,
     featured: true,
     client: 'Jonhey’s',
     role: 'Lead Designer',
     detailImages: [
-        'https://images.unsplash.com/photo-1534422298391-e4f8c170db09?auto=format&fit=crop&q=80&w=800',
-        'https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&q=80&w=800',
-        'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&q=80&w=800'
+        `${CDN_BASE}/assets/cases/jonheys-dumpling-house/detail-1.webp`,
+        `${CDN_BASE}/assets/cases/jonheys-dumpling-house/detail-2.webp`,
+        `${CDN_BASE}/assets/cases/jonheys-dumpling-house/detail-3.webp`
     ],
     story: {
         goal: "Break the 'red and gold' hospitality cliché for a younger, urban crowd.",
@@ -157,8 +159,8 @@ export const PROJECTS: Project[] = [
         gamble: "Using neon purple and heavy, distorted typography for a traditional product.",
         gain: "Immediate cult-status and a visual system that works perfectly on apparel.",
         processImages: [
-            'https://images.unsplash.com/photo-1525245262078-da44dc8ad70e?auto=format&fit=crop&q=80&w=800', 
-            'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&q=80&w=800'
+            `${CDN_BASE}/assets/cases/jonheys-dumpling-house/process-1.webp`, 
+            `${CDN_BASE}/assets/cases/jonheys-dumpling-house/process-2.webp`
         ]
     }
   },
@@ -170,13 +172,13 @@ export const PROJECTS: Project[] = [
     category: 'Brand Identity',
     tags: ['Editorial', 'Strategy', 'Nature'],
     year: 2023,
-    imageUrl: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=1200',
+    imageUrl: `${CDN_BASE}/assets/cases/franca-austral/Hero.webp`,
     featured: false,
     client: 'Franca Collective',
     role: 'Art Director',
     detailImages: [
-        'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&q=80&w=800',
-        'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&q=80&w=800'
+        `${CDN_BASE}/assets/cases/franca-austral/detail-1.webp`,
+        `${CDN_BASE}/assets/cases/franca-austral/detail-2.webp`
     ],
     story: {
         goal: "Capture the vast silence of southern landscapes through typographic negative space.",
@@ -184,8 +186,8 @@ export const PROJECTS: Project[] = [
         gamble: "A 60-page brand book with almost zero body copy—relying purely on scale and hierarchy.",
         gain: "A sophisticated, high-end presence that attracted luxury tourism partners.",
         processImages: [
-            'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?auto=format&fit=crop&q=80&w=800', 
-            'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&q=80&w=800'
+            `${CDN_BASE}/assets/cases/franca-austral/process-1.webp`, 
+            `${CDN_BASE}/assets/cases/franca-austral/process-2.webp`
         ]
     }
   },
@@ -197,13 +199,13 @@ export const PROJECTS: Project[] = [
     category: 'Strategy',
     tags: ['Positioning', 'Messaging', 'Narrative'],
     year: 2021,
-    imageUrl: 'https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?auto=format&fit=crop&q=80&w=1200',
+    imageUrl: `${CDN_BASE}/assets/cases/traveller-entrepreneur/Hero.webp`,
     featured: true,
     client: 'Personal Brand',
     role: 'Lead Strategist',
     detailImages: [
-        'https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&q=80&w=800',
-        'https://images.unsplash.com/photo-1454165833767-027ffea9e77b?auto=format&fit=crop&q=80&w=800'
+        `${CDN_BASE}/assets/cases/traveller-entrepreneur/detail-1.webp`,
+        `${CDN_BASE}/assets/cases/traveller-entrepreneur/detail-2.webp`
     ],
     story: {
         goal: "Pivot an audience from 'lifestyle travel' to 'business technicality'.",
@@ -211,8 +213,8 @@ export const PROJECTS: Project[] = [
         gamble: "Cutting 80% of existing content categories to focus on 'The Grind' as a technical discipline.",
         gain: "A 300% increase in inbound consulting leads within 90 days of repositioning.",
         processImages: [
-            'https://images.unsplash.com/photo-1507537297325-5bcc75b05105?auto=format&fit=crop&q=80&w=800', 
-            'https://images.unsplash.com/photo-1484417894907-623942c8ee29?auto=format&fit=crop&q=80&w=800'
+            `${CDN_BASE}/assets/cases/traveller-entrepreneur/process-1.webp`, 
+            `${CDN_BASE}/assets/cases/traveller-entrepreneur/process-2.webp`
         ]
     }
   }
