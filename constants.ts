@@ -41,7 +41,7 @@ export const PROJECTS: Project[] = [
             asset ('cases/unmplymnt/process-1.webp'),
             asset ('cases/unmplymnt/process-2.webp'),
             asset ('cases/unmplymnt/process-3.webp'),
-           asset ('cases/unmplymnt/detail-6.webp')`
+            asset ('cases/unmplymnt/detail-6.webp')
         ]
     }
   },
@@ -53,14 +53,14 @@ export const PROJECTS: Project[] = [
     category: 'Packaging',
     tags: ['Packaging', 'Industrial', 'Minimalism'],
     year: 2024,
-    imageURL: `${CDN_BASE}/assets/cases/just-boxes/Hero.webp`,
+    imageURL: asset ('cases/just-boxes/Hero.webp'),
     featured: true,
     client: 'Just Boxes',
     role: 'Creative Direction',
     detailImages: [
-        `${CDN_BASE}/assets/cases/just-boxes/Hero.webp`,
-        `${CDN_BASE}/assets/cases/just-boxes/detail-1.webp`,
-        `${CDN_BASE}/assets/cases/just-boxes/detail-2.webp`
+        asset ('cases/unmplymnt/process-1.webp'),
+        asset ('cases/just-boxes/detail-2.webp'),
+        asset ('cases/just-boxes/detail-3.webp')
     ],
     story: {
         goal: "Celebrate cardboard as a primary luxury material.",
@@ -68,8 +68,8 @@ export const PROJECTS: Project[] = [
         gamble: "No plastic coatings. We used structural folding and high-contrast ink to create the 'Premium' feel.",
         gain: "A signature packaging system that is 100% recyclable and 100% unmistakable.",
         processImages: [
-            `${CDN_BASE}/assets/cases/just-boxes/detail-1.webp`, 
-            `${CDN_BASE}/assets/cases/just-boxes/detail-2.webp`
+            asset ('cases/just-boxes/process-1.webp'), 
+            asset ('cases/just-boxes/process-2.webp')
         ]
     }
   },
