@@ -218,13 +218,27 @@ const ProcessGallery: React.FC<{ images: string[], onImageSelect: (img: string) 
     return (
         <section ref={targetRef} className="relative h-[300vh] bg-brand-offwhite">
             <div className="sticky top-0 flex h-screen items-center overflow-hidden">
-                <div class="flex flex-col w-full">
-                     <div class="flex gap-4 md:gap-12 px-6 md:px-8 w-max">
-                        <span className="font-mono text-brand-purple uppercase tracking-[0.3em] text-[10px] md:text-xs font-bold mb-4 block">Visual Audit // Raw Process</span>
-                        <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-brand-navy">The Messy Middle</h2>
+                {/* FIX 1: Changed 'class' to 'className' and added 'h-full justify-center' for vertical alignment */}
+                <div className="flex flex-col w-full h-full justify-center">
+                     
+                     {/* FIX 2: Changed 'class' to 'className' 
+                        - Changed to 'flex-col' so the label sits ABOVE the title 
+                        - Added 'mb-12' to push the images down away from the text
+                     */}
+                     <div className="flex flex-col px-6 md:px-8 w-full max-w-[90vw] mb-12">
+                        <span className="font-mono text-brand-purple uppercase tracking-[0.3em] text-[10px] md:text-xs font-bold mb-4 block">
+                            Visual Audit // Raw Process
+                        </span>
+                        <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-brand-navy">
+                            The Messy Middle
+                        </h2>
                     </div>
-                  
-                    <motion.div ref={containerRef} style={{ x }} className="flex gap-4 md:gap-12 px-6 md:px-8 w-max">
+                   
+                    <motion.div 
+                        ref={containerRef} 
+                        style={{ x }} 
+                        className="flex gap-4 md:gap-12 px-6 md:px-8 w-max"
+                    >
                         {images.concat(images).concat(images).map((img, i) => (
                             <motion.div 
                                 key={i} 
