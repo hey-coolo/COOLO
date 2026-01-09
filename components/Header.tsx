@@ -7,7 +7,7 @@ import BrandLogo from './BrandLogo';
 
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isOpen, setIsOpen] = useState(false); // Mobile menu state
+  const [isOpen, setIsOpen] = useState(false); // New: Track mobile menu state
   const location = useLocation();
   
   const isHome = location.pathname === '/';
@@ -15,7 +15,7 @@ const Header: React.FC = () => {
   // Logic: Show logo if not home OR scrolled OR menu is open
   const showLogo = !isHome || isScrolled || isOpen; 
   
-  // Logic: Use light text if home AND top AND menu is closed
+  // Logic: Use light text if home AND top AND menu is closed (otherwise dark or specific to menu)
   const isLightText = isHome && !isScrolled && !isOpen;
 
   useEffect(() => {
@@ -24,7 +24,7 @@ const Header: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile menu on route change
+  // Close menu when route changes
   useEffect(() => {
     setIsOpen(false);
   }, [location]);
@@ -86,7 +86,6 @@ const Header: React.FC = () => {
         </nav>
 
         {/* Mobile Menu Toggle Button */}
-        {/* This was previously a Link to /contact - changed to a Button to trigger the menu */}
         <button 
             onClick={() => setIsOpen(!isOpen)}
             className={`md:hidden z-50 p-2 focus:outline-none transition-colors duration-300 ${
