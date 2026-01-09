@@ -2,7 +2,7 @@ import { Project, TeamMember, JournalPost, ServiceLeg, ProjectCategory, Drop, De
 
 // CENTRAL CDN PATH
 // Change this string if you move your repo or change the branch
-const CDN_BASE = `https://cdn.jsdelivr.net/gh/hey-coolo/COOLO/`;
+const CDN_BASE = `https://cdn.jsdelivr.net/gh/hey-coolo/COOLO`;
 
 export const ASSETS = {
   services: {
@@ -11,8 +11,8 @@ export const ASSETS = {
     partnership: `${CDN_BASE}/assets/services/partnership.webp`
   },
   team: {
-    franco: `${CDN_BASE}/assets/team/franco.webp`,
-    ariana: `${CDN_BASE}/assets/team/ariana.webp`
+    franco: `${CDN_BASE}/assets/${path}`,
+    ariana: `${CDN_BASE}/assets/${path}`
   }
 };
 
@@ -25,7 +25,7 @@ export const PROJECTS: Project[] = [
     category: ['Concept & Strategy - ', 'Naming - ', 'Brand Identity - ', 'Content Creation - '],
     tags: ['Brutalism', 'Typography', 'Strategy'],
     year: 2025,
-    hero: `${CDN_BASE}/assets/cases/unmplymnt/Hero.webp`, 
+    imageURL: `${CDN_BASE}/assets/cases/unmplymnt/Hero.webp`, 
     featured: true,
     client: 'Internal Project',
     role: 'Strategy, logo & mark system, type system, colour palette, texture & pattern language, apparel branding, art direction.',
@@ -57,7 +57,7 @@ export const PROJECTS: Project[] = [
     category: 'Packaging',
     tags: ['Packaging', 'Industrial', 'Minimalism'],
     year: 2024,
-    hero: `${CDN_BASE}/assets/cases/just-boxes/Hero.webp`,
+    imageURL: `${CDN_BASE}/assets/cases/just-boxes/Hero.webp`,
     featured: true,
     client: 'Just Boxes',
     role: 'Creative Direction',
@@ -85,7 +85,7 @@ export const PROJECTS: Project[] = [
     category: '3D Design',
     tags: ['3D Viz', 'Technical', 'Surfacing'],
     year: 2022,
-    hero: `${CDN_BASE}/assets/cases/surfboard-v001/Hero.webp`,
+    imageURL: `${CDN_BASE}/assets/cases/surfboard-v001/Hero.webp`,
     featured: true,
     client: 'Technical Study',
     role: '3D Artist',
@@ -103,8 +103,8 @@ export const PROJECTS: Project[] = [
         gamble: "A 2-week deep dive into a single material shader.",
         gain: "The creation of our 'Hydro-Logic' shader library, used in all current hardware client builds.",
         processImages: [
-            '${CDN_BASE}/assets/cases/surfboard-v001/process-1.webp', 
-            '${CDN_BASE}/assets/cases/surfboard-v001/process-2.webp'
+            `${CDN_BASE}/assets/cases/surfboard-v001/process-1.webp`, 
+            `${CDN_BASE}/assets/cases/surfboard-v001/process-2.webp`
         ]
     }
   },
@@ -392,7 +392,7 @@ export const TEAM_MEMBERS: { [key: string]: TeamMember } = {
   franco: {
     name: 'Franco',
     title: 'Creative Director',
-    imageUrl: `${CDN_BASE}/assets/team/franco.webp`,
+    imageUrl: `${CDN_BASE}/assets/${path}`,
     instagram: 'what.the.franco',
     bio: [
       "The Brains. Franco specializes in Strategy, Art Direction, and 3D Vision.",
@@ -403,7 +403,7 @@ export const TEAM_MEMBERS: { [key: string]: TeamMember } = {
   ariana: {
     name: 'Ariana',
     title: 'Operations Manager',
-    imageUrl: `${CDN_BASE}/assets/team/ariana.webp`,
+    imageUrl: `${CDN_BASE}/assets/${path}`,
     instagram: 'ariarmndo',
     bio: [
       "The Engine. Ariana manages execution, logistics, and client sanity.",
