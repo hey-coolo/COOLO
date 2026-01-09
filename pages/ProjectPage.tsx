@@ -195,16 +195,15 @@ const NarrativeSection: React.FC<{
     )
 }
 
-const ProcessGallery: React.FC<{ images: string[], onImageSelect: (img: string) => void }> = ({ images, onImageSelect }) => {
-    // We duplicate the images once just to ensure we have a nice long grid for the "messy" feel
-    // You can remove .concat(images) if you only want to show the exact source images
+                    const ProcessGallery: React.FC<{ images: string[], onImageSelect: (img: string) => void }> = ({ images, onImageSelect }) => {
+    // Duplicate images for the "messy" volume feel
     const displayImages = [...images, ...images].slice(0, 8); 
 
     return (
         <section className="py-32 md:py-48 bg-brand-offwhite relative z-10">
             <div className="container mx-auto px-6 md:px-8">
                 
-                {/* Header Section */}
+                {/* Header */}
                 <div className="mb-24 md:mb-32 max-w-3xl">
                     <span className="font-mono text-brand-purple uppercase tracking-[0.3em] text-[10px] md:text-xs font-bold mb-4 block">
                         Visual Audit // Raw Process
@@ -214,8 +213,11 @@ const ProcessGallery: React.FC<{ images: string[], onImageSelect: (img: string) 
                     </h2>
                 </div>
 
-                {/* Editorial Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 w-full">
+                {/* MASONRY LAYOUT (CSS Columns)
+                   This is the key change. 'columns-1 md:columns-2' creates vertical streams.
+                   It fits variable height images perfectly without gaps or cropping.
+                */}
+                <div className="columns-1 md:columns-2 gap-8 md:gap-12 space-y-8 md:space-y-12">
                     {displayImages.map((img, i) => (
                         <motion.div 
                             key={i}
@@ -224,27 +226,27 @@ const ProcessGallery: React.FC<{ images: string[], onImageSelect: (img: string) 
                             viewport={{ once: true, margin: "-10%" }}
                             transition={{ duration: 0.8, delay: i % 2 === 0 ? 0 : 0.2 }}
                             onClick={() => onImageSelect(img)}
-                            className={`relative cursor-pointer group ${
-                                // This creates the "Editorial Stagger" effect
-                                // It pushes every second image down by 12rem on desktop
-                                i % 2 !== 0 ? 'md:mt-32' : '' 
-                            }`}
+                            // 'break-inside-avoid' prevents the image from being cut in half between columns
+                            className="relative break-inside-avoid cursor-pointer group mb-8 md:mb-12"
                         >
-                            <div className="overflow-hidden shadow-2xl bg-brand-navy/5 aspect-[3/4] md:aspect-[4/5]">
+                            {/* Removed 'aspect-[...]' and 'h-full'.
+                                Added 'bg-white' and 'p-2' for a photo-print border look (optional).
+                            */}
+                            <div className="shadow-2xl bg-white p-2 md:p-4 border border-brand-navy/5">
                                 <img 
                                     src={img} 
-                                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000 ease-out" 
+                                    // 'w-full h-auto' ensures the image respects its ORIGINAL Ratio
+                                    className="w-full h-auto block grayscale group-hover:grayscale-0 transition-all duration-700 ease-out" 
                                     alt="Process detail" 
                                 />
                             </div>
                             
-                            {/* Optional: Tiny caption for extra 'editorial' feel */}
-                            <div className="mt-4 flex justify-between items-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                            <div className="mt-4 flex justify-between items-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 px-1">
                                 <span className="font-mono text-[9px] uppercase tracking-widest text-brand-navy/60">
                                     Fig. {i + 1}
                                 </span>
                                 <span className="font-mono text-[9px] uppercase tracking-widest text-brand-purple">
-                                    [View]
+                                    [View Full Res]
                                 </span>
                             </div>
                         </motion.div>
