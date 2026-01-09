@@ -18,53 +18,42 @@ const DownArrow: React.FC<{ className?: string; size?: number }> = ({ className 
     </motion.div>
 );
 
-const IndividualDraggable: React.FC<{ img: string; initialPos: { top: string; left: string; rotate: number; s: number } }> = ({ img, initialPos }) => {
-    const [zIndex, setZIndex] = useState(10);
+// Replaced IndividualDraggable with FloatingImage
+const FloatingImage: React.FC<{ img: string; initialPos: { top: string; left: string; rotate: number; s: number }; index: number }> = ({ img, initialPos, index }) => {
+    const { scrollY } = useScroll();
+    // Parallax: Images move at different speeds based on their scale (simulating depth)
+    // Larger images (closer) move faster than smaller ones (further away)
+    const yParallax = useTransform(scrollY, [0, 1000], [0, -150 * initialPos.s]);
     
     return (
         <motion.div 
-            drag
-            dragMomentum={true}
-            dragTransition={{ power: 0.2, timeConstant: 200 }}
-            onDragStart={(e) => {
-                e.stopPropagation(); // Prevent parent global drag from firing
-                setZIndex(100);
-            }}
-            onDragEnd={() => setZIndex(10 + Math.floor(Math.random() * 5))}
-            className="absolute w-[180px] md:w-[320px] aspect-[4/5] shadow-2xl cursor-grab active:cursor-grabbing group overflow-hidden"
+            className="absolute w-[180px] md:w-[320px] aspect-[4/5] shadow-2xl overflow-hidden pointer-events-none bg-white"
             style={{ 
                 top: initialPos.top, 
                 left: initialPos.left, 
-                zIndex: zIndex
+                scale: initialPos.s,
+                rotate: initialPos.rotate,
+                zIndex: 10, // Behind the text (z-30)
+                y: yParallax
             }}
-            initial={{ 
-                rotate: initialPos.rotate, 
-                scale: initialPos.s, 
-                opacity: 0 
-            }}
+            // Ambient floating animation that runs constantly
             animate={{ 
-                opacity: 0.35, 
-                transition: { duration: 1, delay: Math.random() * 0.5 } 
+                y: [0, -20, 0],
+                rotate: [initialPos.rotate, initialPos.rotate + (index % 2 === 0 ? 2 : -2), initialPos.rotate]
             }}
-            whileHover={{ 
-                opacity: 1, 
-                scale: initialPos.s * 1.05, 
-                zIndex: 110,
-                transition: { duration: 0.3 }
-            }}
-            whileDrag={{ 
-                scale: initialPos.s * 1.1, 
-                rotate: 0, 
-                opacity: 1,
-                boxShadow: "0 50px 100px rgba(0,0,0,0.3)"
+            transition={{ 
+                duration: 5 + (index % 4), // Randomize duration slightly
+                repeat: Infinity, 
+                ease: "easeInOut",
+                delay: index * 0.2 
             }}
         >
             <img 
                 src={img} 
-                className="w-full h-full object-cover pointer-events-none grayscale group-hover:grayscale-0 transition-all duration-700" 
+                className="w-full h-full object-cover grayscale opacity-60 mix-blend-multiply" 
                 alt="Studio Output" 
             />
-            <div className="absolute inset-0 pointer-events-none" />
+            <div className="absolute inset-0 border border-brand-navy/5" />
         </motion.div>
     );
 };
@@ -72,7 +61,6 @@ const IndividualDraggable: React.FC<{ img: string; initialPos: { top: string; le
 const HybridGallery: React.FC = () => {
     // 1. Gather ALL images from ALL projects and Shuffle them
     const randomImages = useMemo(() => {
-        // Flatten all images
         const all = PROJECTS.flatMap(p => [p.imageUrl, ...(p.detailImages || [])]).filter(Boolean);
         
         // Fisher-Yates Shuffle
@@ -81,37 +69,33 @@ const HybridGallery: React.FC = () => {
             [all[i], all[j]] = [all[j], all[i]];
         }
         
-        // Return top 25 images
-        return all.slice(0, 25);
+        // Return top 18 images (reduced count slightly to prevent overcrowding the text)
+        return all.slice(0, 18);
     }, []);
     
     return (
-        <motion.div 
-            className="absolute w-[300vw] h-[300vh] top-[-100vh] left-[-100vw] cursor-move z-10"
-            drag
-            dragConstraints={{ left: -1800, right: 900, top: -1800, bottom: 900 }}
-            dragElastic={0.05}
-        >
-            {/* Global Drag Surface (the "sheet") */}
+        <div className="absolute inset-0 w-full h-[150vh] overflow-hidden pointer-events-none">
+            {/* Global background layer */}
             <div className="absolute inset-0 bg-transparent z-0" />
 
-            {/* Individual Movable Elements with Random Positions */}
             {randomImages.map((img, i) => {
-                // Generate random position for each image
-                const top = `${Math.floor(Math.random() * 90)}%`;
-                const left = `${Math.floor(Math.random() * 90)}%`;
-                const rotate = Math.floor(Math.random() * 40 - 20);
-                const s = 0.7 + Math.random() * 0.6;
+                // Generate distributed positions
+                // We use a wider range (-20% to 120%) so images drift in from edges
+                const top = `${Math.floor(Math.random() * 120 - 10)}%`;
+                const left = `${Math.floor(Math.random() * 120 - 10)}%`;
+                const rotate = Math.floor(Math.random() * 30 - 15);
+                const s = 0.6 + Math.random() * 0.6; // Scale 0.6 to 1.2
 
                 return (
-                    <IndividualDraggable 
+                    <FloatingImage 
                         key={i} 
                         img={img} 
+                        index={i}
                         initialPos={{ top, left, rotate, s }} 
                     />
                 );
             })}
-        </motion.div>
+        </div>
     );
 };
 
@@ -133,7 +117,7 @@ const BrandHero: React.FC = () => {
             onMouseMove={handleMouseMove}
             className="relative min-h-screen flex flex-col pt-32 pb-16 bg-brand-offwhite text-brand-navy overflow-hidden"
         >
-            {/* Immersive Gallery Layer */}
+            {/* Parallax Gallery Layer - Now strictly passive/visual */}
             <HybridGallery />
 
             {/* Studio Grid Overlay */}
@@ -188,10 +172,10 @@ const BrandHero: React.FC = () => {
 
                 {/* Meta Footer Section */}
                 <div className="mt-auto pointer-events-auto">
-                    {/* Drag hint relocated above the line */}
+                    {/* Changed hint to reflect new interaction model */}
                     <div className="text-center mb-6">
                         <span className="font-mono text-[9px] uppercase tracking-[0.5em] opacity-40 font-bold text-brand-navy">
-                            [ DRAG TO EXPLORE ]
+                            [ SCROLL TO EXPLORE ]
                         </span>
                     </div>
 
