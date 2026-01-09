@@ -70,7 +70,7 @@ const Footer: React.FC = () => {
           <div className="flex space-x-12 order-1 md:order-2">
              <Link to="/journal" className="hover:text-brand-purple transition-colors">Journal</Link>
              <a href="https://instagram.com/coolo.co" target="_blank" rel="noopener noreferrer" className="hover:text-brand-purple transition-colors">Instagram</a>
-             <a href="https://linkedin.com/company/coolo" className="hover:text-brand-purple transition-colors">LinkedIn</a>
+             <a href="https://linkedin.com/company/coolo" target="_blank" rel="noopener noreferrer" className="hover:text-brand-purple transition-colors">LinkedIn</a>
           </div>
         </div>
       </div>
