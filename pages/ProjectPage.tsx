@@ -251,21 +251,21 @@ const ProjectPage: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const currentIndex = PROJECTS.findIndex(p => p.slug === slug);
 
-  useEffect(() => {
-    const handleEsc = (e: KeyboardEvent) => {
-        if (e.key === 'Escape') setSelectedImage(null);
-    };
-    if (selectedImage) {
-        document.body.style.overflow = 'hidden';
-    } else {
-        document.body.style.overflow = '';
-    }
-    window.addEventListener('keydown', handleEsc);
-    return () => {
-        window.removeEventListener('keydown', handleEsc);
-        document.body.style.overflow = '';
-    };
-  }, [selectedImage]);
+ useEffect(() => {
+  if (!selectedImage) return;
+
+  const handleEsc = (e: KeyboardEvent) => {
+    if (e.key === 'Escape') setSelectedImage(null);
+  };
+
+  document.body.style.overflow = 'hidden';
+  window.addEventListener('keydown', handleEsc);
+
+  return () => {
+    document.body.style.overflow = '';
+    window.removeEventListener('keydown', handleEsc);
+  };
+}, [selectedImage]);
 
   if (currentIndex === -1) {
     return (
