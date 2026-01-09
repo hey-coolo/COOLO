@@ -5,10 +5,6 @@ import { Project, TeamMember, JournalPost, ServiceLeg, ProjectCategory, Drop, De
 const CDN_BASE = `https://cdn.jsdelivr.net/gh/hey-coolo/COOLO@main/COOLO-main`;
 
 export const ASSETS = {
-  hero: {
-    viz: `${CDN_BASE}/assets/images/hero-viz.webp`,
-    ooh: `${CDN_BASE}/assets/images/hero-ooh.webp`
-  },
   services: {
     clarity: `${CDN_BASE}/assets/services/clarity.webp`,
     designPower: `${CDN_BASE}/assets/services/design-power.webp`,
