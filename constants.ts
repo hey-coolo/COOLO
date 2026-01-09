@@ -392,7 +392,7 @@ export const TEAM_MEMBERS: { [key: string]: TeamMember } = {
   franco: {
     name: 'Franco',
     title: 'Creative Director',
-    imageUrl: ASSETS.team.franco,
+    imageUrl: `${CDN_BASE}/assets/team/franco.webp`,
     instagram: 'what.the.franco',
     bio: [
       "The Brains. Franco specializes in Strategy, Art Direction, and 3D Vision.",
@@ -403,7 +403,7 @@ export const TEAM_MEMBERS: { [key: string]: TeamMember } = {
   ariana: {
     name: 'Ariana',
     title: 'Operations Manager',
-    imageUrl: ASSETS.team.ariana,
+    imageUrl: `${CDN_BASE}/assets/team/ariana.webp`,
     instagram: 'ariarmndo',
     bio: [
       "The Engine. Ariana manages execution, logistics, and client sanity.",
