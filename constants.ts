@@ -7,8 +7,8 @@ const asset = (path: string) => `${CDN_BASE}/assets/${path}`;
 
 export const ASSETS = {
   team: {
-    franco: asset('team/Hero.webp'),
-    ariana: `${CDN_BASE}/assets/${path}`
+    franco: 'https://cdn.jsdelivr.net/gh/hey-coolo/COOLO/asset/team/franco.webp'),
+    ariana: 'https://cdn.jsdelivr.net/gh/hey-coolo/COOLO/asset/team/ariana.webp')
   }
 };
 
@@ -21,16 +21,16 @@ export const PROJECTS: Project[] = [
     category: ['Concept & Strategy - ', 'Naming - ', 'Brand Identity - ', 'Content Creation - '],
     tags: ['Brutalism', 'Typography', 'Strategy'],
     year: 2025,
-    imageURL: asset ('cases/unmplymnt/Hero.webp'), 
+    imageURL: 'https://cdn.jsdelivr.net/gh/hey-coolo/COOLO/asset/cases/unmplymnt/Hero.webp', 
     featured: true,
     client: 'Internal Project',
     role: 'Strategy, logo & mark system, type system, colour palette, texture & pattern language, apparel branding, art direction.',
     detailImages: [
-        asset ('cases/unmplymnt/detail-1.webp'),
-        asset ('cases/unmplymnt/detail-2.webp'),
-        asset ('cases/unmplymnt/detail-3.webp'),
-        asset ('cases/unmplymnt/detail-4.webp'),
-        asset ('cases/unmplymnt/detail-5.webp')
+        'https://cdn.jsdelivr.net/gh/hey-coolo/COOLO/asset/cases/unmplymnt/detail-1.webp',
+        'https://cdn.jsdelivr.net/gh/hey-coolo/COOLO/asset/cases/unmplymnt/detail-2.webp',
+        'https://cdn.jsdelivr.net/gh/hey-coolo/COOLO/asset/cases/unmplymnt/detail-3.webp',
+        'https://cdn.jsdelivr.net/gh/hey-coolo/COOLO/asset/cases/unmplymnt/detail-4.webp',
+        'https://cdn.jsdelivr.net/gh/hey-coolo/COOLO/asset/cases/unmplymnt/detail-5.webp'
     ],
     story: {
         goal: "UNMPLYNMT began as a belief: that clothing can be more than fashion — it can be a banner for identity, rebellion, and community. We asked a simple, strategic question: What does freedom look like when it isn’t selling anything?",
@@ -38,10 +38,10 @@ export const PROJECTS: Project[] = [
         gamble: "We developed a visual voice that mirrors that attitude: Typographic Brutality, Colour Energy, and Texture as Attitude. A flexible system built to scale across campaigns without diluting its raw power.",
         gain: "Identity done right doesn’t whisper. It moves people. We gave them a visual language that behaves like culture: adaptable, self-aware, and unmistakable. Community turned into culture.",
         processImages: [
-            asset ('cases/unmplymnt/process-1.webp'),
-            asset ('cases/unmplymnt/process-2.webp'),
-            asset ('cases/unmplymnt/process-3.webp'),
-            asset ('cases/unmplymnt/detail-6.webp')
+            'https://cdn.jsdelivr.net/gh/hey-coolo/COOLO/asset/cases/unmplymnt/process-1.webp',
+            'https://cdn.jsdelivr.net/gh/hey-coolo/COOLO/asset/cases/unmplymnt/process-2.webp',
+            'https://cdn.jsdelivr.net/gh/hey-coolo/COOLO/asset/cases/unmplymnt/process-3.webp',
+            'https://cdn.jsdelivr.net/gh/hey-coolo/COOLO/asset/cases/unmplymnt/detail-6.webp'
         ]
     }
   },
@@ -53,14 +53,14 @@ export const PROJECTS: Project[] = [
     category: 'Packaging',
     tags: ['Packaging', 'Industrial', 'Minimalism'],
     year: 2024,
-    imageURL: asset ('cases/just-boxes/Hero.webp'),
+    imageURL: 'https://cdn.jsdelivr.net/gh/hey-coolo/COOLO/asset/cases/just-boxes/Hero.webp',
     featured: true,
     client: 'Just Boxes',
     role: 'Creative Direction',
     detailImages: [
-        asset ('cases/unmplymnt/process-1.webp'),
-        asset ('cases/just-boxes/detail-2.webp'),
-        asset ('cases/just-boxes/detail-3.webp')
+        'https://cdn.jsdelivr.net/gh/hey-coolo/COOLO/asset/cases/unmplymnt/process-1.webp',
+        'https://cdn.jsdelivr.net/gh/hey-coolo/COOLO/asset/cases/just-boxes/detail-2.webp',
+        'https://cdn.jsdelivr.net/gh/hey-coolo/COOLO/asset/cases/just-boxes/detail-3.webp'
     ],
     story: {
         goal: "Celebrate cardboard as a primary luxury material.",
@@ -68,8 +68,8 @@ export const PROJECTS: Project[] = [
         gamble: "No plastic coatings. We used structural folding and high-contrast ink to create the 'Premium' feel.",
         gain: "A signature packaging system that is 100% recyclable and 100% unmistakable.",
         processImages: [
-            asset ('cases/just-boxes/process-1.webp'), 
-            asset ('cases/just-boxes/process-2.webp')
+            'https://cdn.jsdelivr.net/gh/hey-coolo/COOLO/asset/cases/just-boxes/process-1.webp', 
+            'https://cdn.jsdelivr.net/gh/hey-coolo/COOLO/asset/cases/just-boxes/process-2.webp'
         ]
     }
   },
@@ -81,16 +81,16 @@ export const PROJECTS: Project[] = [
     category: '3D Design',
     tags: ['3D Viz', 'Technical', 'Surfacing'],
     year: 2022,
-    imageURL: `${CDN_BASE}/assets/cases/surfboard-v001/Hero.webp`,
+    imageURL: 'https://cdn.jsdelivr.net/gh/hey-coolo/COOLO/asset/cases/surfboard-v001/Hero.webp',
     featured: true,
     client: 'Technical Study',
     role: '3D Artist',
     detailImages: [
-        `${CDN_BASE}/assets/cases/surfboard-v001/detail-1.webp`,
-        `${CDN_BASE}/assets/cases/surfboard-v001/detail-2.webp`,
-        `${CDN_BASE}/assets/cases/surfboard-v001/detail-3.webp`,
-        `${CDN_BASE}/assets/cases/surfboard-v001/detail-4.webp`,
-        `${CDN_BASE}/assets/cases/surfboard-v001/detail-5.webp`
+        'https://cdn.jsdelivr.net/gh/hey-coolo/COOLO/asset/cases/surfboard-v001/detail-1.webp',
+        'https://cdn.jsdelivr.net/gh/hey-coolo/COOLO/asset/cases/surfboard-v001/detail-2.webp',
+        'https://cdn.jsdelivr.net/gh/hey-coolo/COOLO/asset/cases/surfboard-v001/detail-3.webp',
+        'https://cdn.jsdelivr.net/gh/hey-coolo/COOLO/asset/cases/surfboard-v001/detail-4.webp',
+        'https://cdn.jsdelivr.net/gh/hey-coolo/COOLO/asset/cases/surfboard-v001/detail-5.webp'
       
     ],
     story: {
@@ -99,8 +99,8 @@ export const PROJECTS: Project[] = [
         gamble: "A 2-week deep dive into a single material shader.",
         gain: "The creation of our 'Hydro-Logic' shader library, used in all current hardware client builds.",
         processImages: [
-            `${CDN_BASE}/assets/cases/surfboard-v001/process-1.webp`, 
-            `${CDN_BASE}/assets/cases/surfboard-v001/process-2.webp`
+            'https://cdn.jsdelivr.net/gh/hey-coolo/COOLO/assets/cases/surfboard-v001/process-1.webp`, 
+            'https://cdn.jsdelivr.net/gh/hey-coolo/COOLO/assets/cases/surfboard-v001/process-2.webp`
         ]
     }
   },
@@ -112,13 +112,13 @@ export const PROJECTS: Project[] = [
     category: '3D Design',
     tags: ['Industrial', 'Hardware', 'Lighting'],
     year: 2021,
-    imageUrl: `${CDN_BASE}/assets/cases/the-cartridges/Hero.webp`,
+    imageUrl: 'https://cdn.jsdelivr.net/gh/hey-coolo/COOLO/assets/cases/the-cartridges/Hero.webp',
     featured: false,
     client: 'Modular Labs',
     role: 'Visualization Lead',
     detailImages: [
-        `${CDN_BASE}/assets/cases/the-cartridges/detail-1.webp`,
-        `${CDN_BASE}/assets/cases/the-cartridges/detail-2.webp`
+        'https://cdn.jsdelivr.net/gh/hey-coolo/COOLO/assets/cases/the-cartridges/detail-1.webp',
+        'https://cdn.jsdelivr.net/gh/hey-coolo/COOLO/assets/cases/the-cartridges/detail-2.webp'
     ],
     story: {
         goal: "Represent complex modularity through simple, high-res geometric lighting.",
@@ -126,8 +126,8 @@ export const PROJECTS: Project[] = [
         gamble: "Using pitch-black environments to force focus on material quality.",
         gain: "A set of high-converting visual assets for a seed-round pitch deck.",
         processImages: [
-            `${CDN_BASE}/assets/cases/the-cartridges/process-1.webp`, 
-            `${CDN_BASE}/assets/cases/the-cartridges/process-2.webp`
+            'https://cdn.jsdelivr.net/gh/hey-coolo/COOLO/assets/cases/the-cartridges/process-1.webp', 
+            'https://cdn.jsdelivr.net/gh/hey-coolo/COOLO/assets/cases/the-cartridges/process-2.webp'
         ]
     }
   },
@@ -388,7 +388,7 @@ export const TEAM_MEMBERS: { [key: string]: TeamMember } = {
   franco: {
     name: 'Franco',
     title: 'Creative Director',
-    imageUrl: `${CDN_BASE}/assets/${path}`,
+    imageUrl: 'https://cdn.jsdelivr.net/gh/hey-coolo/COOLO/assets/team/franco.webp',
     instagram: 'what.the.franco',
     bio: [
       "The Brains. Franco specializes in Strategy, Art Direction, and 3D Vision.",
@@ -399,7 +399,7 @@ export const TEAM_MEMBERS: { [key: string]: TeamMember } = {
   ariana: {
     name: 'Ariana',
     title: 'Operations Manager',
-    imageUrl: `${CDN_BASE}/assets/${path}`,
+    imageUrl: 'https://cdn.jsdelivr.net/gh/hey-coolo/COOLO/assets/team/ariana.webp'),
     instagram: 'ariarmndo',
     bio: [
       "The Engine. Ariana manages execution, logistics, and client sanity.",
