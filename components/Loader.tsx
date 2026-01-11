@@ -140,7 +140,7 @@ const Loader: React.FC<LoaderProps> = ({ onEnter }) => {
             <div className="flex justify-between items-start">
                  {/* Top Left */}
                  <div className="w-8 h-8 border-l-2 border-t-2 border-brand-navy/20 relative">
-                     <span className="absolute top-4 left-4 font-mono text-[9px] uppercase tracking-widest opacity-40 whitespace-nowrap font-bold">sys_boot_v2.0</span>
+                     <span className="absolute top-4 left-4 font-mono text-[9px] uppercase tracking-widest opacity-40 whitespace-nowrap font-bold">COOLO_STUDIO_2026</span>
                  </div>
                  {/* Top Right */}
                  <div className="w-8 h-8 border-r-2 border-t-2 border-brand-navy/20"></div>
@@ -160,7 +160,7 @@ const Loader: React.FC<LoaderProps> = ({ onEnter }) => {
                             className="font-mono text-[9px] md:text-[10px] uppercase tracking-widest text-brand-navy/40 hover:text-brand-purple transition-colors font-bold flex items-center gap-2 group whitespace-nowrap"
                         >
                             <span className="w-3 md:w-4 h-[1px] bg-current opacity-20 group-hover:w-8 transition-all"></span>
-                            RESET_BUFFER
+                            CLEAR_PAGE
                         </button>
                         <button 
                             onClick={downloadSketch}
@@ -168,15 +168,14 @@ const Loader: React.FC<LoaderProps> = ({ onEnter }) => {
                             className="font-mono text-[9px] md:text-[10px] uppercase tracking-widest text-brand-navy/40 hover:text-brand-purple transition-colors font-bold flex items-center gap-2 group whitespace-nowrap"
                         >
                             <span className="w-3 md:w-4 h-[1px] bg-current opacity-20 group-hover:w-8 transition-all"></span>
-                            CAPTURE_FRAME
+                            SAVE_CANVA
                         </button>
                     </div>
                  </div>
 
                  {/* Bottom Right Decoration */}
                  <div className="w-8 h-8 border-r-2 border-b-2 border-brand-navy/20 relative hidden sm:block">
-                     <span className="absolute bottom-4 right-4 font-mono text-[9px] uppercase tracking-widest opacity-40 whitespace-nowrap text-right font-bold">ready_to_engage</span>
-                 </div>
+                     <span className="absolute bottom-4 right-4 font-mono text-[9px] uppercase tracking-widest opacity-40 whitespace-nowrap text-right font-bold">creative_mode</span>               </div>
             </div>
         </div>
         
