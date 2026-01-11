@@ -18,8 +18,7 @@ const DownArrow: React.FC<{ className?: string; size?: number }> = ({ className 
     </motion.div>
 );
 
-// FIX: Added onClick to the interface here so it doesn't crash
-const IndividualDraggable: React.FC<{ img: string; initialPos: { top: string; left: string; rotate: number; s: number }; onClick: () => void }> = ({ img, initialPos, onClick }) => {
+const IndividualDraggable: React.FC<{ img: string; initialPos: { top: string; left: string; rotate: number; s: number }; onClick?: () => void }> = ({ img, initialPos, onClick }) => {
     const [zIndex, setZIndex] = useState(10);
     const [isDragging, setIsDragging] = useState(false);
  
@@ -28,7 +27,7 @@ const IndividualDraggable: React.FC<{ img: string; initialPos: { top: string; le
             drag
             dragMomentum={true}
             dragTransition={{ power: 0.2, timeConstant: 200 }}
-            onDragStart={(e) => {
+            onDragStart={() => {
                 setZIndex(100);
                 setIsDragging(true);
             }}
@@ -37,7 +36,7 @@ const IndividualDraggable: React.FC<{ img: string; initialPos: { top: string; le
                 setTimeout(() => setIsDragging(false), 100); 
             }}
             onClick={() => {
-                if (!isDragging) onClick();
+                if (!isDragging && onClick) onClick();
             }}
             className="absolute w-[220px] md:w-[380px] aspect-[4/5] shadow-2xl cursor-grab active:cursor-grabbing group overflow-hidden border border-brand-navy/5 bg-white"
             style={{ 
@@ -45,38 +44,12 @@ const IndividualDraggable: React.FC<{ img: string; initialPos: { top: string; le
                 left: initialPos.left, 
                 zIndex: zIndex
             }}
-
-            initial={{ 
-                rotate: initialPos.rotate, 
-                scale: initialPos.s, 
-                opacity: 0 
-            }}
-            animate={{ 
-                opacity: 0.85, 
-                transition: { duration: 1, delay: Math.random() * 0.5 } 
-            }}
-
-            whileHover={{ 
-                opacity: 1, 
-                scale: initialPos.s * 1.02, 
-                zIndex: 110,
-                transition: { duration: 0.2 }
-
-            }}
-            whileDrag={{ 
-                scale: initialPos.s * 1.05, 
-                rotate: 0, 
-                opacity: 1,
-                boxShadow: "0 40px 80px rgba(15,3,40,0.2)"
-            }}
-
+            initial={{ rotate: initialPos.rotate, scale: initialPos.s, opacity: 0 }}
+            animate={{ opacity: 0.85, transition: { duration: 1, delay: Math.random() * 0.5 } }}
+            whileHover={{ opacity: 1, scale: initialPos.s * 1.02, zIndex: 110, transition: { duration: 0.2 } }}
+            whileDrag={{ scale: initialPos.s * 1.05, rotate: 0, opacity: 1, boxShadow: "0 40px 80px rgba(15,3,40,0.2)" }}
         >
-            <img 
-                src={img} 
-                className="w-full h-full object-cover pointer-events-none grayscale group-hover:grayscale-0 transition-all duration-700" 
-                alt="" 
-            />
-            {/* Click hint overlay */}
+            <img src={img} className="w-full h-full object-cover pointer-events-none grayscale group-hover:grayscale-0 transition-all duration-700" alt="" />
             <div className="absolute inset-0 bg-brand-purple/0 group-hover:bg-brand-purple/10 transition-colors pointer-events-none flex items-center justify-center">
                  <span className="opacity-0 group-hover:opacity-100 font-mono text-[9px] bg-brand-navy text-brand-offwhite px-2 py-1 uppercase tracking-widest transition-opacity duration-300">View</span>
             </div>
@@ -85,14 +58,12 @@ const IndividualDraggable: React.FC<{ img: string; initialPos: { top: string; le
 };
 
 const ProjectHero: React.FC<{ project: any; onImageClick: (src: string) => void }> = ({ project, onImageClick }) => {
-    // 1. Aggregate ALL images
     const allProjectImages = [
         project.imageUrl,
         ...(project.detailImages || []),
         ...(project.story?.processImages || [])
     ].filter(Boolean); 
 
-    // 2. Create the "Endless" density.
     const images = Array(5).fill(allProjectImages).flat().slice(0, 32);
 
     const positions = Array.from({ length: 32 }).map((_, i) => ({
@@ -111,7 +82,6 @@ const ProjectHero: React.FC<{ project: any; onImageClick: (src: string) => void 
                 dragElastic={0.05}
             >
                 <div className="absolute inset-0 bg-transparent z-0" />
-
                 {images.map((img, i) => (
                     <IndividualDraggable 
                         key={i} 
@@ -131,7 +101,6 @@ const ProjectHero: React.FC<{ project: any; onImageClick: (src: string) => void 
                     >
                         {project.category === 'Partnership' ? 'Partnership Archive' : `Case Study ${project.id.toString().padStart(2, '0')}`}
                     </motion.span>
-                  
                     <div className="pointer-events-auto inline-block">
                         <motion.h1 
                             initial={{ opacity: 0, y: 40 }}
@@ -190,13 +159,9 @@ const NarrativeSection: React.FC<{
                         </motion.div>
                     </div>
                     <div className="lg:col-span-8">
-                        <motion.p 
-                            style={{ opacity }}
-                            className={`font-body text-xl md:text-4xl leading-tight font-light mb-16 break-words ${isDark ? 'text-brand-offwhite/80' : 'text-brand-navy/80'}`}
-                        >
+                        <motion.p style={{ opacity }} className={`font-body text-xl md:text-4xl leading-tight font-light mb-16 break-words ${isDark ? 'text-brand-offwhite/80' : 'text-brand-navy/80'}`}>
                             {content}
                         </motion.p>
-                        
                         {images && images.length > 0 && (
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 {images.map((img, i) => (
@@ -215,17 +180,12 @@ const NarrativeSection: React.FC<{
 
 const ProcessGallery: React.FC<{ images: string[], onImageSelect: (img: string) => void }> = ({ images, onImageSelect }) => {
     if (!images || images.length === 0) return null;
-
     return (
         <section className="py-32 md:py-48 bg-brand-offwhite relative z-10">
             <div className="container mx-auto px-6 md:px-8">
                 <div className="mb-24 md:mb-32 max-w-3xl">
-                    <span className="font-mono text-brand-purple uppercase tracking-[0.3em] text-[10px] md:text-xs font-bold mb-4 block">
-                        Visual Audit // Raw Process
-                    </span>
-                    <h2 className="text-5xl md:text-8xl font-black uppercase tracking-tighter text-brand-navy leading-[0.9]">
-                        The Messy Middle
-                    </h2>
+                    <span className="font-mono text-brand-purple uppercase tracking-[0.3em] text-[10px] md:text-xs font-bold mb-4 block">Visual Audit // Raw Process</span>
+                    <h2 className="text-5xl md:text-8xl font-black uppercase tracking-tighter text-brand-navy leading-[0.9]">The Messy Middle</h2>
                 </div>
                 <div className="columns-1 md:columns-2 gap-8 md:gap-12 space-y-8 md:space-y-12">
                     {images.map((img, i) => (
@@ -239,20 +199,12 @@ const ProcessGallery: React.FC<{ images: string[], onImageSelect: (img: string) 
                             className="relative break-inside-avoid cursor-pointer group mb-8 md:mb-12"
                         >
                             <div className="shadow-2xl bg-brand-navy/5 overflow-hidden">
-                                <img 
-                                    src={img} 
-                                    className="w-full h-auto block grayscale group-hover:grayscale-0 transition-all duration-700 ease-out" 
-                                    alt="Process detail" 
-                                />
+                                <img src={img} className="w-full h-auto block grayscale group-hover:grayscale-0 transition-all duration-700 ease-out" alt="Process detail" />
                                 <div className="absolute inset-0 bg-brand-purple/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 mix-blend-multiply" />
                             </div>
                             <div className="mt-4 flex justify-between items-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 px-1">
-                                <span className="font-mono text-[9px] uppercase tracking-widest text-brand-navy/60">
-                                    Fig. {i + 1}
-                                </span>
-                                <span className="font-mono text-[9px] uppercase tracking-widest text-brand-purple">
-                                    [View Full Res]
-                                </span>
+                                <span className="font-mono text-[9px] uppercase tracking-widest text-brand-navy/60">Fig. {i + 1}</span>
+                                <span className="font-mono text-[9px] uppercase tracking-widest text-brand-purple">[View Full Res]</span>
                             </div>
                         </motion.div>
                     ))}
@@ -272,7 +224,6 @@ const ImageModal: React.FC<{ src: string | null; onClose: () => void }> = ({ src
                     exit={{ opacity: 0 }}
                     onClick={onClose}
                     className="fixed inset-0 z-[99999] bg-brand-navy/95 backdrop-blur-3xl flex items-center justify-center p-4 md:p-12 cursor-zoom-out"
-                    style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}
                 >
                     <motion.div 
                         initial={{ scale: 0.9, opacity: 0, y: 20 }}
@@ -281,26 +232,11 @@ const ImageModal: React.FC<{ src: string | null; onClose: () => void }> = ({ src
                         transition={{ type: 'spring', damping: 30, stiffness: 300 }}
                         className="relative w-full h-full flex items-center justify-center pointer-events-none"
                     >
-                        <div 
-                            className="relative flex flex-col items-center pointer-events-auto"
-                            onClick={(e) => e.stopPropagation()} 
-                        >
-                            <img 
-                                src={src} 
-                                className="w-auto h-auto max-w-[90vw] max-h-[85vh] object-contain shadow-[0_50px_100px_rgba(0,0,0,0.5)] border border-white/10" 
-                                alt="Full Resolution" 
-                            />
-                            
+                        <div className="relative flex flex-col items-center pointer-events-auto" onClick={(e) => e.stopPropagation()}>
+                            <img src={src} className="w-auto h-auto max-w-[90vw] max-h-[85vh] object-contain shadow-[0_50px_100px_rgba(0,0,0,0.5)] border border-white/10" alt="Full Resolution" />
                             <div className="w-full mt-6 flex flex-col md:flex-row justify-between items-center gap-6">
-                                <div className="font-mono text-[10px] uppercase tracking-widest text-brand-offwhite/50 font-bold">
-                                    Source Inspection // Studio Capture
-                                </div>
-                                <button 
-                                    onClick={onClose}
-                                    className="font-mono text-[11px] uppercase tracking-widest text-brand-yellow font-black border-b-2 border-brand-yellow pb-1 hover:text-brand-offwhite hover:border-brand-offwhite transition-all"
-                                >
-                                    CLOSE_DOSS_ [ESC]
-                                </button>
+                                <div className="font-mono text-[10px] uppercase tracking-widest text-brand-offwhite/50 font-bold">Source Inspection // Studio Capture</div>
+                                <button onClick={onClose} className="font-mono text-[11px] uppercase tracking-widest text-brand-yellow font-black border-b-2 border-brand-yellow pb-1 hover:text-brand-offwhite hover:border-brand-offwhite transition-all">CLOSE_DOSS_ [ESC]</button>
                             </div>
                         </div>
                     </motion.div>
@@ -318,9 +254,7 @@ const ProjectPage: React.FC = () => {
 
  useEffect(() => {
   if (!selectedImage) return;
-  const handleEsc = (e: KeyboardEvent) => {
-    if (e.key === 'Escape') setSelectedImage(null);
-  };
+  const handleEsc = (e: KeyboardEvent) => { if (e.key === 'Escape') setSelectedImage(null); };
   document.body.style.overflow = 'hidden';
   window.addEventListener('keydown', handleEsc);
   return () => {
@@ -358,7 +292,6 @@ const ProjectPage: React.FC = () => {
     <div className="bg-brand-offwhite text-brand-navy min-h-screen">
       <ProjectHero project={project} onImageClick={setSelectedImage} />
       
-      {/* 1. Context / The Goal */}
       <NarrativeSection 
         step={isLiteMode ? "01 Context" : "01 The Goal"}
         title={isLiteMode ? "Partnership Scope" : "Call to Adventure"}
@@ -366,12 +299,10 @@ const ProjectPage: React.FC = () => {
         isDark={false}
       />
 
-      {/* 2. Process Gallery (Only show if not Lite mode OR if there are process images explicitly) */}
       {!isLiteMode && story.processImages.length > 0 && (
            <ProcessGallery images={story.processImages} onImageSelect={setSelectedImage} />
       )}
  
-      {/* 3. The Gap (Hidden in Lite Mode) */}
       {!isLiteMode && (
           <NarrativeSection 
             step="02 The Gap"
@@ -381,7 +312,6 @@ const ProjectPage: React.FC = () => {
           />
       )}
 
-      {/* 4. The Gamble (Hidden in Lite Mode) */}
       {!isLiteMode && (
           <NarrativeSection 
             step="03 The Gamble"
@@ -392,7 +322,6 @@ const ProjectPage: React.FC = () => {
           />
       )}
 
-      {/* 5. The Gain / Impact */}
       <section className="py-24 md:py-48 bg-brand-yellow text-brand-navy overflow-hidden">
           <div className="container mx-auto px-6 md:px-8 text-center">
               <span className="font-mono text-xs uppercase tracking-[0.3em] font-bold mb-8 block">
