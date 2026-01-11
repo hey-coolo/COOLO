@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Html, Head, Body, Container, Section, Text, Heading, Link, Hr, Preview } from '@react-email/components';
 
-// COOLO Brand Colors from constants.ts / index.html
+// COOLO Brand Colors
 const colors = {
   navy: '#0F0328',
   offWhite: '#F7F7F7',
@@ -17,7 +17,6 @@ export const MissionReceivedEmail = ({ name }: MissionReceivedEmailProps) => {
   return (
     <Html>
       <Head>
-        {/* Import Font to match site (fallback to sans-serif) */}
         <style dangerouslySetInnerHTML={{__html: `
           @import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@900&family=Space+Mono:wght@400;700&display=swap');
         `}} />
@@ -25,13 +24,13 @@ export const MissionReceivedEmail = ({ name }: MissionReceivedEmailProps) => {
       <Preview>Transmission Received. Stand by.</Preview>
       <Body style={main}>
         <Container style={container}>
-          {/* Header / Logo Area */}
+          {/* Header */}
           <Section style={header}>
             <Heading style={brandLogo}>COOLO</Heading>
             <Text style={statusBadge}>STATUS: RECEIVED</Text>
           </Section>
 
-          {/* Main Content */}
+          {/* Content */}
           <Section style={contentSection}>
             <Heading style={h1}>MISSION<br/><span style={{color: colors.purple}}>ACKNOWLEDGED.</span></Heading>
             
@@ -72,10 +71,10 @@ export const MissionReceivedEmail = ({ name }: MissionReceivedEmailProps) => {
 
 export default MissionReceivedEmail;
 
-// --- STYLES (Inline CSS for Email Clients) ---
+// --- STYLES ---
 const main = {
   backgroundColor: colors.offWhite,
-  fontFamily: 'Helvetica, Arial, sans-serif', // Fallback for email clients
+  fontFamily: 'Helvetica, Arial, sans-serif',
 };
 
 const container = {
@@ -124,12 +123,12 @@ const paragraph = {
   fontFamily: 'Helvetica, Arial, sans-serif',
   fontSize: '16px',
   lineHeight: '1.6',
-  color: 'rgba(15, 3, 40, 0.7)', // Navy with opacity
+  color: 'rgba(15, 3, 40, 0.7)',
   margin: '0 0 16px',
 };
 
 const highlightBox = {
-  backgroundColor: 'rgba(15, 3, 40, 0.05)', // Navy 5%
+  backgroundColor: 'rgba(15, 3, 40, 0.05)',
   borderLeft: `2px solid ${colors.purple}`,
   padding: '16px',
   margin: '24px 0',
