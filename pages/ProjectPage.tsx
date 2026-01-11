@@ -18,8 +18,10 @@ const DownArrow: React.FC<{ className?: string; size?: number }> = ({ className 
     </motion.div>
 );
 
-const IndividualDraggable: React.FC<{ img: string; initialPos: { top: string; left: string; rotate: number; s: number } }> = ({ img, initialPos }) => {
+// FIX: Added onClick to the interface here so it doesn't crash
+const IndividualDraggable: React.FC<{ img: string; initialPos: { top: string; left: string; rotate: number; s: number }; onClick: () => void }> = ({ img, initialPos, onClick }) => {
     const [zIndex, setZIndex] = useState(10);
+    const [isDragging, setIsDragging] = useState(false);
  
     return (
         <motion.div 
@@ -27,10 +29,16 @@ const IndividualDraggable: React.FC<{ img: string; initialPos: { top: string; le
             dragMomentum={true}
             dragTransition={{ power: 0.2, timeConstant: 200 }}
             onDragStart={(e) => {
-                e.stopPropagation(); 
                 setZIndex(100);
+                setIsDragging(true);
             }}
-            onDragEnd={() => setZIndex(10 + Math.floor(Math.random() * 5))}
+            onDragEnd={() => {
+                setZIndex(10 + Math.floor(Math.random() * 5));
+                setTimeout(() => setIsDragging(false), 100); 
+            }}
+            onClick={() => {
+                if (!isDragging) onClick();
+            }}
             className="absolute w-[220px] md:w-[380px] aspect-[4/5] shadow-2xl cursor-grab active:cursor-grabbing group overflow-hidden border border-brand-navy/5 bg-white"
             style={{ 
                 top: initialPos.top, 
@@ -63,27 +71,28 @@ const IndividualDraggable: React.FC<{ img: string; initialPos: { top: string; le
             }}
 
         >
-
             <img 
                 src={img} 
                 className="w-full h-full object-cover pointer-events-none grayscale group-hover:grayscale-0 transition-all duration-700" 
                 alt="" 
             />
+            {/* Click hint overlay */}
+            <div className="absolute inset-0 bg-brand-purple/0 group-hover:bg-brand-purple/10 transition-colors pointer-events-none flex items-center justify-center">
+                 <span className="opacity-0 group-hover:opacity-100 font-mono text-[9px] bg-brand-navy text-brand-offwhite px-2 py-1 uppercase tracking-widest transition-opacity duration-300">View</span>
+            </div>
         </motion.div>
     );
 };
 
-const ProjectHero: React.FC<{ project: any }> = ({ project }) => {
-    // 1. Aggregate ALL images from the project (Hero, Details, and Process)
+const ProjectHero: React.FC<{ project: any; onImageClick: (src: string) => void }> = ({ project, onImageClick }) => {
+    // 1. Aggregate ALL images
     const allProjectImages = [
-        project.imageUrl,                         // The Hero
-        ...(project.detailImages || []),          // The Details
-        ...(project.story?.processImages || [])   // The Process
-    ].filter(Boolean); // Remove any undefined/nulls
+        project.imageUrl,
+        ...(project.detailImages || []),
+        ...(project.story?.processImages || [])
+    ].filter(Boolean); 
 
     // 2. Create the "Endless" density.
-    // We repeat the *combined* list to ensure we have enough items (32) to fill the screen density.
-    // This creates the visual "mess" without limiting which images are shown.
     const images = Array(5).fill(allProjectImages).flat().slice(0, 32);
 
     const positions = Array.from({ length: 32 }).map((_, i) => ({
@@ -108,6 +117,7 @@ const ProjectHero: React.FC<{ project: any }> = ({ project }) => {
                         key={i} 
                         img={img} 
                         initialPos={positions[i]} 
+                        onClick={() => onImageClick(img)}
                     />
                 ))}
             </motion.div>
@@ -119,7 +129,7 @@ const ProjectHero: React.FC<{ project: any }> = ({ project }) => {
                         animate={{ opacity: 1, y: 0 }}
                         className="font-mono uppercase tracking-[0.5em] text-[10px] md:text-xs font-bold mb-6 block text-brand-purple"
                     >
-                        Case Study {project.id.toString().padStart(2, '0')}
+                        {project.category === 'Partnership' ? 'Partnership Archive' : `Case Study ${project.id.toString().padStart(2, '0')}`}
                     </motion.span>
                   
                     <div className="pointer-events-auto inline-block">
@@ -140,7 +150,7 @@ const ProjectHero: React.FC<{ project: any }> = ({ project }) => {
                 </div>
                 <div className="absolute bottom-12 flex flex-col items-center gap-4 pointer-events-none">
                     <span className="font-mono text-[9px] uppercase tracking-[0.5em] text-brand-navy/30 font-bold bg-white/50 backdrop-blur-sm px-4 py-2">
-                        [ TOSS IMAGES TO EXPLORE ]
+                        [ TOSS & CLICK TO EXPLORE ]
                     </span>
                 </div>
             </div>
@@ -187,7 +197,7 @@ const NarrativeSection: React.FC<{
                             {content}
                         </motion.p>
                         
-                        {images && (
+                        {images && images.length > 0 && (
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 {images.map((img, i) => (
                                     <div key={i} className={`overflow-hidden shadow-2xl ${i % 2 === 1 ? 'md:mt-16' : ''} bg-brand-navy/5`}>
@@ -204,11 +214,11 @@ const NarrativeSection: React.FC<{
 }
 
 const ProcessGallery: React.FC<{ images: string[], onImageSelect: (img: string) => void }> = ({ images, onImageSelect }) => {
+    if (!images || images.length === 0) return null;
+
     return (
         <section className="py-32 md:py-48 bg-brand-offwhite relative z-10">
             <div className="container mx-auto px-6 md:px-8">
-                
-                {/* Header */}
                 <div className="mb-24 md:mb-32 max-w-3xl">
                     <span className="font-mono text-brand-purple uppercase tracking-[0.3em] text-[10px] md:text-xs font-bold mb-4 block">
                         Visual Audit // Raw Process
@@ -217,10 +227,7 @@ const ProcessGallery: React.FC<{ images: string[], onImageSelect: (img: string) 
                         The Messy Middle
                     </h2>
                 </div>
-
-                {/* MASONRY LAYOUT */}
                 <div className="columns-1 md:columns-2 gap-8 md:gap-12 space-y-8 md:space-y-12">
-                    {/* Just map the images directly, no duplication */}
                     {images.map((img, i) => (
                         <motion.div 
                             key={i}
@@ -237,11 +244,8 @@ const ProcessGallery: React.FC<{ images: string[], onImageSelect: (img: string) 
                                     className="w-full h-auto block grayscale group-hover:grayscale-0 transition-all duration-700 ease-out" 
                                     alt="Process detail" 
                                 />
-                                
-                                {/* Overlay */}
                                 <div className="absolute inset-0 bg-brand-purple/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 mix-blend-multiply" />
                             </div>
-                            
                             <div className="mt-4 flex justify-between items-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 px-1">
                                 <span className="font-mono text-[9px] uppercase tracking-widest text-brand-navy/60">
                                     Fig. {i + 1}
@@ -314,14 +318,11 @@ const ProjectPage: React.FC = () => {
 
  useEffect(() => {
   if (!selectedImage) return;
-
   const handleEsc = (e: KeyboardEvent) => {
     if (e.key === 'Escape') setSelectedImage(null);
   };
-
   document.body.style.overflow = 'hidden';
   window.addEventListener('keydown', handleEsc);
-
   return () => {
     document.body.style.overflow = '';
     window.removeEventListener('keydown', handleEsc);
@@ -341,44 +342,62 @@ const ProjectPage: React.FC = () => {
   
   const project = PROJECTS[currentIndex];
   const nextProject = PROJECTS[(currentIndex + 1) % PROJECTS.length];
+  
+  // Logic to determine if this is a "Lite" project or a full Case Study
+  const isLiteMode = !project.story?.gap || project.story.gap === "";
+
   const story = project.story || {
       goal: project.challenge || "Define the mission.",
-      gap: "The messy middle where strategy meets execution.",
-      gamble: "The pivot point. The risk we took.",
+      gap: "",
+      gamble: "",
       gain: project.outcome || "The impact.",
       processImages: project.detailImages?.slice(0,3) || []
   };
 
   return (
     <div className="bg-brand-offwhite text-brand-navy min-h-screen">
-      <ProjectHero project={project} />
+      <ProjectHero project={project} onImageClick={setSelectedImage} />
+      
+      {/* 1. Context / The Goal */}
       <NarrativeSection 
-        step="01 The Goal"
-        title="Call to Adventure"
+        step={isLiteMode ? "01 Context" : "01 The Goal"}
+        title={isLiteMode ? "Partnership Scope" : "Call to Adventure"}
         content={story.goal}
         isDark={false}
       />
 
-      <ProcessGallery images={story.processImages} onImageSelect={setSelectedImage} />
+      {/* 2. Process Gallery (Only show if not Lite mode OR if there are process images explicitly) */}
+      {!isLiteMode && story.processImages.length > 0 && (
+           <ProcessGallery images={story.processImages} onImageSelect={setSelectedImage} />
+      )}
  
-      <NarrativeSection 
-        step="02 The Gap"
-        title="The Struggle"
-        content={story.gap}
-        isDark={true}
-      />
+      {/* 3. The Gap (Hidden in Lite Mode) */}
+      {!isLiteMode && (
+          <NarrativeSection 
+            step="02 The Gap"
+            title="The Struggle"
+            content={story.gap}
+            isDark={true}
+          />
+      )}
 
-      <NarrativeSection 
-        step="03 The Gamble"
-        title="The Pivot"
-        content={story.gamble}
-        images={project.detailImages?.slice(0, 2)}
-        isDark={false}
-      />
+      {/* 4. The Gamble (Hidden in Lite Mode) */}
+      {!isLiteMode && (
+          <NarrativeSection 
+            step="03 The Gamble"
+            title="The Pivot"
+            content={story.gamble}
+            images={project.detailImages?.slice(0, 2)}
+            isDark={false}
+          />
+      )}
 
+      {/* 5. The Gain / Impact */}
       <section className="py-24 md:py-48 bg-brand-yellow text-brand-navy overflow-hidden">
           <div className="container mx-auto px-6 md:px-8 text-center">
-              <span className="font-mono text-xs uppercase tracking-[0.3em] font-bold mb-8 block">04 The Gain / Impact</span>
+              <span className="font-mono text-xs uppercase tracking-[0.3em] font-bold mb-8 block">
+                  {isLiteMode ? "02 Output / Impact" : "04 The Gain / Impact"}
+              </span>
               <h2 className="text-3xl md:text-5xl lg:text-[4vw] font-black uppercase tracking-tighter leading-[1.1] max-w-4xl mx-auto break-words">
                   {story.gain}
               </h2>
@@ -402,7 +421,6 @@ const ProjectPage: React.FC = () => {
           </div>
       </section>
 
-        
       <section className="bg-brand-navy py-48 md:py-64 relative overflow-hidden group">
         <Link to={`/work/${nextProject.slug}`} className="block relative z-10 text-center p-6">
             <span className="font-mono text-brand-offwhite/50 uppercase tracking-[0.5em] text-[10px] md:text-xs font-black">Next Case File</span>
@@ -415,7 +433,7 @@ const ProjectPage: React.FC = () => {
         </div>
       </section>
 
-<ImageModal src={selectedImage} onClose={() => setSelectedImage(null)} />
+      <ImageModal src={selectedImage} onClose={() => setSelectedImage(null)} />
    </div>
   );
 };

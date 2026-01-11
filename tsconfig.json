@@ -12,7 +12,7 @@
     "skipLibCheck": true,
    "types": [
       "node",
-      "vite/client"  <-- ADD THIS LINE
+      "vite/client" 
     ],
     "moduleResolution": "bundler",
     "isolatedModules": true,

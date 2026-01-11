@@ -1,3 +1,5 @@
+// types.ts
+
 export interface Project {
   id: number;
   title: string;
@@ -22,7 +24,7 @@ export interface Project {
   };
 }
 
-export type ProjectCategory = 'All' | 'Featured' | '3D Design' | 'Brand Identity' | 'Web Design' | 'Campaign' | 'Fashion' | 'Packaging' | 'Motion Design' | 'Digital Art' | 'Strategy';
+export type ProjectCategory = 'All' | 'Featured' | '3D Design' | 'Brand Identity' | 'Web Design' | 'Campaign' | 'Fashion' | 'Packaging' | 'Motion Design' | 'Digital Art' | 'Strategy' | 'Partnership';
 
 export interface ServiceTier {
   title: string;
@@ -48,7 +50,7 @@ export interface DesignPowerTier {
 export interface ClarityTier {
     slug: string;
     name: string;
-    price?: string; // Made optional
+    price?: string; 
     subtitle: string;
     desc: string;
     features: string[];

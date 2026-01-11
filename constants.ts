@@ -5,8 +5,8 @@ import { Project, TeamMember, JournalPost, ServiceLeg, ProjectCategory, Drop, De
 
 export const ASSETS = {
   team: {
-    franco: '/assets/team/Franco.webp',
-    ariana: '/assets/team/Ariana.webp'
+    franco: './assets/team/Franco.webp',
+    ariana: './assets/team/Ariana.webp'
   },
   services: {
       clarity: "#FCC803",      // Brand Yellow
@@ -24,29 +24,29 @@ export const PROJECTS: Project[] = [
     category: 'Brand Identity', 
     tags: ['Brutalism', 'Typography', 'Strategy'],
     year: 2025,
-    imageUrl: '/assets/cases/unmplymnt/Hero.webp', 
+    imageUrl: './assets/cases/unmplymnt/Hero.webp', 
     featured: true,
     client: 'Internal Project',
     role: 'Strategy, logo & mark system, type system.',
     detailImages: [
-        '/assets/cases/unmplymnt/detail-1.webp', 
-        '/assets/cases/unmplymnt/detail-2.webp', 
-        '/assets/cases/unmplymnt/detail-3.webp', 
-        '/assets/cases/unmplymnt/detail-4.webp', 
-        '/assets/cases/unmplymnt/detail-5.webp',
-        '/assets/cases/unmplymnt/detail-6.webp',
-        '/assets/cases/unmplymnt/detail-7.webp'
+        './assets/cases/unmplymnt/detail-1.webp', 
+        './assets/cases/unmplymnt/detail-2.webp', 
+        './assets/cases/unmplymnt/detail-3.webp', 
+        './assets/cases/unmplymnt/detail-4.webp', 
+        './assets/cases/unmplymnt/detail-5.webp',
+        './assets/cases/unmplymnt/detail-6.webp',
+        './assets/cases/unmplymnt/detail-7.webp'
     ],
     story: {
         goal: "UNMPLYNMT began as a belief: that clothing can be more than fashion — it can be a banner for identity.",
-        gap: "Most streetwear brands dress their ambition in borrowed codes. UNMPLYNMT wasn’t about nostalgia.",
+        gap: "Most streetwear brands dress their ambition in borrowed codes. UNMPLYNMT was not about nostalgia.",
         gamble: "We developed a visual voice that mirrors that attitude: Typographic Brutality.",
-        gain: "Identity done right doesn’t whisper. It moves people.",
+        gain: "Identity done right does not whisper. It moves people.",
         processImages: [
-            '/assets/cases/unmplymnt/process-1.webp',
-            '/assets/cases/unmplymnt/process-2.webp',
-            '/assets/cases/unmplymnt/process-3.webp',
-            '/assets/cases/unmplymnt/process-5.webp'
+            './assets/cases/unmplymnt/process-1.webp',
+            './assets/cases/unmplymnt/process-2.webp',
+            './assets/cases/unmplymnt/process-3.webp',
+            './assets/cases/unmplymnt/process-5.webp'
         ]
     }
   },
@@ -58,22 +58,25 @@ export const PROJECTS: Project[] = [
     category: 'Packaging',
     tags: ['Packaging', 'Industrial', 'Minimalism'],
     year: 2024,
-    imageUrl: '/assets/cases/just-boxes/Hero.webp', 
+    imageUrl: './assets/cases/just-boxes/Hero.webp', 
     featured: true,
     client: 'Just Boxes',
     role: 'Creative Direction',
     detailImages: [
-        '/assets/cases/just-boxes/detail-1.webp',
-        '/assets/cases/just-boxes/detail-2.webp'
+        './assets/cases/just-boxes/detail-1.webp',
+        './assets/cases/just-boxes/detail-2.webp'
     ],
     story: {
         goal: "Celebrate cardboard as a primary luxury material.",
         gap: "Sustainable packaging is often over-designed.",
         gamble: "No plastic coatings. We used structural folding.",
         gain: "A signature packaging system that is 100% recyclable.",
-        processImages: [] 
+        processImages: [
+            '/assets/cases/just-boxes/detail-1.webp',
+            '/assets/cases/just-boxes/detail-2.webp'
+        ]
     }
-  },
+  },    
   {
     id: 3,
     title: 'Surfboard v001',
@@ -82,16 +85,16 @@ export const PROJECTS: Project[] = [
     category: '3D Design',
     tags: ['3D Viz', 'Technical', 'Surfacing'],
     year: 2022,
-    imageUrl: '/assets/cases/surfboard-v001/Hero.webp',
+    imageUrl: './assets/cases/surfboard-v001/Hero.webp',
     featured: true,
     client: 'Technical Study',
     role: '3D Artist',
     detailImages: [
-        '/assets/cases/surfboard-v001/detail-1.webp',
-        '/assets/cases/surfboard-v001/detail-2.webp',
-        '/assets/cases/surfboard-v001/detail-3.webp',
-        '/assets/cases/surfboard-v001/detail-4.webp',
-        '/assets/cases/surfboard-v001/detail-5.webp'
+        './assets/cases/surfboard-v001/detail-1.webp',
+        './assets/cases/surfboard-v001/detail-2.webp',
+        './assets/cases/surfboard-v001/detail-3.webp',
+        './assets/cases/surfboard-v001/detail-4.webp',
+        './assets/cases/surfboard-v001/detail-5.webp'
     ],
     story: {
         goal: "Mimic the exact light refraction of hand-shaped surfboard resin.",
@@ -99,8 +102,8 @@ export const PROJECTS: Project[] = [
         gamble: "A 2-week deep dive into a single material shader.",
         gain: "The creation of our 'Hydro-Logic' shader library.",
         processImages: [
-            '/assets/cases/surfboard-v001/process-1.webp',
-            '/assets/cases/surfboard-v001/process-2.webp'
+            './assets/cases/surfboard-v001/process-1.webp',
+            './assets/cases/surfboard-v001/process-2.webp'
         ]
     }
   },
@@ -112,17 +115,25 @@ export const PROJECTS: Project[] = [
     category: '3D Design',
     tags: ['Industrial', 'Hardware', 'Lighting'],
     year: 2021,
-    imageUrl: '/assets/cases/the-cartridges/Hero.webp',
+    imageUrl: './assets/cases/the-cartridges/Hero.webp',
     featured: false,
     client: 'Modular Labs',
     role: 'Visualization Lead',
-    detailImages: [],
-    story: {
+    detailImages: [ 
+        './assets/cases/the-cartridges/detail-1.webp', 
+        './assets/cases/the-cartridges/detail-2.webp', 
+        './assets/cases/the-cartridges/detail-3.webp', 
+        './assets/cases/the-cartridges/detail-4.webp'],
+
+        story: {
         goal: "Represent complex modularity through simple, high-res geometric lighting.",
         gap: "Technical products are often shown in flat lighting.",
         gamble: "Using pitch-black environments to force focus.",
         gain: "A set of high-converting visual assets.",
-        processImages: []
+        processImages: [
+        './assets/cases/the-cartridges/process-1.webp', 
+        './assets/cases/the-cartridges/process-2.webp', 
+        './assets/cases/the-cartridges/process-3.webp']
     }
   },
   {
@@ -154,7 +165,7 @@ export const PROJECTS: Project[] = [
     category: 'Brand Identity',
     tags: ['Editorial', 'Strategy', 'Nature'],
     year: 2023,
-    imageUrl: '/assets/cases/franca-austral/Hero.webp',
+    imageUrl: './assets/cases/franca-austral/Hero.webp',
     featured: false,
     client: 'Franca Collective',
     role: 'Art Director',
@@ -175,7 +186,7 @@ export const PROJECTS: Project[] = [
     category: 'Strategy',
     tags: ['Positioning', 'Messaging', 'Narrative'],
     year: 2021,
-    imageUrl: '/assets/cases/traveller-entrepreneur/Hero.webp',
+    imageUrl: './assets/cases/traveller-entrepreneur/Hero.webp',
     featured: true,
     client: 'Personal Brand',
     role: 'Lead Strategist',
@@ -185,6 +196,57 @@ export const PROJECTS: Project[] = [
         gap: "The travel content was too casual.",
         gamble: "Cutting 80% of existing content categories.",
         gain: "A 300% increase in inbound consulting leads.",
+        processImages: []
+    }
+  },
+{
+    id: 8,
+    title: 'Pablo Creative',
+    slug: 'pablo-creative',
+    description: 'Multidisciplinary design studio partnership. Covering photography, graphic design, web, and motion.',
+    category: 'Partnership',
+    tags: ['Studio', 'Motion', 'Photography', 'Graphic Design'],
+    year: 2020,
+    imageUrl: '/assets/cases/pablo-creative/Hero.webp', 
+    featured: false,
+    client: 'Pablo Creative',
+    role: 'Design & Motion Lead',
+    detailImages: [
+        '/assets/cases/pablo-creative/detail-1.webp',
+        '/assets/cases/pablo-creative/detail-2.webp',
+        '/assets/cases/pablo-creative/detail-3.webp',
+        '/assets/cases/pablo-creative/detail-4.webp'
+    ],
+    story: {
+        goal: "Deliver high-output creative across every medium: Print, Web, Motion, and Video.",
+        gap: "", // Empty to trigger Gallery Mode
+        gamble: "", 
+        gain: "A diverse portfolio of integrated campaigns built on speed and precision.",
+        processImages: [] 
+    }
+  },
+  {
+    id: 9,
+    title: 'Ntegrity',
+    slug: 'ntegrity',
+    description: 'Operational design support for Australia’s leading non-profit marketing agency.',
+    category: 'Partnership',
+    tags: ['Agency', 'Digital Ads', 'Social Media', 'Events'],
+    year: 2021,
+    imageUrl: '/assets/cases/ntegrity/Hero.webp', 
+    featured: false,
+    client: 'Ntegrity Agency',
+    role: 'Mid-Weight Designer',
+    detailImages: [
+        '/assets/cases/ntegrity/detail-1.webp',
+        '/assets/cases/ntegrity/detail-2.webp',
+        '/assets/cases/ntegrity/detail-3.webp'
+    ],
+    story: {
+        goal: "Support large-scale fundraising events with high-volume digital assets and paid media content.",
+        gap: "", // Empty to trigger Gallery Mode
+        gamble: "",
+        gain: "Seamless campaign execution for major Australian non-profits.",
         processImages: []
     }
   }
@@ -381,7 +443,7 @@ export const PARTNERSHIP_MODELS: PartnershipModel[] = [
 ];
 
 export const PROJECT_CATEGORIES: ProjectCategory[] = [
-  'All', 'Featured', '3D Design', 'Brand Identity', 'Web Design', 'Strategy', 'Packaging'
+  'All', 'Featured', '3D Design', 'Brand Identity', 'Web Design', 'Strategy', 'Packaging', 'Partnership'
 ];
 
 export const JOURNAL_POSTS: JournalPost[] = [
@@ -389,7 +451,7 @@ export const JOURNAL_POSTS: JournalPost[] = [
     slug: "script-01-micromanagement",
     title: "The Trust Cycle",
     date: "2024.11.12",
-    imageUrl: '/assets/journal/script-01.webp',
+    imageUrl: './assets/journal/script-01.webp',
     excerpt: "Why micromanagement is actually a symptom of a failed strategy phase.",
     tags: ["Process", "Clients", "Intel"],
     readTime: "4 min read",
@@ -400,7 +462,7 @@ export const JOURNAL_POSTS: JournalPost[] = [
     slug: "3d-as-strategic-asset",
     title: "3D as a Strategic Asset",
     date: "2024.10.05",
-    imageUrl: '/assets/journal/script-02.webp',
+    imageUrl: './assets/journal/script-02.webp',
     excerpt: "Moving 3D from 'cool render' to 'conversion tool'.",
     tags: ["3D", "E-commerce", "Strategy"],
     readTime: "6 min read",
@@ -411,7 +473,7 @@ export const JOURNAL_POSTS: JournalPost[] = [
     slug: "no-magic-formula-logic",
     title: "The Logic of No Magic",
     date: "2024.09.20",
-    imageUrl: '/assets/journal/script-03.webp',
+    imageUrl: './assets/journal/script-03.webp',
     excerpt: "Why we killed the 'Creative Guru' trope to save our clients' money.",
     tags: ["Business", "Operations", "Fluff"],
     readTime: "5 min read",
@@ -426,21 +488,21 @@ export const FREE_RESOURCES: Resource[] = [
         title: 'The Clarity Audit', 
         format: 'PDF', 
         desc: 'A 15-point checklist to identify narrative leaks in your current brand.', 
-        link: '/docs/audit.pdf' 
+        link: './docs/audit.pdf' 
     },
     { 
         id: '02', 
         title: 'No Magic Questionnaire', 
         format: 'PDF', 
         desc: 'The exact intake form we use to deconstruct high-growth brands.', 
-        link: '/docs/questionnaire.pdf' 
+        link: './docs/questionnaire.pdf' 
     },
     { 
         id: '03', 
         title: 'Positioning One-Pager', 
         format: 'PDF', 
         desc: 'A minimalist template to define your core value prop on a single page.', 
-        link: '/docs/positioning.pdf' 
+        link: './docs/positioning.pdf' 
     }
 ];
 

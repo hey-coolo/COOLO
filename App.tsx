@@ -18,7 +18,6 @@ import ContactPage from './pages/ContactPage';
 import JournalPage from './pages/JournalPage';
 import DropsPage from './pages/DropsPage';
 import DropDetailPage from './pages/DropDetailPage';
-import LabPage from './pages/LabPage';
 import AboutPage from './pages/AboutPage';
 import TierDetailPage from './pages/TierDetailPage';
 import ClarityTierPage from './pages/ClarityTierPage';
@@ -103,7 +102,6 @@ const App: React.FC = () => {
                       <Route path="/journal/:slug" element={<JournalPage />} />
                       <Route path="/drops" element={<DropsPage />} />
                       <Route path="/drops/:slug" element={<DropDetailPage />} />
-                      <Route path="/lab" element={<LabPage />} />
                       <Route path="/contact" element={<ContactPage />} />
                       <Route path="/faq" element={<FAQPage />} />
                     </Routes>
