@@ -1,5 +1,5 @@
 import { Resend } from 'resend';
-import { MissionReceivedEmail } from './components/emails/MissionReceived.tsx';
+import { MissionReceivedEmail } from '../components/emails/MissionReceived';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 

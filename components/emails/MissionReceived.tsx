@@ -57,11 +57,13 @@ export const MissionReceivedEmail = ({ name }: MissionReceivedEmailProps) => {
 
           {/* FOOTER */}
           <Section style={footer}>
-            <Text style={footerText}>
-              COOLO STUDIO<br/>
-              MOUNT MAUNGANUI, NZ<br/>
-              <Link href="https://instagram.com/coolo.co" style={link}>INSTAGRAM</Link>
-            </Text>
+              <Text style={footerText}>
+                COOLO STUDIO<br/>
+                MOUNT MAUNGANUI, NZ<br/>
+                <Link href="https://instagram.com/coolo.co" style={link}>INSTAGRAM</Link>
+                {' • '}
+                <Link href="https://coolo.co.nz/unsubscribe" style={{...link, color: '#999', textDecoration: 'none'}}>UNSUBSCRIBE</Link>
+              </Text>
           </Section>
         </Container>
       </Body>
