@@ -16,32 +16,19 @@ export default async function handler(req, res) {
   }
 
   try {
-    // 2. Add to Audience (Optional)
+    // 2. Add to Audience (ONLY if ID exists)
     if (process.env.RESEND_AUDIENCE_ID) {
-        try {
-            await resend.contacts.create({
-                email: email,
-                firstName: name.split(' ')[0],
-                lastName: name.split(' ').slice(1).join(' '),
-                unsubscribed: false,
-                audienceId: process.env.RESEND_AUDIENCE_ID
-            });
-        } catch (e) {
-            console.warn("Audience skipped:", e);
-        }
-    } else {
-        // Try adding to default audience if no ID provided
-        try {
-             await resend.contacts.create({
-              email: email,
-              firstName: name.split(' ')[0],
-              lastName: name.split(' ').slice(1).join(' '),
-              unsubscribed: false
-            });
-
-        } catch (e) {
-            console.warn("Default Audience skipped:", e);
-        }
+      try {
+        await resend.contacts.create({
+          email: email,
+          firstName: name.split(' ')[0],
+          lastName: name.split(' ').slice(1).join(' '),
+          unsubscribed: false,
+          audienceId: process.env.RESEND_AUDIENCE_ID,
+        });
+      } catch (e) {
+        console.warn("Audience skipped:", e);
+      }     
     }
 
     // 3. Send Stylized Email
