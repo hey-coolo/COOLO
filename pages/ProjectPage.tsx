@@ -4,34 +4,50 @@ import { useParams, Link } from 'react-router-dom';
 import { PROJECTS } from '../constants';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 
-// --- 1. LOCAL REVEAL LOADER (The "II" Favicon Animation) ---
+// --- 1. LOCAL REVEAL LOADER (SVG Mask Cut-Out) ---
 const ProjectReveal: React.FC<{ onComplete: () => void }> = ({ onComplete }) => {
     return (
         <motion.div
-            className="fixed inset-0 z-[9999] flex items-center justify-center bg-brand-offwhite"
+            className="fixed inset-0 z-[9999] flex items-center justify-center pointer-events-none"
             initial={{ opacity: 1 }}
             animate={{ opacity: 0 }}
-            transition={{ duration: 0.8, delay: 1.5, ease: "easeInOut" }}
+            transition={{ duration: 0.5, delay: 1.2, ease: "linear" }} 
             onAnimationComplete={onComplete}
         >
-            <div className="w-24 h-24 relative">
-                <svg viewBox="0 0 100 100" className="w-full h-full overflow-visible">
-                    <motion.rect
-                        x="25" y="10" width="15" height="80" rx="7.5"
-                        fill="#0F0328"
-                        initial={{ scaleY: 0 }}
-                        animate={{ scaleY: 1 }}
-                        transition={{ duration: 0.8, ease: [0.19, 1, 0.22, 1] }}
-                    />
-                    <motion.rect
-                        x="60" y="10" width="15" height="80" rx="7.5"
-                        fill="#0F0328"
-                        initial={{ scaleY: 0 }}
-                        animate={{ scaleY: 1 }}
-                        transition={{ duration: 0.8, delay: 0.2, ease: [0.19, 1, 0.22, 1] }}
-                    />
-                </svg>
-            </div>
+            {/* The SVG acts as the overlay container */}
+            <svg className="w-full h-full" preserveAspectRatio="xMidYMid slice">
+                <defs>
+                    <mask id="logo-mask">
+                        {/* 1. White Rect = The Solid Overlay Part */}
+                        <rect x="0" y="0" width="100%" height="100%" fill="white" />
+                        
+                        {/* 2. Black Rects = The "Holes" (Transparent Parts) 
+                            We animate the scale of these holes to "reveal" the page.
+                        */}
+                        <g transform="translate(50 50)"> {/* Center the group to origin for scaling */}
+                            <motion.g
+                                initial={{ scale: 1 }}
+                                animate={{ scale: 50 }} // Scale up massive to clear screen
+                                transition={{ duration: 1.2, delay: 0.2, ease: [0.83, 0, 0.17, 1] }} // Custom expo ease
+                            >
+                                {/* The "II" Logo Shape centered at 0,0 */}
+                                <rect x="-20" y="-40" width="15" height="80" rx="7.5" fill="black" />
+                                <rect x="5" y="-40" width="15" height="80" rx="7.5" fill="black" />
+                            </motion.g>
+                        </g>
+                    </mask>
+                </defs>
+
+                {/* The Visible Overlay Layer applying the mask */}
+                <rect 
+                    x="0" 
+                    y="0" 
+                    width="100%" 
+                    height="100%" 
+                    fill="#F7F7F7" // Brand Off-White
+                    mask="url(#logo-mask)" 
+                />
+            </svg>
         </motion.div>
     );
 };
@@ -51,7 +67,7 @@ const RevealImage: React.FC<{ src: string; className?: string }> = ({ src, class
     );
 };
 
-// --- 3. STICKY SCROLL SECTION (Fixed Logic) ---
+// --- 3. STICKY SCROLL SECTION (Refined Logic) ---
 const StickyScrollSection: React.FC<{ 
     title: string; 
     text: string; 
@@ -65,7 +81,7 @@ const StickyScrollSection: React.FC<{
             <div className={`flex flex-col md:flex-row gap-12 md:gap-24 relative ${align === 'right' ? 'md:flex-row-reverse' : ''}`}>
                 
                 {/* STICKY TEXT COLUMN */}
-                {/* h-screen + sticky top-0 + justify-center = Centered Sticky Text */}
+                {/* sticky top-0 + h-screen + justify-center = Centered Sticky Content */}
                 <div className="md:w-1/3">
                     <div className="md:sticky md:top-0 md:h-screen flex flex-col justify-center py-24 md:py-0">
                         <span className="font-mono text-brand-purple uppercase tracking-[0.3em] text-xs font-black mb-8 block border-l-2 border-brand-purple pl-4">
@@ -78,7 +94,6 @@ const StickyScrollSection: React.FC<{
                 </div>
 
                 {/* SCROLLING IMAGE STREAM */}
-                {/* This column flows naturally and gives the section its height */}
                 <div className="md:w-2/3 flex flex-col gap-16 md:gap-32 py-12 md:py-32">
                     {images.map((img, i) => (
                         <RevealImage key={i} src={img} className="w-full shadow-2xl" />
@@ -185,10 +200,9 @@ const NextProject: React.FC<{ project: any }> = ({ project }) => (
 
 const ProjectPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
-  const [isRevealing, setIsRevealing] = useState(true); // State for the Reveal Loader
+  const [isRevealing, setIsRevealing] = useState(true); 
   const currentIndex = PROJECTS.findIndex(p => p.slug === slug);
 
-  // Scroll to top when slug changes
   useEffect(() => {
       window.scrollTo(0, 0);
       setIsRevealing(true);
@@ -214,7 +228,6 @@ const ProjectPage: React.FC = () => {
   // Helper to split detailImages into streams
   const details = project.detailImages || [];
   const goalImages = details.slice(0, 2); 
-  // Fallback to hero image if gaps are empty, to maintain structure
   const gapImages = details.slice(2, 4).length > 0 ? details.slice(2, 4) : [project.imageUrl];
   const gambleImages = details.slice(4);
 

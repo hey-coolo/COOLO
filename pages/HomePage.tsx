@@ -204,7 +204,7 @@ const BrandHero: React.FC = () => {
                 <div className="mt-auto pointer-events-auto">
                     <div className="text-center mb-6">
                         <span className="font-mono text-[9px] uppercase tracking-[0.5em] opacity-40 font-bold text-brand-navy">
-                            [ MOVE CURSOR TO PAINT ]
+                            [ MOVE CURSOR TO REVEAL ]
                         </span>
                     </div>
 
@@ -243,7 +243,11 @@ const SplitManifesto: React.FC = () => {
     return (
         <section className="border-t-2 border-brand-navy bg-brand-offwhite relative z-40 overflow-hidden">
             <div className="container mx-auto border-x border-brand-navy/10">
-                <div className="grid grid-cols-1 lg:grid-cols-2">
+                {/* FIX: 'items-start' is required here so the left column height 
+                    is independent of the right column, enabling the sticky effect. */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 items-start">
+                    
+                    {/* LEFT COLUMN: Sticky Header */}
                     <div className="lg:sticky lg:top-32 lg:h-[calc(100vh-8rem)] p-8 md:p-16 border-b lg:border-b-0 lg:border-r border-brand-navy/10 flex flex-col justify-between">
                         <div>
                             <span className="font-mono text-brand-purple uppercase tracking-[0.3em] text-xs font-bold mb-8 block">01 / The Thesis</span>
@@ -257,6 +261,7 @@ const SplitManifesto: React.FC = () => {
                         </div>
                     </div>
 
+                    {/* RIGHT COLUMN: Scrolling Content */}
                     <div className="p-8 md:p-16 space-y-16 md:space-y-32">
                         <AnimatedSection>
                             <p className="text-3xl md:text-5xl font-light leading-tight text-brand-navy break-words">
