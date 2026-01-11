@@ -27,35 +27,51 @@ const ContactPage: React.FC = () => {
     if (step > 0) setStep(step - 1);
   };
 
-  // --- NEW SENDING LOGIC ---
+  // --- NEW: Handle Enter Key ---
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      // For Textareas: Only submit on Ctrl+Enter or Cmd+Enter to allow multi-line typing
+      if (e.currentTarget.tagName === 'TEXTAREA' && !e.metaKey && !e.ctrlKey) {
+        return; 
+      }
+      
+      e.preventDefault();
+      
+      // If we are on the last step (Review), Send. Otherwise, Next.
+      if (step === 5) {
+        handleTransmission();
+      } else {
+        handleNext();
+      }
+    }
+  };
+
   const handleTransmission = async () => {
     setStatus('submitting');
 
     try {
-      // REPLACE 'YOUR_ENDPOINT_HERE' with your actual service URL (e.g. Formspree, Getform)
-      const response = await fetch('YOUR_ENDPOINT_HERE', {
+      const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         },
-        body: JSON.stringify({
-          subject: `New Inquiry from ${formData.name}`,
-          ...formData
-        })
+        body: JSON.stringify(formData)
       });
 
       if (response.ok) {
         setStatus('success');
       } else {
+        const errorData = await response.json();
+        console.error("Submission error:", errorData);
         setStatus('error');
       }
     } catch (error) {
+      console.error("Network error:", error);
       setStatus('error');
     }
   };
 
-  // Kinetic input styling
   const inputClass = "bg-transparent border-b-4 border-brand-purple/30 text-brand-navy font-black focus:border-brand-purple focus:outline-none placeholder-brand-navy/20 w-full transition-all duration-300";
 
   return (
@@ -73,7 +89,6 @@ const ContactPage: React.FC = () => {
 
                 <div className="bg-white border border-brand-navy/10 p-8 md:p-16 shadow-2xl min-h-[400px] flex flex-col justify-between relative overflow-hidden">
                     
-                    {/* Hide Step Counter on Success */}
                     {status !== 'success' && (
                         <div className="absolute top-0 right-0 p-4 font-mono text-[10px] uppercase tracking-widest opacity-30">
                             Step 0{step + 1} / 06
@@ -83,7 +98,7 @@ const ContactPage: React.FC = () => {
                     <form onSubmit={(e) => e.preventDefault()} className="relative z-10 h-full flex flex-col justify-center">
                         <AnimatePresence mode="wait">
                             
-                            {/* --- SUCCESS STATE --- */}
+                            {/* SUCCESS STATE */}
                             {status === 'success' && (
                                 <motion.div
                                     key="success"
@@ -109,15 +124,9 @@ const ContactPage: React.FC = () => {
                                 </motion.div>
                             )}
 
-                            {/* --- STEPS 0-4 (Inputs) --- */}
+                            {/* STEP 0: NAME */}
                             {status !== 'success' && step === 0 && (
-                                <motion.div 
-                                    key="step0"
-                                    initial={{ opacity: 0, x: 20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    exit={{ opacity: 0, x: -20 }}
-                                    className="space-y-8"
-                                >
+                                <motion.div key="step0" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-8">
                                     <label className="block text-3xl md:text-5xl font-light text-brand-navy leading-tight">
                                         Identify yourself. <br/>
                                         I am <input 
@@ -126,6 +135,7 @@ const ContactPage: React.FC = () => {
                                             name="name" 
                                             value={formData.name} 
                                             onChange={handleChange}
+                                            onKeyDown={handleKeyDown}
                                             placeholder="[YOUR NAME]" 
                                             className={`${inputClass} inline-block w-auto min-w-[300px]`}
                                         />.
@@ -133,14 +143,9 @@ const ContactPage: React.FC = () => {
                                 </motion.div>
                             )}
 
+                            {/* STEP 1: BUSINESS */}
                             {status !== 'success' && step === 1 && (
-                                <motion.div 
-                                    key="step1"
-                                    initial={{ opacity: 0, x: 20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    exit={{ opacity: 0, x: -20 }}
-                                    className="space-y-8"
-                                >
+                                <motion.div key="step1" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-8">
                                     <label className="block text-3xl md:text-5xl font-light text-brand-navy leading-tight">
                                         I am operating on behalf of <br/>
                                         <input 
@@ -149,6 +154,7 @@ const ContactPage: React.FC = () => {
                                             name="business" 
                                             value={formData.business} 
                                             onChange={handleChange}
+                                            onKeyDown={handleKeyDown}
                                             placeholder="[BUSINESS NAME]" 
                                             className={`${inputClass} inline-block w-auto min-w-[400px]`}
                                         /> <br/>
@@ -157,6 +163,7 @@ const ContactPage: React.FC = () => {
                                             name="role" 
                                             value={formData.role} 
                                             onChange={handleChange}
+                                            onKeyDown={handleKeyDown}
                                             placeholder="[YOUR ROLE]" 
                                             className={`${inputClass} inline-block w-auto min-w-[300px] text-brand-purple`}
                                         />.
@@ -164,14 +171,9 @@ const ContactPage: React.FC = () => {
                                 </motion.div>
                             )}
 
+                            {/* STEP 2: PAIN */}
                             {status !== 'success' && step === 2 && (
-                                <motion.div 
-                                    key="step2"
-                                    initial={{ opacity: 0, x: 20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    exit={{ opacity: 0, x: -20 }}
-                                    className="space-y-8"
-                                >
+                                <motion.div key="step2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-8">
                                     <label className="block text-3xl md:text-5xl font-light text-brand-navy leading-tight">
                                         The specific friction or pain point <br/> we are facing right now is: <br/>
                                         <textarea 
@@ -179,21 +181,18 @@ const ContactPage: React.FC = () => {
                                             name="problem" 
                                             value={formData.problem} 
                                             onChange={handleChange}
-                                            placeholder="[DESCRIBE THE PAIN... BE BRUTAL]" 
+                                            onKeyDown={handleKeyDown}
+                                            placeholder="[DESCRIBE THE PAIN...]" 
                                             className={`${inputClass} w-full mt-4 h-32 resize-none`}
                                         />
                                     </label>
+                                    <span className="text-xs font-mono opacity-40 block">[CMD+ENTER to Continue]</span>
                                 </motion.div>
                             )}
 
+                             {/* STEP 3: GOAL */}
                              {status !== 'success' && step === 3 && (
-                                <motion.div 
-                                    key="step3"
-                                    initial={{ opacity: 0, x: 20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    exit={{ opacity: 0, x: -20 }}
-                                    className="space-y-8"
-                                >
+                                <motion.div key="step3" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-8">
                                     <label className="block text-3xl md:text-5xl font-light text-brand-navy leading-tight">
                                         The single most important outcome <br/> I hope to achieve with COOLO is: <br/>
                                         <textarea 
@@ -201,21 +200,18 @@ const ContactPage: React.FC = () => {
                                             name="goal" 
                                             value={formData.goal} 
                                             onChange={handleChange}
+                                            onKeyDown={handleKeyDown}
                                             placeholder="[DESCRIBE THE VICTORY]" 
                                             className={`${inputClass} w-full mt-4 h-32 resize-none`}
                                         />
                                     </label>
+                                    <span className="text-xs font-mono opacity-40 block">[CMD+ENTER to Continue]</span>
                                 </motion.div>
                             )}
 
+                            {/* STEP 4: EMAIL */}
                             {status !== 'success' && step === 4 && (
-                                <motion.div 
-                                    key="step4"
-                                    initial={{ opacity: 0, x: 20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    exit={{ opacity: 0, x: -20 }}
-                                    className="space-y-8"
-                                >
+                                <motion.div key="step4" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-8">
                                     <label className="block text-3xl md:text-5xl font-light text-brand-navy leading-tight">
                                         You can confirm this brief and <br/> send the dossier to: <br/>
                                         <input 
@@ -224,6 +220,7 @@ const ContactPage: React.FC = () => {
                                             name="email" 
                                             value={formData.email} 
                                             onChange={handleChange}
+                                            onKeyDown={handleKeyDown}
                                             placeholder="[YOUR EMAIL ADDRESS]" 
                                             className={`${inputClass} inline-block w-full`}
                                         />
@@ -231,7 +228,7 @@ const ContactPage: React.FC = () => {
                                 </motion.div>
                             )}
 
-                             {/* --- STEP 5 (Review & Submit) --- */}
+                             {/* STEP 5: REVIEW */}
                              {status !== 'success' && step === 5 && (
                                 <motion.div 
                                     key="step5"
@@ -242,7 +239,7 @@ const ContactPage: React.FC = () => {
                                     <div className="font-mono text-brand-purple uppercase tracking-widest text-xs font-bold mb-8">Brief Generated</div>
                                     <h3 className="text-4xl md:text-6xl font-black uppercase text-brand-navy leading-none mb-8">Ready to Transmit?</h3>
                                     <p className="font-body text-xl text-brand-navy/60 max-w-lg mx-auto mb-12">
-                                        We will review your intel and respond within 24 hours if the fit is right.
+                                        We will review your intel and respond within 24 hours.
                                     </p>
                                     
                                     <button 
@@ -255,7 +252,7 @@ const ContactPage: React.FC = () => {
 
                                     {status === 'error' && (
                                         <p className="mt-4 text-red-600 font-mono text-xs uppercase tracking-widest font-bold">
-                                            Error: Signal Lost. Please try again.
+                                            Signal Lost. Please try again.
                                         </p>
                                     )}
                                 </motion.div>
@@ -283,22 +280,13 @@ const ContactPage: React.FC = () => {
             </div>
         </AnimatedSection>
       </div>
-
-      {/* Footer Info */}
+      
+      {/* Footer info can remain the same as previously provided */}
       <div className="bg-brand-navy text-brand-offwhite py-24 mt-24">
         <div className="container mx-auto px-8 grid grid-cols-1 md:grid-cols-3 gap-16 font-mono uppercase tracking-[0.2em] text-[10px]">
-          <div>
-              <h3 className="text-brand-purple mb-4 font-bold">HQ</h3>
-              <p className="text-lg font-sans font-black tracking-normal">Mount Maunganui, NZ</p>
-          </div>
-          <div>
-               <h3 className="text-brand-purple mb-4 font-bold">Direct Line</h3>
-               <a href="mailto:hey@coolo.co.nz" className="text-lg font-sans font-black tracking-normal block hover:text-brand-purple">hey@coolo.co.nz</a>
-          </div>
-          <div>
-              <h3 className="text-brand-purple mb-4 font-bold">Network</h3>
-              <a href="https://instagram.com/coolo.co" target="_blank" rel="noopener noreferrer" className="text-lg font-sans font-black tracking-normal block hover:text-brand-purple">Instagram</a>
-          </div>
+          <div><h3 className="text-brand-purple mb-4 font-bold">HQ</h3><p className="text-lg font-sans font-black tracking-normal">Mount Maunganui, NZ</p></div>
+          <div><h3 className="text-brand-purple mb-4 font-bold">Direct Line</h3><a href="mailto:hey@coolo.co.nz" className="text-lg font-sans font-black tracking-normal block hover:text-brand-purple">hey@coolo.co.nz</a></div>
+          <div><h3 className="text-brand-purple mb-4 font-bold">Network</h3><a href="https://instagram.com/coolo.studio" target="_blank" rel="noopener noreferrer" className="text-lg font-sans font-black tracking-normal block hover:text-brand-purple">Instagram</a></div>
         </div>
       </div>
     </div>

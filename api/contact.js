@@ -16,23 +16,26 @@ export default async function handler(req, res) {
   }
 
   try {
-    // --- 1. RESEND: Add to "Web Leads" Audience (Database) ---
-    // This replaces Mailchimp. The user is now stored in Resend Contacts.
-    // Note: You can create an Audience in Resend Dashboard and get the ID.
-    // If you don't have an ID yet, you can remove the 'audienceId' line, 
-    // and it will add to your default 'General' audience.
-    const contactRequest = resend.contacts.create({
-      email: email,
-      firstName: name.split(' ')[0],
-      lastName: name.split(' ').slice(1).join(' '),
-      unsubscribed: false,
-      audienceId: process.env.RESEND_AUDIENCE_ID, 
-      properties: {
-        business_name: business || '',
-        job_role: role || '',
-        pain_point: problem?.substring(0, 250) || '', // Limit char length for properties
+    // --- 1. RESEND: Add to Audience (Optional / Soft Fail) ---
+    // We wrap this in a separate try/catch so it doesn't block the email if it fails.
+    if (process.env.RESEND_AUDIENCE_ID) {
+      try {
+        await resend.contacts.create({
+          email: email,
+          firstName: name.split(' ')[0],
+          lastName: name.split(' ').slice(1).join(' '),
+          unsubscribed: false,
+          audienceId: process.env.RESEND_AUDIENCE_ID,
+          properties: {
+            business_name: business || '',
+            job_role: role || '',
+          }
+        });
+      } catch (audiencError) {
+        console.warn("Could not add to audience (Check Audience ID):", audiencError);
+        // We continue execution even if this fails!
       }
-    });
+    }
 
     // --- 2. RESEND: Send Stylized Auto-Reply (Transactional) ---
     const emailRequest = resend.emails.send({
@@ -57,18 +60,16 @@ export default async function handler(req, res) {
         <p>${problem}</p>
         <h3>The Goal</h3>
         <p>${goal}</p>
-        <hr />
-        <p><em>Contact securely stored in Resend Audience.</em></p>
       `,
     });
 
-    // Execute all in parallel for speed
-    await Promise.all([contactRequest, emailRequest, adminNotificationRequest]);
+    // Wait for critical emails to send
+    await Promise.all([emailRequest, adminNotificationRequest]);
 
     return res.status(200).json({ message: 'Transmission Successful' });
 
   } catch (error) {
-    console.error('Resend Error:', error);
+    console.error('Critical Resend Error:', error);
     return res.status(500).json({ error: 'Internal System Error' });
   }
 }
