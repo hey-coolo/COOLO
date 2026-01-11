@@ -1,9 +1,20 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import BrandLogo from './BrandLogo';
 
 const Footer: React.FC = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end end"]
+  });
+
+  // Re-implemented the Skew/Motion effects from your original footer
+  const skewX = useTransform(scrollYProgress, [0, 1], ["0deg", "-20deg"]);
+  const x = useTransform(scrollYProgress, [0, 1], ["0%", "5%"]); 
+  const opacity = useTransform(scrollYProgress, [0, 0.4], [0, 1]);
+
   const links = {
     index: [
       { name: 'Work', path: '/work' },
@@ -25,32 +36,35 @@ const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="bg-brand-navy text-brand-offwhite relative z-50 overflow-hidden pt-24 md:pt-32">
+    <footer ref={containerRef} className="bg-brand-navy text-brand-offwhite relative z-50 overflow-hidden pt-24 md:pt-32">
       
-      {/* 1. MASSIVE CTA SECTION */}
-      <div className="container mx-auto px-6 md:px-8 mb-24 md:mb-32">
-        <span className="font-mono text-brand-purple uppercase tracking-[0.3em] text-xs font-bold mb-8 block">
-            Signal The Unit
-        </span>
-        <Link 
-            to="/contact" 
-            className="group block relative border-t border-b border-brand-offwhite/10 py-12 md:py-24 hover:bg-brand-offwhite/5 transition-colors duration-500"
-        >
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
-                <h2 className="text-6xl md:text-[10vw] font-black uppercase tracking-tighter leading-[0.85] group-hover:text-brand-yellow transition-colors duration-300">
-                    Start The<br/>Project.
-                </h2>
-                <div className="mt-8 md:mt-0 w-16 h-16 md:w-32 md:h-32 rounded-full border border-brand-offwhite/20 flex items-center justify-center group-hover:bg-brand-yellow group-hover:border-brand-yellow transition-all duration-500 group-hover:rotate-45">
-                    <svg className="w-6 h-6 md:w-10 md:h-10 text-brand-offwhite group-hover:text-brand-navy transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                    </svg>
-                </div>
-            </div>
-        </Link>
+      {/* 1. THE RETURN OF "START THE GRIND" (Adapted for Dark Mode) */}
+      <div className="container mx-auto px-6 md:px-8 mb-32 md:mb-48">
+        <motion.div style={{ opacity }} className="flex flex-col items-center text-center">
+          <span className="font-mono text-sm uppercase text-brand-purple tracking-widest mb-8 font-bold">
+            Ready to evolve?
+          </span>
+          <h2 className="text-6xl md:text-[14vw] font-black uppercase tracking-tight text-brand-offwhite leading-[0.85] flex flex-col md:block items-center">
+            <span>START THE</span>
+            <br className="hidden md:block"/>
+            <motion.span 
+              style={{ skewX, x, display: 'inline-block', originX: 0 }}
+              className="text-brand-yellow" // Changed to Yellow for contrast on Navy
+            >
+              GRIND.
+            </motion.span>
+          </h2>
+          <a 
+            href="mailto:hey@coolo.co.nz" 
+            className="inline-block mt-16 text-2xl md:text-4xl font-sans font-black hover:text-brand-yellow transition-colors duration-300 underline decoration-brand-purple decoration-4 underline-offset-8"
+          >
+            hey@coolo.co.nz
+          </a>
+        </motion.div>
       </div>
 
       {/* 2. THE NAVIGATION GRID */}
-      <div className="container mx-auto px-6 md:px-8 grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-8 mb-32">
+      <div className="container mx-auto px-6 md:px-8 grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-8 mb-32 border-t border-brand-offwhite/10 pt-24">
         
         {/* Col 1: Index */}
         <div>
@@ -58,7 +72,7 @@ const Footer: React.FC = () => {
             <ul className="space-y-4">
                 {links.index.map(link => (
                     <li key={link.name}>
-                        <Link to={link.path} className="font-sans text-2xl font-bold uppercase tracking-tight hover:text-brand-yellow transition-colors">
+                        <Link to={link.path} className="font-sans text-xl md:text-2xl font-bold uppercase tracking-tight hover:text-brand-yellow transition-colors">
                             {link.name}
                         </Link>
                     </li>
@@ -72,7 +86,7 @@ const Footer: React.FC = () => {
             <ul className="space-y-4">
                 {links.services.map(link => (
                     <li key={link.name}>
-                        <Link to={link.path} className="font-sans text-2xl font-bold uppercase tracking-tight hover:text-brand-yellow transition-colors">
+                        <Link to={link.path} className="font-sans text-xl md:text-2xl font-bold uppercase tracking-tight hover:text-brand-yellow transition-colors">
                             {link.name}
                         </Link>
                     </li>
@@ -86,7 +100,7 @@ const Footer: React.FC = () => {
             <ul className="space-y-4">
                 {links.social.map(link => (
                     <li key={link.name}>
-                        <a href={link.url} target="_blank" rel="noopener noreferrer" className="font-sans text-2xl font-bold uppercase tracking-tight hover:text-brand-yellow transition-colors">
+                        <a href={link.url} target="_blank" rel="noopener noreferrer" className="font-sans text-xl md:text-2xl font-bold uppercase tracking-tight hover:text-brand-yellow transition-colors">
                             {link.name}
                         </a>
                     </li>
@@ -113,12 +127,9 @@ const Footer: React.FC = () => {
       <div className="border-t border-brand-offwhite/10">
           <div className="container mx-auto px-6 md:px-8 py-12 md:py-16">
               <div className="flex flex-col md:flex-row justify-between items-end gap-8">
-                  {/* Footer Logo - Adjusted size as requested */}
                   <div className="w-full md:w-auto">
-                        {/* Passing white color ensures the correct SVG loads on the dark footer.
-                           Adjust the w-48 or w-64/96 to change massive logo size.
-                        */}
                       <div className="w-48 md:w-96 opacity-100 mb-8 md:mb-0">
+                        {/* Force light logo on dark footer */}
                         <BrandLogo color="#F7F7F7" className="w-full h-auto" />
                       </div>
                   </div>
