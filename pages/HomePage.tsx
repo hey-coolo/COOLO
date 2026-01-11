@@ -511,7 +511,7 @@ const ShowcaseGrid: React.FC = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-y-24">
                     {/* START FROM PROJECT 1, AS 0 IS FEATURED */}
-                    {PROJECTS.slice(1, 5).map((project, index) => (
+                    {PROJECTS.slice(1, 7).map((project, index) => (
                         <div key={project.id} className={`${index % 2 === 1 ? 'md:mt-24' : ''}`}>
                              <ProjectCard project={project} className="aspect-[4/3] w-full" />
                              <div className="mt-6 flex justify-between items-start border-t border-brand-navy/10 pt-4">
@@ -560,7 +560,7 @@ const HomePage: React.FC = () => {
       <BrandHero />
       <SplitManifesto />
       <ServiceRouter />
-      <FeatureSpotlight /> {/* NEW SECTION ADDED HERE */}
+      <FeatureSpotlight />
       <CapabilityList />
       <ShowcaseGrid />
       <LatestIntel />
