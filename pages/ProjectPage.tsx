@@ -3,78 +3,77 @@ import { useParams, Link } from 'react-router-dom';
 import { PROJECTS } from '../constants';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 
-// --- 1. CINEMATIC REVEAL LOADER (Center Cut-Out) ---
+// --- 1. CINEMATIC REVEAL LOADER (Fixed Center) ---
 const ProjectReveal: React.FC<{ onComplete: () => void }> = ({ onComplete }) => {
     return (
         <motion.div
             className="fixed inset-0 z-[9999] flex items-center justify-center pointer-events-none"
             initial={{ opacity: 1 }}
             animate={{ opacity: 0 }}
-            transition={{ duration: 0.1, delay: 1.6 }} // Fade out container at very end
+            transition={{ duration: 0.2, delay: 1.6 }}
             onAnimationComplete={onComplete}
         >
-            <svg className="w-full h-full" preserveAspectRatio="xMidYMid slice">
+            <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
                 <defs>
                     <mask id="logo-mask">
-                        {/* Solid White Background (Visible) */}
-                        <rect x="0" y="0" width="100%" height="100%" fill="white" />
-                        
-                        {/* Black Shapes (The Holes) */}
-                        {/* We group them and scale the GROUP from the center (50 50) */}
-                        <motion.g
-                            initial={{ scale: 1 }}
-                            animate={{ scale: 80 }} // Massive scale to clear screen
-                            transition={{ duration: 1.4, delay: 0.2, ease: [0.83, 0, 0.17, 1] }}
-                            style={{ transformBox: 'fill-box', transformOrigin: 'center' }}
-                        >
-                            {/* The "II" Logo Shapes centered roughly in the 100x100 viewbox */}
-                            <rect x="38" y="30" width="8" height="40" rx="4" fill="black" />
-                            <rect x="54" y="30" width="8" height="40" rx="4" fill="black" />
-                        </motion.g>
+                        <rect x="0" y="0" width="100" height="100" fill="white" />
+                        <g transform="translate(50 50)">
+                            <motion.g
+                                initial={{ scale: 1 }}
+                                animate={{ scale: 300 }} 
+                                transition={{ duration: 1.4, delay: 0.2, ease: [0.83, 0, 0.17, 1] }}
+                            >
+                                <rect x="-12" y="-40" width="10" height="80" rx="5" fill="black" />
+                                <rect x="2" y="-40" width="10" height="80" rx="5" fill="black" />
+                            </motion.g>
+                        </g>
                     </mask>
                 </defs>
-
-                {/* The Overlay Layer */}
-                <rect 
-                    x="0" y="0" width="100%" height="100%" 
-                    fill="#F7F7F7" 
-                    mask="url(#logo-mask)" 
-                />
+                <rect x="0" y="0" width="100" height="100" fill="#F7F7F7" mask="url(#logo-mask)" />
             </svg>
         </motion.div>
     );
 };
 
-// --- 2. CINEMATIC IMAGE COMPONENT (Parallax + Scale) ---
-// No cheap grayscale hovers. This uses a subtle vertical parallax 
-// AND a slow zoom-out effect as you scroll past.
-const CinematicImage: React.FC<{ src: string; className?: string; priority?: boolean }> = ({ src, className, priority = false }) => {
-    const ref = useRef(null);
-    const { scrollYProgress } = useScroll({
-        target: ref,
-        offset: ["start end", "end start"]
-    });
-    
-    // Parallax movement (moves slightly faster/slower than scroll)
-    const y = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"]);
-    // Subtle scale breathing (starts zoomed in, settles out)
-    const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1.15, 1, 1.15]);
+// --- 2. IMAGE COMPONENTS ---
 
+// Type A: The "Cinema" Image (Full Width, Parallax, High Impact)
+const CinemaImage: React.FC<{ src: string }> = ({ src }) => {
+    const ref = useRef(null);
+    const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+    const y = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]); // Deep parallax
+    
     return (
-        <div ref={ref} className={`overflow-hidden relative bg-brand-navy/5 ${className}`}>
-            <motion.div style={{ y, scale }} className="w-full h-full origin-center">
-                <img 
-                    src={src} 
-                    className="w-full h-full object-cover transition-opacity duration-700" 
-                    alt="" 
-                    loading={priority ? "eager" : "lazy"}
-                />
+        <div ref={ref} className="w-full aspect-[16/9] md:aspect-[21/9] overflow-hidden relative shadow-2xl my-12">
+            <motion.div style={{ y, scale: 1.1 }} className="w-full h-full">
+                <img src={src} className="w-full h-full object-cover" alt="" />
             </motion.div>
         </div>
     );
 };
 
-// --- 3. STICKY SCROLL SECTION (Editorial Layout) ---
+// Type B: The "Scatter" Image (Smaller, Static Scroll, Float Hover)
+const ScatterImage: React.FC<{ src: string; align: 'left' | 'right' }> = ({ src, align }) => {
+    return (
+        <motion.div 
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-15%" }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className={`w-3/4 md:w-2/3 aspect-[4/5] md:aspect-square overflow-hidden relative shadow-lg bg-brand-navy/5 ${align === 'right' ? 'self-end' : 'self-start'}`}
+        >
+            <motion.div 
+                whileHover={{ scale: 1.05 }} 
+                transition={{ duration: 0.6 }}
+                className="w-full h-full"
+            >
+                <img src={src} className="w-full h-full object-cover" alt="" />
+            </motion.div>
+        </motion.div>
+    );
+};
+
+// --- 3. STICKY SCROLL SECTION (Rhythmic Layout) ---
 const StickyScrollSection: React.FC<{ 
     title: string; 
     text: string; 
@@ -84,47 +83,41 @@ const StickyScrollSection: React.FC<{
     if (!images || images.length === 0) return null;
 
     return (
-        <div className="container mx-auto px-6 md:px-8 py-24 relative">
-            <div className={`flex flex-col md:flex-row gap-16 md:gap-32 relative ${align === 'right' ? 'md:flex-row-reverse' : ''}`}>
+        <div className="container mx-auto px-6 md:px-8 py-32 relative">
+            <div className={`flex flex-col md:flex-row gap-16 md:gap-32 relative items-start ${align === 'right' ? 'md:flex-row-reverse' : ''}`}>
                 
                 {/* STICKY TEXT COLUMN */}
-                <div className="md:w-1/3">
-                    <div className="md:sticky md:top-0 md:h-screen flex flex-col justify-center py-24 md:py-0">
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, margin: "-20%" }}
-                            transition={{ duration: 0.8 }}
-                        >
-                            <span className="font-mono text-brand-purple uppercase tracking-[0.3em] text-xs font-black mb-8 block border-l-2 border-brand-purple pl-4">
-                                {title}
-                            </span>
-                            <p className="font-body text-xl md:text-3xl leading-tight font-light text-brand-navy">
-                                {text}
-                            </p>
-                        </motion.div>
-                    </div>
+                <div className="md:w-1/3 md:sticky md:top-0 md:h-screen flex flex-col justify-center py-12 md:py-0 z-10">
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        viewport={{ once: true }}
+                    >
+                        <span className="font-mono text-brand-purple uppercase tracking-[0.3em] text-xs font-black mb-8 block border-l-2 border-brand-purple pl-4">
+                            {title}
+                        </span>
+                        <p className="font-body text-xl md:text-3xl leading-tight font-light text-brand-navy">
+                            {text}
+                        </p>
+                    </motion.div>
                 </div>
 
-                {/* SCROLLING IMAGE STREAM (Varied Grid) */}
-                <div className="md:w-2/3 flex flex-col gap-16 py-12 md:py-32">
+                {/* SCROLLING IMAGE STREAM (Rhythmic Grid) */}
+                <div className="md:w-2/3 flex flex-col gap-24 py-12 md:py-32 w-full">
                     {images.map((img, i) => {
-                        // Layout Logic:
-                        // Image 0: Full Width
-                        // Image 1 & 2: Half Width (Side by Side)
-                        // Image 3: Full Width...
+                        // RHYTHM LOGIC:
+                        // Index 0: Cinema (Full Impact)
+                        // Index 1: Scatter Left
+                        // Index 2: Scatter Right
+                        // Index 3: Cinema...
                         
-                        // We wrap index 1 & 2 in a grid row? 
-                        // To keep it simple but visually varied, let's alternate Aspect Ratios.
-                        const isPortrait = i % 2 !== 0; 
-                        
-                        return (
-                            <CinematicImage 
-                                key={i} 
-                                src={img} 
-                                className={`w-full shadow-2xl ${isPortrait ? 'aspect-[4/5] md:w-3/4 md:self-end' : 'aspect-video md:w-full md:self-start'}`} 
-                            />
-                        )
+                        const position = i % 3;
+
+                        if (position === 0) {
+                            return <CinemaImage key={i} src={img} />;
+                        } else {
+                            return <ScatterImage key={i} src={img} align={position === 1 ? 'left' : 'right'} />;
+                        }
                     })}
                 </div>
             </div>
@@ -135,19 +128,16 @@ const StickyScrollSection: React.FC<{
 const ProjectHero: React.FC<{ project: any }> = ({ project }) => {
     const ref = useRef(null);
     const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-    const y = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]); // Slower parallax for bg
+    const y = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]); 
     const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
     return (
         <div ref={ref} className="relative h-screen w-full overflow-hidden flex flex-col justify-center items-center bg-brand-navy">
-            {/* Background */}
             <motion.div style={{ y, opacity }} className="absolute inset-0 z-0">
                 <img src={project.imageUrl} className="w-full h-full object-cover opacity-60" alt="" />
-                {/* Gradient Mesh Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-brand-navy/20 to-brand-navy/90" />
             </motion.div>
 
-            {/* Content */}
             <div className="relative z-10 container mx-auto px-6 md:px-8 text-center">
                 <motion.div
                     initial={{ opacity: 0, y: 50 }}
@@ -161,20 +151,10 @@ const ProjectHero: React.FC<{ project: any }> = ({ project }) => {
                         {project.title}
                     </h1>
                     
-                    {/* Metadata Grid */}
                     <div className="grid grid-cols-3 max-w-2xl mx-auto border-t border-brand-offwhite/30 pt-8 gap-4 font-mono text-[10px] md:text-xs uppercase tracking-widest text-brand-offwhite/80">
-                        <div>
-                            <span className="block text-brand-purple font-bold mb-2">Client</span>
-                            {project.client}
-                        </div>
-                        <div>
-                            <span className="block text-brand-purple font-bold mb-2">Role</span>
-                            {project.role}
-                        </div>
-                        <div>
-                            <span className="block text-brand-purple font-bold mb-2">Year</span>
-                            {project.year}
-                        </div>
+                        <div><span className="block text-brand-purple font-bold mb-2">Client</span>{project.client}</div>
+                        <div><span className="block text-brand-purple font-bold mb-2">Role</span>{project.role}</div>
+                        <div><span className="block text-brand-purple font-bold mb-2">Year</span>{project.year}</div>
                     </div>
                 </motion.div>
             </div>
@@ -187,24 +167,24 @@ const ProcessGallery: React.FC<{ images: string[] }> = ({ images }) => {
     return (
         <div className="py-32 bg-brand-navy text-brand-offwhite relative z-20">
             <div className="container mx-auto px-6 md:px-8">
-                <div className="mb-24 border-b border-brand-offwhite/10 pb-8 flex flex-col md:flex-row justify-between md:items-end gap-8">
+                <div className="mb-32 border-b border-brand-offwhite/10 pb-8 flex flex-col md:flex-row justify-between md:items-end gap-8">
                     <h3 className="font-sans text-6xl md:text-9xl font-black uppercase tracking-tighter leading-[0.85]">
                         The<br/><span className="text-brand-purple">Mess.</span>
                     </h3>
                     <span className="font-mono text-xs uppercase tracking-widest opacity-50 text-right">
-                        Raw Output // <br/>Archive 01-{images.length}
+                        Raw Output // Archive 01-{images.length}
                     </span>
                 </div>
                 
-                {/* Masonry-ish Grid */}
-                <div className="columns-1 md:columns-2 lg:columns-3 gap-4 space-y-4">
+                {/* Horizontal Scroll / Masonry Mix */}
+                <div className="columns-1 md:columns-3 gap-4 space-y-4">
                     {images.map((img, i) => (
                         <motion.div 
                             key={i}
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            className="break-inside-avoid overflow-hidden"
+                            className="break-inside-avoid overflow-hidden mb-4"
                         >
                             <img src={img} className="w-full h-auto object-cover grayscale opacity-60 hover:opacity-100 hover:grayscale-0 transition-all duration-700" alt="" />
                         </motion.div>
@@ -269,15 +249,20 @@ const ProjectPage: React.FC = () => {
       processImages: []
   };
 
-  // --- IMAGE LOGIC ---
+  // --- IMAGE LOGIC (Smart Splitting) ---
   const details = project.detailImages || [];
-  // Logic: 
-  // Goal: Needs strong intro visuals (2 images)
-  // Gap: Needs visuals (2 images or fallback to hero)
-  // Gamble: Takes the rest.
-  const goalImages = details.slice(0, 2); 
-  const gapImages = details.slice(2, 4).length > 0 ? details.slice(2, 4) : [project.imageUrl];
-  const gambleImages = details.slice(4);
+  
+  // Distribute images to sections.
+  // Ideally, each section gets 3+ images to feel like a "stream".
+  // If we don't have enough, we repeat visuals or fallback to hero.
+  const allVisuals = details.length > 0 ? details : [project.imageUrl];
+  
+  // Logic: Split available images roughly evenly among the 3 active sections
+  const chunkSize = Math.ceil(allVisuals.length / 3);
+  
+  const goalImages = allVisuals.slice(0, chunkSize);
+  const gapImages = allVisuals.slice(chunkSize, chunkSize * 2);
+  const gambleImages = allVisuals.slice(chunkSize * 2);
 
   return (
     <>
@@ -303,7 +288,7 @@ const ProjectPage: React.FC = () => {
             <StickyScrollSection 
                 title="02 / The Gap" 
                 text={gap} 
-                images={gapImages} 
+                images={gapImages.length > 0 ? gapImages : [project.imageUrl]} 
                 align="right"
             />
         )}
