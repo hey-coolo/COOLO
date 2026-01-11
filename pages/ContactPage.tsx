@@ -27,17 +27,16 @@ const ContactPage: React.FC = () => {
     if (step > 0) setStep(step - 1);
   };
 
-  // --- NEW: Handle Enter Key ---
+  // --- NEW: HANDLE ENTER KEY ---
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
-      // For Textareas: Only submit on Ctrl+Enter or Cmd+Enter to allow multi-line typing
+      // Allow normal Enter behavior in textareas (new line), unless CMD/CTRL is held
       if (e.currentTarget.tagName === 'TEXTAREA' && !e.metaKey && !e.ctrlKey) {
-        return; 
+        return;
       }
+      e.preventDefault(); // Prevent form submission refresh
       
-      e.preventDefault();
-      
-      // If we are on the last step (Review), Send. Otherwise, Next.
+      // If on the final step, submit. Otherwise, go next.
       if (step === 5) {
         handleTransmission();
       } else {
@@ -135,11 +134,12 @@ const ContactPage: React.FC = () => {
                                             name="name" 
                                             value={formData.name} 
                                             onChange={handleChange}
-                                            onKeyDown={handleKeyDown}
+                                            onKeyDown={handleKeyDown} 
                                             placeholder="[YOUR NAME]" 
                                             className={`${inputClass} inline-block w-auto min-w-[300px]`}
                                         />.
                                     </label>
+                                    <div className="mt-4 text-xs font-mono text-brand-navy/40 uppercase tracking-widest">[Press Enter]</div>
                                 </motion.div>
                             )}
 
@@ -168,6 +168,7 @@ const ContactPage: React.FC = () => {
                                             className={`${inputClass} inline-block w-auto min-w-[300px] text-brand-purple`}
                                         />.
                                     </label>
+                                    <div className="mt-4 text-xs font-mono text-brand-navy/40 uppercase tracking-widest">[Press Enter]</div>
                                 </motion.div>
                             )}
 
@@ -225,6 +226,7 @@ const ContactPage: React.FC = () => {
                                             className={`${inputClass} inline-block w-full`}
                                         />
                                     </label>
+                                    <div className="mt-4 text-xs font-mono text-brand-navy/40 uppercase tracking-widest">[Press Enter]</div>
                                 </motion.div>
                             )}
 
@@ -260,6 +262,7 @@ const ContactPage: React.FC = () => {
                         </AnimatePresence>
                     </form>
 
+                    {/* Navigation Buttons (Back / Next) */}
                     {status !== 'success' && step < 5 && (
                         <div className="flex justify-between items-center mt-12 pt-8 border-t border-brand-navy/5">
                             <button 
@@ -281,7 +284,6 @@ const ContactPage: React.FC = () => {
         </AnimatedSection>
       </div>
       
-      {/* Footer info can remain the same as previously provided */}
       <div className="bg-brand-navy text-brand-offwhite py-24 mt-24">
         <div className="container mx-auto px-8 grid grid-cols-1 md:grid-cols-3 gap-16 font-mono uppercase tracking-[0.2em] text-[10px]">
           <div><h3 className="text-brand-purple mb-4 font-bold">HQ</h3><p className="text-lg font-sans font-black tracking-normal">Mount Maunganui, NZ</p></div>

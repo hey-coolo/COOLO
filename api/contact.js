@@ -1,10 +1,10 @@
-// api/contact.js
 import { Resend } from 'resend';
 import { MissionReceivedEmail } from '../components/emails/MissionReceived';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export default async function handler(req, res) {
+  // 1. Security: Only allow POST requests
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
@@ -16,36 +16,40 @@ export default async function handler(req, res) {
   }
 
   try {
-    // --- 1. RESEND: Add to Audience (Optional / Soft Fail) ---
-    // We wrap this in a separate try/catch so it doesn't block the email if it fails.
-    if (process.env.RESEND_AUDIENCE_ID) {
-      try {
-        await resend.contacts.create({
-          email: email,
-          firstName: name.split(' ')[0],
-          lastName: name.split(' ').slice(1).join(' '),
-          unsubscribed: false,
-          audienceId: process.env.RESEND_AUDIENCE_ID,
-          properties: {
-            business_name: business || '',
-            job_role: role || '',
-          }
-        });
-      } catch (audiencError) {
-        console.warn("Could not add to audience (Check Audience ID):", audiencError);
-        // We continue execution even if this fails!
+    // --- 1. ADD CONTACT TO RESEND AUDIENCE (Database) ---
+    // We wrap this in a try/catch so it doesn't block the email if it fails
+    // (e.g. if the user is already on the list)
+    try {
+      const audienceId = process.env.RESEND_AUDIENCE_ID;
+      
+      const contactPayload = {
+        email: email,
+        firstName: name.split(' ')[0],
+        lastName: name.split(' ').slice(1).join(' '),
+        unsubscribed: false,
+      };
+
+      // Only add audienceId if you actually have one configured in Vercel
+      if (audienceId) {
+        contactPayload.audienceId = audienceId;
       }
+
+      await resend.contacts.create(contactPayload);
+      console.log("Contact added to Resend Audience");
+    } catch (contactError) {
+      // Log error but DO NOT CRASH. Continue to send the email.
+      console.warn("Could not add contact to audience (likely already exists or no ID):", contactError);
     }
 
-    // --- 2. RESEND: Send Stylized Auto-Reply (Transactional) ---
+    // --- 2. SEND "MISSION RECEIVED" EMAIL (Transactional) ---
     const emailRequest = resend.emails.send({
-      from: 'COOLO <hey@coolo.co.nz>', 
+      from: 'COOLO <hey@coolo.co.nz>', // Make sure this domain is verified in Resend
       to: [email],
       subject: 'Mission Received // COOLO',
       react: MissionReceivedEmail({ name }),
     });
 
-    // --- 3. RESEND: Notify YOU (Admin Notification) ---
+    // --- 3. SEND NOTIFICATION TO YOU ---
     const adminNotificationRequest = resend.emails.send({
       from: 'COOLO Bot <system@coolo.co.nz>',
       to: ['hey@coolo.co.nz'],
@@ -63,13 +67,13 @@ export default async function handler(req, res) {
       `,
     });
 
-    // Wait for critical emails to send
+    // Wait for the emails to actually send
     await Promise.all([emailRequest, adminNotificationRequest]);
 
     return res.status(200).json({ message: 'Transmission Successful' });
 
   } catch (error) {
-    console.error('Critical Resend Error:', error);
+    console.error('Critical Error:', error);
     return res.status(500).json({ error: 'Internal System Error' });
   }
 }
