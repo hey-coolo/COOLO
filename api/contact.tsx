@@ -1,5 +1,6 @@
 import { Resend } from 'resend';
-import { MissionReceivedEmail } from '../components/emails/MissionReceived';
+import { MissionReceivedEmail } from '../components/emails/MissionReceived'; // Adjusted path
+import { NewLeadAlert } from '../components/emails/NewLeadAlert'; // Import new template
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -8,7 +9,6 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  // Destructure the NEW fields
   const { name, email, vibe, budget, message } = req.body;
 
   if (!email || !name) {
@@ -16,46 +16,38 @@ export default async function handler(req, res) {
   }
 
   try {
-    // 1. Add to Audience (Optional)
+    // 1. Add to Audience (Safe check)
     if (process.env.RESEND_AUDIENCE_ID) {
-      const { error: contactError } = await resend.contacts.create({
-        email: email,
-        firstName: name.split(' ')[0],
-        lastName: name.split(' ').slice(1).join(' '),
-        unsubscribed: false,
-        audienceId: process.env.RESEND_AUDIENCE_ID,
-      });
-      if (contactError) console.warn("Audience creation warning:", contactError);
+      try {
+        await resend.contacts.create({
+          email: email,
+          firstName: name.split(' ')[0],
+          lastName: name.split(' ').slice(1).join(' '),
+          unsubscribed: false,
+          audienceId: process.env.RESEND_AUDIENCE_ID,
+        });
+      } catch (e) {
+        console.warn("Audience creation warning:", e);
+      }
     }
 
-    // 2. Send "Mission Received" Confirmation to User
-    const { error: emailError } = await resend.emails.send({
+    // 2. Send Email to User (With Unsubscribe Link)
+    const emailRequest = resend.emails.send({
       from: 'COOLO <hey@coolo.co.nz>',
       to: [email],
-      subject: 'We got your message // COOLO',
+      subject: 'Message Received // COOLO',
       react: MissionReceivedEmail({ name }),
     });
 
-    if (emailError) {
-      console.error("Email sending failed:", emailError);
-      return res.status(500).json({ error: emailError.message });
-    }
-
-    // 3. Notify Admin (You)
-    await resend.emails.send({
+    // 3. Send Stylized Email to Admin (You)
+    const adminRequest = resend.emails.send({
       from: 'COOLO Bot <system@coolo.co.nz>',
       to: ['hey@coolo.co.nz'],
       subject: `New Lead: ${name} (${vibe})`,
-      html: `
-        <h2>New Inquiry from Website</h2>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Mission:</strong> ${vibe}</p>
-        <p><strong>Budget:</strong> ${budget}</p>
-        <br/>
-        <p><strong>Message:</strong><br/>${message}</p>
-      `
+      react: NewLeadAlert({ name, email, vibe, budget, message }), // Use the new component
     });
+
+    await Promise.all([emailRequest, adminRequest]);
 
     return res.status(200).json({ message: 'Success' });
 

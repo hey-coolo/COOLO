@@ -20,24 +20,47 @@ const ClarityPage: React.FC = () => {
     setSelectedRes(null);
   };
 
-  const handleSubscribe = (e: React.FormEvent) => {
+const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
 
     setStatus('processing');
 
-    setTimeout(() => {
-        setStatus('sent');
-        if (selectedRes?.link) {
-            const link = document.createElement('a');
-            link.href = selectedRes.link;
-            link.download = selectedRes.title;
-            link.target = "_blank";
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-    }, 1500);
+    try {
+      // 1. Send the email to your API
+      const response = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+
+      // Even if the API warns (e.g. "already subscribed"), we generally want to let them download.
+      // But if it's a 500 error, we might want to know. 
+      // For a lead magnet, "Fail Open" (letting them download) is often better UX than blocking them if the API hiccups.
+      
+      if (!response.ok) {
+          console.warn("Subscription issue, but proceeding with download.");
+      }
+
+      // 2. If the network request finished, trigger the download
+      setStatus('sent');
+      
+      if (selectedRes?.link) {
+          const link = document.createElement('a');
+          link.href = selectedRes.link;
+          link.download = selectedRes.title;
+          link.target = "_blank";
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+      }
+
+    } catch (error) {
+      console.error("Download flow error:", error);
+      // Optional: setStatus('error') if you want to block the download on failure
+      // For now, we reset so they can try again
+      setStatus('idle'); 
+    }
   };
 
   return (
