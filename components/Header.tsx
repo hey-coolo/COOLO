@@ -52,7 +52,7 @@ const Header: React.FC = () => {
         
         {/* Logo */}
         <div className="relative z-[60]">
-            <Link to="/" className="block w-24 md:w-32" onClick={() => setIsOpen(false)}>
+            <Link to="/" className="block w-20 md:w-24" onClick={() => setIsOpen(false)}>
                  <BrandLogo 
                     className="w-full h-auto" 
                     color={logoColor}
