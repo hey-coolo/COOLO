@@ -5,8 +5,7 @@ import BrandLogo from './BrandLogo';
 
 // --- STUDIO RADIO PLAYLIST ---
 const TRACKS = [
-    "Aphex Twin - #3", 
-    "MF DOOM - Rhymes Like Dimes",
+    "Daft Punk - Lose Yourself to Dance", 
     "Tame Impala - Nangs",
     "Fred again.. - Delilah",
     "Khruangbin - Texas Sun",
@@ -38,7 +37,6 @@ const TimeDisplay = () => {
     useEffect(() => {
         const updateTime = () => {
             const now = new Date();
-            // Create NZ time string manually to avoid hydration mismatch
             const nzTime = now.toLocaleTimeString('en-NZ', { 
                 hour: '2-digit', 
                 minute: '2-digit', 
@@ -67,8 +65,9 @@ const Footer: React.FC = () => {
     offset: ["start end", "end end"]
   });
 
-  // Parallax for the big text
-  const y = useTransform(scrollYProgress, [0, 1], ["-20%", "0%"]);
+  // Parallax for the Logo - it moves slightly slower than scroll
+  const y = useTransform(scrollYProgress, [0, 1], ["-20%", "10%"]);
+  const opacity = useTransform(scrollYProgress, [0.5, 1], [0, 0.4]);
 
   const handleCopyEmail = () => {
       navigator.clipboard.writeText("hey@coolo.co.nz");
@@ -114,7 +113,7 @@ const Footer: React.FC = () => {
 
       {/* 2. THE GRID */}
       <div className="container mx-auto px-6 md:px-8 grid grid-cols-2 md:grid-cols-4 border-b border-brand-offwhite/10">
-          {/* SITEMAP */}
+          {/* DIRECTORY */}
           <div className="border-r border-brand-offwhite/10 py-12 pr-8">
               <h4 className="font-mono text-[9px] uppercase text-brand-offwhite/40 tracking-widest font-bold mb-6">Directory</h4>
               <ul className="space-y-3 font-mono text-xs uppercase tracking-widest">
@@ -158,28 +157,30 @@ const Footer: React.FC = () => {
           </div>
       </div>
 
-      {/* 3. THE MASSIVE LOGO FOOTER */}
-      <div className="w-full overflow-hidden border-t border-brand-offwhite/5 pt-4">
+      {/* 3. THE "00" LOGO FOOTER */}
+      <div className="w-full overflow-hidden border-t border-brand-offwhite/5 pt-12 flex justify-center items-end relative">
+          
           <motion.div 
-            style={{ y }}
-            className="w-full flex justify-center items-end"
+            style={{ y, opacity }}
+            className="w-[50vw] md:w-[25vw] max-w-[400px] pointer-events-none mix-blend-overlay grayscale"
           >
-             {/* This SVG renders the word "COOLO" edge-to-edge.
-                It uses the 'Big Shoulders Display' font geometry.
-             */}
-             <h1 className="text-[28vw] leading-[0.75] font-black tracking-tighter text-brand-offwhite select-none pointer-events-none mix-blend-overlay opacity-30 translate-y-4">
-                COOLO
-             </h1>
+             {/* THE DOBLE OO ICON */}
+             <img 
+                src="/assets/logos/apple-touch-icon.png" 
+                alt="COOLO Studio Mark" 
+                className="w-full h-full object-contain"
+             />
           </motion.div>
+
       </div>
       
       {/* 4. COPYRIGHT BAR */}
-      <div className="bg-brand-dark border-t border-brand-offwhite/10 py-4">
+      <div className="bg-brand-dark border-t border-brand-offwhite/10 py-4 relative z-10">
           <div className="container mx-auto px-6 md:px-8 flex justify-between items-center">
-              <p className="font-mono text-[9px] uppercase tracking-widest text-brand-offwhite/30">
+              <p className="font-mono text-[12px] uppercase tracking-widest text-brand-offwhite/30">
                   © {new Date().getFullYear()} COOLO Studio.
               </p>
-              <p className="font-mono text-[9px] uppercase tracking-widest text-brand-offwhite/30">
+              <p className="font-mono text-[12px] uppercase tracking-widest text-brand-offwhite/30">
                   Built by Humans.
               </p>
           </div>
