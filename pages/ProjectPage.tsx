@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { PROJECTS } from '../constants';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 
+// --- 1. PRELOADER (DO NOT TOUCH) ---
 const ProjectReveal: React.FC<{ onComplete: () => void }> = ({ onComplete }) => {
     return (
         <motion.div
@@ -53,88 +54,7 @@ const ProjectReveal: React.FC<{ onComplete: () => void }> = ({ onComplete }) => 
     );
 };
 
-// Type A: The "Cinema" Image (Full Width, Parallax, High Impact)
-const CinemaImage: React.FC<{ src: string }> = ({ src }) => {
-    const ref = useRef(null);
-    const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-    const y = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]); 
-    
-    return (
-        <div ref={ref} className="w-full aspect-[16/9] md:aspect-[21/9] overflow-hidden relative shadow-2xl my-12">
-            <motion.div style={{ y, scale: 1.1 }} className="w-full h-full">
-                <img src={src} className="w-full h-full object-cover" alt="" />
-            </motion.div>
-        </div>
-    );
-};
-
-// Type B: The "Scatter" Image (Smaller, Static Scroll, Float Hover)
-const ScatterImage: React.FC<{ src: string; align: 'left' | 'right' }> = ({ src, align }) => {
-    return (
-        <motion.div 
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-15%" }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className={`w-3/4 md:w-2/3 aspect-[4/5] md:aspect-square overflow-hidden relative shadow-lg bg-brand-navy/5 ${align === 'right' ? 'self-end' : 'self-start'}`}
-        >
-            <motion.div 
-                whileHover={{ scale: 1.05 }} 
-                transition={{ duration: 0.6 }}
-                className="w-full h-full"
-            >
-                <img src={src} className="w-full h-full object-cover" alt="" />
-            </motion.div>
-        </motion.div>
-    );
-};
-
-// --- 3. STICKY SCROLL SECTION (Rhythmic Layout) ---
-const StickyScrollSection: React.FC<{ 
-    title: string; 
-    text: string; 
-    images: string[]; 
-    align?: 'left' | 'right' 
-}> = ({ title, text, images, align = 'left' }) => {
-    if (!images || images.length === 0) return null;
-
-    return (
-        <div className="container mx-auto px-6 md:px-8 py-32 relative">
-            <div className={`flex flex-col md:flex-row gap-16 md:gap-32 relative items-start ${align === 'right' ? 'md:flex-row-reverse' : ''}`}>
-                
-                {/* STICKY TEXT COLUMN */}
-                <div className="md:w-1/3 md:sticky md:top-0 md:h-screen flex flex-col justify-center py-12 md:py-0 z-10">
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        viewport={{ once: true }}
-                    >
-                        <span className="font-mono text-brand-purple uppercase tracking-[0.3em] text-xs font-black mb-8 block border-l-2 border-brand-purple pl-4">
-                            {title}
-                        </span>
-                        <p className="font-body text-xl md:text-3xl leading-tight font-light text-brand-navy">
-                            {text}
-                        </p>
-                    </motion.div>
-                </div>
-
-                {/* SCROLLING IMAGE STREAM (Rhythmic Grid) */}
-                <div className="md:w-2/3 flex flex-col gap-24 py-12 md:py-32 w-full">
-                    {images.map((img, i) => {
-                        // RHYTHM LOGIC: 0=Cinema, 1=Left, 2=Right
-                        const position = i % 3;
-                        if (position === 0) {
-                            return <CinemaImage key={i} src={img} />;
-                        } else {
-                            return <ScatterImage key={i} src={img} align={position === 1 ? 'left' : 'right'} />;
-                        }
-                    })}
-                </div>
-            </div>
-        </div>
-    );
-}
-
+// --- 2. HERO SECTION (DO NOT TOUCH) ---
 const ProjectHero: React.FC<{ project: any }> = ({ project }) => {
     const ref = useRef(null);
     const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
@@ -172,8 +92,7 @@ const ProjectHero: React.FC<{ project: any }> = ({ project }) => {
     );
 };
 
-// --- 3. REDESIGN: EDITORIAL SECTION (The Narrative) ---
-
+// --- 3. NEW EDITORIAL SECTION (Clean Scrolling Gallery) ---
 const EditorialSection: React.FC<{ 
     step: string; 
     title: string; 
@@ -188,8 +107,8 @@ const EditorialSection: React.FC<{
             <div className="container mx-auto px-6 md:px-8">
                 <div className={`flex flex-col ${inverted ? 'md:flex-row-reverse' : 'md:flex-row'} gap-12 md:gap-24`}>
                     
-                    {/* TEXT COLUMN */}
-                    <div className="md:w-1/3 flex flex-col pt-8">
+                    {/* TEXT COLUMN - Sticky behavior for better reading experience */}
+                    <div className="md:w-1/3 flex flex-col pt-8 md:sticky md:top-32 md:h-fit">
                         <motion.div
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
@@ -215,22 +134,22 @@ const EditorialSection: React.FC<{
                         </motion.div>
                     </div>
 
-                    {/* IMAGES COLUMN - NO CROP LOGIC */}
-                    <div className="md:w-2/3 flex flex-col gap-12">
+                    {/* IMAGES COLUMN - Natural Aspect Ratios (No Cropping) */}
+                    <div className="md:w-2/3 flex flex-col gap-12 md:gap-24">
                         {images && images.map((img, i) => (
                             <motion.div
                                 key={i}
-                                initial={{ opacity: 0, scale: 0.95 }}
-                                whileInView={{ opacity: 1, scale: 1 }}
+                                initial={{ opacity: 0, y: 40 }}
+                                whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true, margin: "-10%" }}
                                 transition={{ duration: 0.8, delay: i * 0.1 }}
-                                className="w-full bg-brand-navy/5 p-4 md:p-8" // Add a subtle frame
+                                className="w-full bg-brand-navy/5" 
                             >
-                                {/* w-full + h-auto ensures NO cropping regardless of image shape */}
+                                {/* w-full + h-auto ensures NO cropping */}
                                 <img 
                                     src={img} 
                                     alt={`${title} detail ${i}`} 
-                                    className="w-full h-auto shadow-2xl" 
+                                    className="w-full h-auto shadow-2xl block" 
                                 />
                             </motion.div>
                         ))}
@@ -242,7 +161,7 @@ const EditorialSection: React.FC<{
     );
 };
 
-// --- 4. REDESIGN: THE GAIN (Results) ---
+// --- 4. RESULTS SECTION (High Impact) ---
 const ResultsSection: React.FC<{ gain: string }> = ({ gain }) => {
     if (!gain) return null;
     return (
@@ -257,7 +176,7 @@ const ResultsSection: React.FC<{ gain: string }> = ({ gain }) => {
                     <span className="font-mono text-brand-purple uppercase tracking-[0.3em] text-xs font-bold mb-12 block">
                         04 / The Outcome
                     </span>
-                    <h2 className="text-4xl md:text-7xl font-black uppercase tracking-tight leading-tight max-w-5xl mx-auto">
+                    <h2 className="text-4xl md:text-7xl font-black uppercase tracking-tight leading-tight max-w-5xl mx-auto text-brand-offwhite">
                         "{gain}"
                     </h2>
                 </motion.div>
@@ -266,13 +185,12 @@ const ResultsSection: React.FC<{ gain: string }> = ({ gain }) => {
     );
 };
 
-// --- 5. REDESIGN: MASONRY GALLERY (Process) ---
-// Using CSS columns allows uncropped images of different sizes to stack perfectly like Pinterest.
+// --- 5. MASONRY GALLERY (For Process Images) ---
 const MasonryGallery: React.FC<{ images: string[] }> = ({ images }) => {
     if (!images || images.length === 0) return null;
     
     return (
-        <section className="py-32 bg-brand-offwhite">
+        <section className="py-32 bg-brand-offwhite border-t border-brand-navy/5">
             <div className="container mx-auto px-6 md:px-8">
                 <div className="mb-24">
                     <h3 className="text-brand-navy font-black text-5xl md:text-8xl uppercase tracking-tighter opacity-10">
@@ -283,7 +201,7 @@ const MasonryGallery: React.FC<{ images: string[] }> = ({ images }) => {
                     </p>
                 </div>
 
-                {/* CSS COLUMNS FOR MASONRY LAYOUT */}
+                {/* CSS Columns for true Masonry layout */}
                 <div className="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8">
                     {images.map((img, i) => (
                         <motion.div 
@@ -295,10 +213,9 @@ const MasonryGallery: React.FC<{ images: string[] }> = ({ images }) => {
                             className="break-inside-avoid"
                         >
                             <div className="group relative overflow-hidden bg-brand-navy/5">
-                                {/* NO CROP: w-full h-auto */}
                                 <img 
                                     src={img} 
-                                    className="w-full h-auto grayscale group-hover:grayscale-0 transition-all duration-700 ease-out" 
+                                    className="w-full h-auto grayscale group-hover:grayscale-0 transition-all duration-700 ease-out block" 
                                     alt="Process" 
                                 />
                                 <div className="absolute inset-0 bg-brand-purple/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
@@ -311,6 +228,7 @@ const MasonryGallery: React.FC<{ images: string[] }> = ({ images }) => {
     );
 };
 
+// --- 6. NEXT PROJECT (DO NOT TOUCH) ---
 const NextProject: React.FC<{ project: any }> = ({ project }) => (
     <Link to={`/work/${project.slug}`} className="block relative h-screen overflow-hidden group bg-brand-navy z-20">
         <div className="absolute inset-0 opacity-40 group-hover:opacity-60 transition-opacity duration-1000 ease-out">
@@ -363,10 +281,11 @@ const ProjectPage: React.FC = () => {
       processImages: []
   };
 
-  // --- IMAGE LOGIC ---
+  // --- IMAGE LOGIC (Distribute images across sections) ---
   const details = project.detailImages || [];
-  // Use all visuals available, looping if necessary to fill the rhythm
   const allVisuals = details.length > 0 ? details : [project.imageUrl];
+  
+  // Split logic: Divide images roughly into 3 parts for the 3 sections
   const chunkSize = Math.ceil(allVisuals.length / 3);
   const goalImages = allVisuals.slice(0, chunkSize);
   const gapImages = allVisuals.slice(chunkSize, chunkSize * 2);
@@ -382,40 +301,40 @@ const ProjectPage: React.FC = () => {
         
         <ProjectHero project={project} />
         
-        <StickyScrollSection 
-            title="01 / The Goal" 
+        {/* NEW LAYOUT: Editorial Sections */}
+        
+        <EditorialSection 
+            step="01"
+            title="The Goal" 
             text={goal} 
             images={goalImages.length > 0 ? goalImages : [project.imageUrl]} 
-            align="left"
+            inverted={false}
         />
 
         {gap && (
-            <StickyScrollSection 
-                title="02 / The Gap" 
+            <EditorialSection 
+                step="02"
+                title="The Gap" 
                 text={gap} 
                 images={gapImages.length > 0 ? gapImages : [project.imageUrl]} 
-                align="right"
+                inverted={true}
             />
         )}
 
         {gamble && (
-            <StickyScrollSection 
-                title="03 / The Gamble" 
+            <EditorialSection 
+                step="03"
+                title="The Gamble" 
                 text={gamble} 
                 images={gambleImages.length > 0 ? gambleImages : [project.imageUrl]} 
-                align="left"
+                inverted={false}
             />
         )}
 
-        {gain && (
-            <div className="min-h-[60vh] flex items-center justify-center bg-brand-navy text-brand-offwhite">
-                <div className="container mx-auto px-6 md:px-8 text-center">
-                    <span className="font-mono text-brand-purple uppercase tracking-[0.3em] text-xs font-bold mb-8 block">04 / The Gain</span>
-                    <h2 className="text-5xl md:text-8xl font-black uppercase tracking-tight leading-[0.9]">
-                        {gain}
-                    </h2>
-                </div>
-            </div>
+        <ResultsSection gain={gain} />
+
+        {processImages && processImages.length > 0 && (
+            <MasonryGallery images={processImages} />
         )}
     
         <NextProject project={nextProject} />
