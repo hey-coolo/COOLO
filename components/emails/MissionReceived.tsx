@@ -21,7 +21,7 @@ export const MissionReceivedEmail = ({ name }: MissionReceivedEmailProps) => {
           @import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@900&family=Space+Mono:wght@400;700&display=swap');
         `}} />
       </Head>
-      <Preview>Transmission Received. Stand by.</Preview>
+      <Preview>We received your message.</Preview>
       <Body style={main}>
         <Container style={container}>
           {/* HEADER */}
@@ -32,24 +32,24 @@ export const MissionReceivedEmail = ({ name }: MissionReceivedEmailProps) => {
 
           {/* CONTENT */}
           <Section style={contentSection}>
-            <Heading style={h1}>MISSION<br/><span style={{color: colors.purple}}>ACKNOWLEDGED.</span></Heading>
+            <Heading style={h1}>MESSAGE<br/><span style={{color: colors.purple}}>RECEIVED.</span></Heading>
             
             <Text style={paragraph}>
-              Agent {name},
+              Hey {name},
             </Text>
             <Text style={paragraph}>
-              Your transmission has successfully reached the COOLO unit in Mount Maunganui.
+              Thanks for reaching out. We've got your details in our system.
             </Text>
             <Text style={paragraph}>
-              We are currently analyzing your intel. If the parameters align with our operational standards, you will receive a signal from a senior operative (Franco or Ariana) within 24 hours.
+              We usually reply within 24 hours to set up a chat or clarify the next steps. Sit tight.
             </Text>
             
             <Section style={highlightBox}>
-              <Text style={monoText}>REF_ID: {Math.floor(Math.random() * 10000)} // V2.0_ALPHA</Text>
+              <Text style={monoText}>TICKET_ID: {Math.floor(Math.random() * 10000)} // COOLO_STUDIO</Text>
             </Section>
 
             <Link href="https://coolo.co.nz" style={button}>
-              RETURN TO BASE
+              RETURN TO SITE
             </Link>
           </Section>
 
