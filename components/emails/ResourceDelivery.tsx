@@ -8,7 +8,6 @@ export const ResourceDelivery = ({ resourceName = "Brand Guide 2.0", downloadLin
     <Html>
       <Head>
         <style>{`
-          @import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@800;900&family=Space+Mono:wght@400;700&display=swap');
           .logo-dark { display: none !important; }
           .logo-light { display: block !important; }
           @media (prefers-color-scheme: dark) {
@@ -35,10 +34,6 @@ export const ResourceDelivery = ({ resourceName = "Brand Guide 2.0", downloadLin
                 'brand-navy': '#0F0328',
                 'brand-dark': '#010101',
               },
-              fontFamily: {
-                sans: ['"Big Shoulders Display"', 'Helvetica', 'Arial', 'sans-serif'],
-                mono: ['"Space Mono"', 'Courier', 'monospace'],
-              }
             },
           },
         }}
@@ -46,41 +41,41 @@ export const ResourceDelivery = ({ resourceName = "Brand Guide 2.0", downloadLin
         <Body className="bg-mode-body bg-brand-offwhite font-sans my-auto mx-auto px-4 py-12">
           <Container className="mx-auto w-full max-w-[600px]">
             
-            <Section className="mb-10 text-center">
-              <Img src={`${baseUrl}/static/logo-light-mode.png`} width="100" alt="COOLO" className="logo-light mx-auto" />
-              <Img src={`${baseUrl}/static/logo-dark-mode.png`} width="100" alt="COOLO" className="logo-dark mx-auto" />
+            <Section className="mb-10">
+              <Img src={`${baseUrl}/static/logo-light-mode.png`} width="110" alt="COOLO" className="logo-light" />
+              <Img src={`${baseUrl}/static/logo-dark-mode.png`} width="110" alt="COOLO" className="logo-dark" />
             </Section>
 
-            <Section className="bg-mode-card bg-white border-2 border-brand-navy p-10 shadow-none">
+            <Section className="bg-mode-card bg-white border border-brand-dark p-10 shadow-none">
               
               <Section className="mb-6">
-                 <Text className="text-mode-secondary text-brand-navy font-mono text-[11px] font-bold uppercase tracking-widest border border-brand-lavender rounded-full px-3 py-1 inline-block m-0">
-                  FILE: READY
+                <Text className="text-mode-secondary text-brand-dark font-mono text-[10px] uppercase tracking-widest border border-brand-lavender rounded-full px-3 py-1 inline-block m-0">
+                  FILE: 2.4MB
                 </Text>
               </Section>
 
-              <Heading className="text-mode-primary text-brand-navy font-sans text-[64px] leading-[0.9] font-black uppercase m-0 mb-6">
-                HERE IS<br/>
-                <span className="text-brand-purple">THE GOODS.</span>
+              <Heading className="text-mode-primary text-brand-dark text-[36px] font-black italic uppercase tracking-tighter leading-none m-0 mb-6">
+                HERE IS<br/>THE GOODS.
               </Heading>
               
-              <Text className="text-mode-primary text-brand-navy/80 font-sans text-[18px] leading-[1.6] mb-8">
+              <Text className="text-mode-primary text-brand-dark text-[16px] leading-[26px] mb-8">
                 The nuclear option. We built it. Now you own it. Here is the <strong>{resourceName}</strong> file you requested.
               </Text>
 
+              {/* SOLID BRAND-DARK BUTTON */}
               <Button 
-                className="btn-mode-solid bg-brand-navy text-brand-offwhite font-mono text-[13px] font-bold py-5 px-8 w-full uppercase tracking-widest hover:bg-brand-purple transition-colors border-2 border-brand-navy"
+                className="btn-mode-solid bg-brand-dark text-brand-offwhite rounded-none w-full py-5 text-center text-[13px] font-bold uppercase tracking-[0.2em] border-2 border-brand-dark"
                 href={downloadLink}
               >
                 DOWNLOAD NOW
               </Button>
 
             </Section>
-
-            <Section className="mt-8 text-center">
-              <Text className="text-mode-secondary text-brand-navy/40 font-mono text-[10px] uppercase tracking-widest">
-                COOLO STUDIO // MOUNT MAUNGANUI, NZ
-              </Text>
+            
+            <Section className="mt-8">
+               <Text className="text-mode-secondary text-brand-lavender font-mono text-[10px] uppercase tracking-widest">
+                 © 2024 COOLO
+               </Text>
             </Section>
 
           </Container>
