@@ -1,4 +1,3 @@
-
 import React from 'react';
 import AnimatedSection from '../components/AnimatedSection';
 import { PARTNERSHIP_MODELS } from '../constants';
@@ -10,9 +9,10 @@ const PartnershipPage: React.FC = () => {
       <div className="container mx-auto px-8">
         <AnimatedSection>
           <header className="py-24 md:py-48 max-w-5xl">
-            <span className="font-mono text-brand-purple uppercase tracking-[0.3em] text-sm font-bold">Leg 3: Scale</span>
-            <h1 className="text-brand-navy text-7xl md:text-[12vw] font-black uppercase tracking-tight leading-[0.9] mt-8">
-              The Scale<br/><span className="text-brand-purple">Button.</span>
+            <span className="font-mono text-brand-purple uppercase tracking-[0.3em] text-sm font-bold block mb-4">Leg 3: Scale</span>
+            {/* UPDATED HEADER STYLE */}
+            <h1 className="text-brand-navy text-8xl md:text-[12vw] font-black uppercase tracking-tight leading-[0.9] mt-0">
+              The Scale<br/><span className="text-brand-purple italic">Button.</span>
             </h1>
             <p className="font-body text-2xl md:text-4xl text-brand-navy/70 mt-12 leading-tight max-w-3xl">
               For senior agencies and visionaries. We are the elite unit you plug into your process to handle the heavy lifting of high-end execution.
@@ -96,7 +96,7 @@ const PartnershipPage: React.FC = () => {
              <AnimatedSection>
                  <span className="font-mono text-brand-purple uppercase tracking-widest text-xs font-bold mb-8 block">Network Status: Accepting Partners</span>
                  <h2 className="text-[12vw] font-black uppercase tracking-tight leading-none mb-16 text-brand-navy">
-                    Signal the<br/><span className="text-brand-purple">Unit.</span>
+                    Signal the<br/><span className="text-brand-purple italic">Unit.</span>
                  </h2>
                  <a href="mailto:hey@coolo.co.nz" className="inline-block bg-brand-navy text-brand-offwhite font-mono text-2xl uppercase px-16 py-8 hover:bg-brand-purple transition-all duration-700 shadow-2xl">
                     hey@coolo.co.nz

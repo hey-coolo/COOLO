@@ -1,4 +1,3 @@
-
 import React from 'react';
 import AnimatedSection from '../../components/AnimatedSection';
 import { COURSE_MODULES } from '../../constants';
@@ -9,9 +8,10 @@ const CoursePage: React.FC = () => {
     <div className="bg-brand-offwhite min-h-screen pt-48 pb-48">
       <div className="container mx-auto px-8">
         <AnimatedSection className="max-w-4xl">
-          <span className="font-mono text-brand-purple uppercase tracking-widest text-xs font-bold">Online Course</span>
-          <h1 className="text-7xl md:text-[12vw] font-black uppercase tracking-tight leading-[0.9] text-brand-navy mt-8">
-            Franco Brand<br/><span className="text-brand-purple">Formula.</span>
+          <span className="font-mono text-brand-purple uppercase tracking-widest text-xs font-bold block mb-4">Online Course</span>
+          {/* UPDATED HEADER STYLE */}
+          <h1 className="text-8xl md:text-[12vw] font-black uppercase tracking-tight leading-[0.9] text-brand-navy mt-0">
+            Franco Brand<br/><span className="text-brand-purple italic">Formula.</span>
           </h1>
           <p className="font-body text-3xl text-brand-navy/70 mt-12 leading-tight">
             Structured lectures, worksheets, critique prompts, and community Q&A. For small-to-mid brands and teams ready to do the work.
