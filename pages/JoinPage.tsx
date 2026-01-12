@@ -131,8 +131,7 @@ const JoinPage: React.FC = () => {
             </div>
         </AnimatedSection>
       </main>
-      
-      <Footer />
+
     </div>
   );
 };
