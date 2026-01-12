@@ -60,15 +60,6 @@ const Footer: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [emailText, setEmailText] = useState("hey@coolo.co.nz");
   
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end end"]
-  });
-
-  // Parallax for the Logo - it moves slightly slower than scroll
-  const y = useTransform(scrollYProgress, [0, 1], ["-20%", "10%"]);
-  const opacity = useTransform(scrollYProgress, [0.5, 1], [0, 0.4]);
-
   const handleCopyEmail = () => {
       navigator.clipboard.writeText("hey@coolo.co.nz");
       setEmailText("SAVED TO CLIPBOARD.");
@@ -78,6 +69,22 @@ const Footer: React.FC = () => {
   return (
     <footer ref={containerRef} className="bg-brand-navy text-brand-offwhite relative z-50 overflow-hidden border-t-2 border-brand-offwhite/10">
       
+      {/* 0. THE GRIND SECTION (ADDED) */}
+      <div className="bg-brand-yellow text-brand-navy py-16 md:py-24 border-b-2 border-brand-navy">
+          <div className="container mx-auto px-6 md:px-8 text-center">
+              <span className="font-mono text-xs uppercase tracking-[0.4em] font-black mb-6 block">The Call to Action</span>
+              <h2 className="text-7xl md:text-[10vw] font-black uppercase tracking-tight leading-[0.85] mb-12">
+                  Start the<br/>GRIND.
+              </h2>
+              <Link 
+                  to="/contact" 
+                  className="inline-block border-2 border-brand-navy bg-brand-navy text-brand-offwhite font-mono text-xl uppercase font-bold px-12 py-5 hover:bg-brand-offwhite hover:text-brand-navy transition-all shadow-[8px_8px_0px_0px_#FFF]"
+              >
+                  Initiate Sequence
+              </Link>
+          </div>
+      </div>
+
       {/* 1. THE BIG STATEMENT */}
       <div className="relative border-b border-brand-offwhite/10">
           <div className="container mx-auto px-6 md:px-8 py-24 md:py-32">
