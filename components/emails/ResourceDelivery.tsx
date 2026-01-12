@@ -1,76 +1,46 @@
 import * as React from 'react';
-import { Html, Head, Body, Container, Section, Text, Heading, Link, Hr, Preview, Img } from '@react-email/components';
+import { Html, Head, Body, Container, Section, Text, Heading, Link, Img, Preview } from '@react-email/components';
 
-// UPDATE THIS to your actual live domain (e.g., https://coolo.co.nz)
-const BASE_URL = 'https://coolo.co.nz'; 
+const colors = { navy: '#0F0328', offWhite: '#F7F7F7', purple: '#3A0888', yellow: '#FCC803' };
 
-const colors = {
-  navy: '#0F0328',
-  offWhite: '#F7F7F7',
-  purple: '#3A0888',
-  yellow: '#FCC803',
-};
-
-interface ResourceDeliveryProps {
-  resourceName: string;
-  downloadLink: string;
-}
-
-export const ResourceDelivery = ({ 
-  resourceName = "The Clarity Audit", 
-  downloadLink = "#" 
-}: ResourceDeliveryProps) => {
+export const ResourceDelivery = ({ resourceName, downloadLink }: { resourceName: string; downloadLink: string }) => {
   return (
     <Html>
-      <Head>
-        <style dangerouslySetInnerHTML={{__html: `
-          @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
-        `}} />
-      </Head>
-      <Preview>Download Ready: {resourceName}</Preview>
-      <Body style={main}>
-        <Container style={container}>
+      <Head />
+      <Preview>Your tool is ready for download.</Preview>
+      <Body style={{ backgroundColor: colors.offWhite, fontFamily: 'Helvetica, Arial, sans-serif', padding: '40px 0' }}>
+        <Container style={{ margin: '0 auto', maxWidth: '580px', padding: '0 20px' }}>
           
-          {/* BRAND HEADER - Using your actual asset */}
-          <Section style={header}>
-            <Img 
-                src={`${BASE_URL}/assets/logos/apple-touch-icon.png`} 
+          <Section style={{ textAlign: 'center' as const, marginBottom: '40px' }}>
+             <Img 
+                src="https://coolo.co.nz/assets/logos/logo-dark.svg" 
                 alt="COOLO" 
-                width="64" 
-                height="64" 
-                style={logo} 
-            />
+                width="90" 
+                style={{ margin: '0 auto' }}
+             />
           </Section>
-
-          {/* CONTENT CARD */}
-          <Section style={contentSection}>
-            <Text style={statusBadge}>SECURE FILE TRANSFER</Text>
-            
-            <Heading style={h1}>FILE<br/><span style={{color: colors.purple}}>UNLOCKED.</span></Heading>
-            
-            <Text style={paragraph}>
-              The <strong>{resourceName}</strong> file you requested has been retrieved from the archive.
+          
+          <Section style={{ backgroundColor: '#ffffff', border: `2px solid ${colors.navy}`, padding: '48px', boxShadow: `16px 16px 0px 0px ${colors.yellow}` }}>
+            <Text style={{ fontStyle: 'italic', fontSize: '12px', color: colors.purple, fontWeight: 700, textTransform: 'uppercase', marginBottom: '16px', letterSpacing: '0.1em' }}>
+              Free Game // Sequence Unlocked
             </Text>
             
-            <Section style={highlightBox}>
-              <Link href={downloadLink} style={button}>
-                DOWNLOAD FILE
-              </Link>
-              <Text style={tinyText}>DIRECT LINK EXPOSED</Text>
-            </Section>
-
-            <Hr style={divider} />
-
-            <Text style={paragraph}>
-              <strong>Mission Protocol:</strong> Use this to audit your brand logic. If you find gaps, reply to this email. We can fix them.
+            <Heading style={{ color: colors.navy, fontSize: '42px', fontWeight: 900, textTransform: 'uppercase', lineHeight: '0.9', margin: '0 0 24px' }}>
+                Tool<br/><span style={{ color: colors.purple }}>Retrieved.</span>
+            </Heading>
+            
+            <Text style={{ color: colors.navy, fontSize: '17px', lineHeight: '1.6', opacity: 0.8, marginBottom: '32px' }}>
+              The <strong>{resourceName}</strong> is ready for use. We don't hide our logic—we open-source it so you can build faster.
             </Text>
+            
+            <Link href={downloadLink} style={{ backgroundColor: colors.navy, color: colors.offWhite, padding: '20px 40px', display: 'inline-block', fontWeight: 700, textDecoration: 'none', textTransform: 'uppercase', letterSpacing: '0.2em', fontSize: '13px' }}>
+                Grab the goods
+            </Link>
           </Section>
 
-          {/* FOOTER */}
-          <Section style={footer}>
-            <Text style={footerText}>
-              COOLO STUDIO // MOUNT MAUNGANUI<br/>
-              <Link href={BASE_URL} style={link}>COOLO.CO.NZ</Link>
+          <Section style={{ marginTop: '54px', borderTop: '1px solid #e0e0e0', paddingTop: '32px', textAlign: 'center' as const }}>
+            <Text style={{ color: '#aaa', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.2em', lineHeight: '2' }}>
+              COOLO STUDIO // ARTIST LED // Mount Maunganui, NZ
             </Text>
           </Section>
         </Container>
@@ -80,109 +50,3 @@ export const ResourceDelivery = ({
 };
 
 export default ResourceDelivery;
-
-// --- STYLES ---
-const main = {
-  backgroundColor: colors.offWhite,
-  fontFamily: 'Helvetica, Arial, sans-serif',
-};
-
-const container = {
-  margin: '0 auto',
-  padding: '40px 0 48px',
-  maxWidth: '580px',
-};
-
-const header = {
-  marginBottom: '32px',
-  textAlign: 'center' as const,
-};
-
-const logo = {
-  margin: '0 auto',
-  borderRadius: '0px', 
-};
-
-const statusBadge = {
-  fontFamily: '"Space Mono", monospace',
-  fontSize: '10px',
-  letterSpacing: '0.2em',
-  color: colors.navy,
-  fontWeight: 700,
-  marginBottom: '16px',
-  display: 'block',
-  opacity: 0.5,
-};
-
-const contentSection = {
-  padding: '0 24px',
-};
-
-const h1 = {
-  fontFamily: 'Helvetica, Arial, sans-serif',
-  fontSize: '48px',
-  lineHeight: '0.9',
-  fontWeight: 900,
-  color: colors.navy,
-  margin: '0 0 24px',
-  textTransform: 'uppercase' as const,
-};
-
-const paragraph = {
-  fontFamily: 'Helvetica, Arial, sans-serif',
-  fontSize: '16px',
-  lineHeight: '1.6',
-  color: 'rgba(15, 3, 40, 0.8)',
-  margin: '0 0 24px',
-};
-
-const highlightBox = {
-  backgroundColor: '#FFFFFF',
-  border: `2px solid ${colors.navy}`,
-  padding: '32px',
-  textAlign: 'center' as const,
-  margin: '32px 0',
-  boxShadow: '8px 8px 0px 0px rgba(15, 3, 40, 0.1)',
-};
-
-const button = {
-  backgroundColor: colors.purple,
-  color: colors.offWhite,
-  fontFamily: '"Space Mono", monospace',
-  fontSize: '14px',
-  fontWeight: 700,
-  textDecoration: 'none',
-  padding: '16px 40px',
-  display: 'inline-block',
-  textTransform: 'uppercase' as const,
-  letterSpacing: '0.1em',
-};
-
-const tinyText = {
-  fontFamily: '"Space Mono", monospace',
-  fontSize: '10px',
-  color: 'rgba(15, 3, 40, 0.4)',
-  marginTop: '16px',
-};
-
-const divider = {
-  borderColor: 'rgba(15, 3, 40, 0.1)',
-  margin: '48px 0',
-};
-
-const footer = {
-  textAlign: 'center' as const,
-};
-
-const footerText = {
-  fontFamily: '"Space Mono", monospace',
-  fontSize: '10px',
-  color: 'rgba(15, 3, 40, 0.4)',
-  letterSpacing: '0.1em',
-  lineHeight: '1.8',
-};
-
-const link = {
-  color: colors.purple,
-  textDecoration: 'underline',
-};

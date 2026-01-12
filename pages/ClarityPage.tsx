@@ -18,10 +18,6 @@ const ClarityPage: React.FC = () => {
     setEmail('');
   };
 
-  const handleCloseModal = () => {
-    setSelectedRes(null);
-  };
-
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !selectedRes) return;
@@ -41,9 +37,7 @@ const ClarityPage: React.FC = () => {
 
       if (response.ok) {
         setStatus('sent');
-      } else {
-        throw new Error('API Error');
-      }
+      } else throw new Error();
     } catch (error) {
       console.error(error);
       setStatus('error');
@@ -51,19 +45,19 @@ const ClarityPage: React.FC = () => {
   };
 
   return (
-    <div className="bg-brand-offwhite min-h-screen flex flex-col font-sans selection:bg-brand-purple selection:text-white">
+    <div className="bg-brand-offwhite min-h-screen flex flex-col font-sans">
       <Header />
       
       <main className="flex-grow pt-32">
         <div className="container mx-auto px-8">
           <AnimatedSection>
             <header className="py-24 md:py-48 max-w-5xl">
-              <span className="font-mono text-brand-purple uppercase tracking-[0.3em] text-sm font-bold block mb-4">The Way / Strategy</span>
+              <span className="font-mono text-brand-purple uppercase tracking-[0.3em] text-sm font-bold block mb-4">Phase 01 / The Logic</span>
               <h1 className="text-brand-navy text-8xl md:text-[14vw] font-black uppercase tracking-tight leading-[0.9] mt-0">
                 No Magic<br/><span className="text-brand-purple italic">Formula™</span>
               </h1>
-              <p className="font-body text-2xl md:text-4xl text-brand-navy/70 mt-12 leading-tight max-w-3xl font-medium">
-                We trade hype for real logic. A system built for founders who want a sharp perspective and a plan that actually sticks.
+              <p className="font-body text-2xl md:text-4xl text-brand-navy/70 mt-12 leading-tight max-w-3xl italic">
+                We trade hype for real perspective. A system built for founders who want a plan that actually sticks.
               </p>
             </header>
           </AnimatedSection>
@@ -75,7 +69,7 @@ const ClarityPage: React.FC = () => {
                       <span className="font-mono text-brand-purple uppercase tracking-[0.3em] text-xs font-black mb-4 block">The Starter Kit</span>
                       <h2 className="text-5xl font-black uppercase tracking-tight leading-none text-brand-navy">Free<br/>Game.</h2>
                       <p className="mt-8 font-body text-xl text-brand-navy/60 leading-relaxed">
-                          We're open-sourcing our core logic. Grab these three tools and start auditing your brand today.
+                          We believe in open-sourcing our best thinking. Grab these tools and start auditing your brand vibe today.
                       </p>
                   </div>
                   <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -90,7 +84,7 @@ const ClarityPage: React.FC = () => {
                                   <p className="font-body text-sm text-brand-navy/60 group-hover:text-brand-offwhite/60 mb-8">{res.desc}</p>
                                   <div className="mt-auto flex items-center justify-between pt-4 border-t border-brand-navy/5 w-full group-hover:border-brand-offwhite/10">
                                       <span className="font-mono text-[10px] uppercase font-bold text-brand-navy group-hover:text-brand-offwhite">{res.format}</span>
-                                      <span className="font-mono text-[10px] uppercase font-bold text-brand-purple group-hover:text-brand-yellow underline decoration-2 underline-offset-4">Grab it &rarr;</span>
+                                      <span className="font-mono text-[10px] uppercase font-bold text-brand-purple group-hover:text-brand-yellow underline decoration-2 underline-offset-4">Get it &rarr;</span>
                                   </div>
                               </button>
                           </AnimatedSection>
@@ -108,7 +102,7 @@ const ClarityPage: React.FC = () => {
                               <div>
                                   <div className="flex justify-between items-start mb-8">
                                       <span className="font-mono text-xs uppercase tracking-widest font-bold text-brand-purple group-hover:text-brand-yellow">{tier.subtitle}</span>
-                                      <span className="font-mono text-[10px] uppercase font-black px-2 py-1 bg-brand-navy/5 group-hover:bg-brand-offwhite/10 group-hover:text-brand-yellow">Let's talk</span>
+                                      <span className="font-mono text-[10px] uppercase font-black px-2 py-1 bg-brand-navy/5 group-hover:bg-brand-offwhite/10 group-hover:text-brand-yellow">Talk to us</span>
                                   </div>
                                   <h3 className="text-5xl font-black uppercase leading-none tracking-tight mb-6">{tier.name}</h3>
                                   <p className="font-body text-xl text-brand-navy/60 group-hover:text-brand-offwhite/70 transition-colors leading-relaxed">
@@ -123,7 +117,7 @@ const ClarityPage: React.FC = () => {
                                   </ul>
                               </div>
                               <div className="mt-12 flex items-center gap-4">
-                                  <span className="font-mono text-sm uppercase font-bold tracking-widest">See more</span>
+                                  <span className="font-mono text-sm uppercase font-bold tracking-widest">Explore Tier</span>
                                   <div className="w-12 h-[2px] bg-brand-navy group-hover:bg-brand-yellow group-hover:w-24 transition-all duration-500"></div>
                               </div>
                           </div>
@@ -132,7 +126,7 @@ const ClarityPage: React.FC = () => {
               ))}
           </section>
           
-          {/* THE OUTCOME */}
+          {/* THE RESULT */}
           <section className="pb-32 border-t border-brand-navy/10 pt-24">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
                   <div className="lg:col-span-4">
@@ -140,10 +134,10 @@ const ClarityPage: React.FC = () => {
                   </div>
                   <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-12">
                       {[
-                          { t: "Unmistakable Space", d: "A clear position that makes you the only choice in your world." },
-                          { t: "Human Mapping", d: "Real people, real needs. No corporate persona fluff, just high-signal insight." },
-                          { t: "The Message", d: "A narrative spine that works across every channel you touch." },
-                          { t: "90-Day Plan", d: "A tactical roadmap you can actually start executing tomorrow morning." }
+                          { t: "Unmistakable Space", d: "A clear position that makes you the only logical choice in your niche." },
+                          { t: "Human Mapping", d: "Real people, real needs. We skip the corporate personas for actual insight." },
+                          { t: "The Message", d: "A narrative spine that works across every single channel you touch." },
+                          { t: "90-Day Flow", d: "A tactical plan you can actually execute without the burnout." }
                       ].map(o => (
                           <div key={o.t}>
                               <h4 className="font-mono text-brand-purple uppercase tracking-widest text-xs font-bold mb-2">{o.t}</h4>
@@ -158,9 +152,9 @@ const ClarityPage: React.FC = () => {
 
       <AnimatePresence>
         {selectedRes && (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[100] flex items-center justify-center bg-brand-navy/95 backdrop-blur-sm p-4" onClick={handleCloseModal}>
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[100] flex items-center justify-center bg-brand-navy/95 backdrop-blur-sm p-4" onClick={() => setSelectedRes(null)}>
                 <motion.div initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.9, y: 20 }} className="bg-brand-offwhite p-8 md:p-12 max-w-lg w-full relative border-2 border-brand-yellow shadow-[20px_20px_0px_0px_#3A0888]" onClick={(e) => e.stopPropagation()}>
-                    <button onClick={handleCloseModal} className="absolute top-4 right-4 text-brand-navy font-mono text-xl hover:rotate-90 transition-transform">✕</button>
+                    <button onClick={() => setSelectedRes(null)} className="absolute top-4 right-4 text-brand-navy font-mono text-xl hover:rotate-90 transition-transform">✕</button>
                     <div className="mb-8">
                         <span className="font-mono text-xs uppercase tracking-widest text-brand-purple font-bold block mb-2">Free Goods</span>
                         <h3 className="text-4xl font-black uppercase tracking-tight text-brand-navy leading-none">Grab the<br/>{selectedRes.title}</h3>
@@ -168,9 +162,9 @@ const ClarityPage: React.FC = () => {
                     {status === 'sent' ? (
                         <div className="text-center py-8">
                             <div className="w-16 h-16 bg-brand-yellow text-brand-navy rounded-full flex items-center justify-center mx-auto mb-6 text-2xl">📬</div>
-                            <h4 className="text-2xl font-bold uppercase text-brand-navy mb-2">It's on the way.</h4>
-                            <p className="font-body text-brand-navy/70">We've just sent the download link to <strong>{email}</strong>. Check your inbox.</p>
-                            <button onClick={handleCloseModal} className="mt-8 font-mono text-xs uppercase tracking-widest border-b border-brand-navy pb-1">Back to site</button>
+                            <h4 className="text-2xl font-bold uppercase text-brand-navy mb-2">Check your inbox.</h4>
+                            <p className="font-body text-brand-navy/70">We've just sent the link to <strong>{email}</strong>. Check your spam if it's missing.</p>
+                            <button onClick={() => setSelectedRes(null)} className="mt-8 font-mono text-xs uppercase tracking-widest border-b border-brand-navy pb-1">Back to site</button>
                         </div>
                     ) : (
                         <form onSubmit={handleSubscribe} className="space-y-6">
@@ -182,7 +176,7 @@ const ClarityPage: React.FC = () => {
                             <button type="submit" disabled={status === 'processing'} className="w-full bg-brand-navy text-brand-offwhite font-mono uppercase font-bold py-4 hover:bg-brand-purple transition-all disabled:opacity-50">
                                 {status === 'processing' ? 'Sending...' : 'Send it to me'}
                             </button>
-                            {status === 'error' && <p className="text-red-500 font-mono text-[10px] text-center">Something went wrong. Refresh and try again?</p>}
+                            {status === 'error' && <p className="text-red-500 font-mono text-[10px] text-center">Something went wrong. Try again?</p>}
                             <p className="text-center font-mono text-[9px] uppercase text-brand-navy/30 tracking-tighter">Joining the crew. No spam, just value.</p>
                         </form>
                     )}

@@ -7,11 +7,11 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 export default async function handler(req: any, res: any) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
   
-  const { name, email, vibe, message } = req.body;
-  if (!email || !name) return res.status(400).json({ error: 'Name and email required.' });
+  const { name, email, vibe, budget, message } = req.body;
+  if (!email || !name) return res.status(400).json({ error: 'Name and email are required.' });
 
   try {
-    // 1. Add to crew (Contacts)
+    // 1. Add to Crew (Contacts)
     if (process.env.RESEND_AUDIENCE_ID) {
       try {
         await resend.contacts.create({
@@ -20,10 +20,10 @@ export default async function handler(req: any, res: any) {
           unsubscribed: false,
           audienceId: process.env.RESEND_AUDIENCE_ID,
         });
-      } catch (e) { /* skip */ }
+      } catch (e) { /* silent if exists */ }
     }
 
-    // 2. Personal auto-reply
+    // 2. Personal auto-reply to user
     const emailRequest = resend.emails.send({
       from: 'COOLO <hey@coolo.co.nz>',
       to: [email],
@@ -31,12 +31,12 @@ export default async function handler(req: any, res: any) {
       react: MissionReceivedEmail({ name }),
     });
 
-    // 3. Admin notification
+    // 3. Stylized brief receipt to hey@coolo.co.nz
     const adminRequest = resend.emails.send({
       from: 'COOLO Bot <system@coolo.co.nz>',
       to: ['hey@coolo.co.nz'],
-      subject: `New Thread: ${name} (${vibe})`,
-      react: NewLeadAlert({ name, email, vibe, message, budget: 'Confirmed via UI' }),
+      subject: `New Lead Brief: ${name} (${vibe})`,
+      react: NewLeadAlert({ name, email, vibe, budget, message }),
     });
 
     await Promise.all([emailRequest, adminRequest]);

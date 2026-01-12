@@ -295,7 +295,7 @@ const Loader: React.FC<LoaderProps> = ({ onEnter }) => {
         <div className="relative z-30 flex flex-col items-center pointer-events-none select-none p-4 max-w-full mt-auto mb-16 md:mb-32">
             
             {/* SVG MASK REVEAL */}
-            <div className="w-[70vw] md:w-[35vw] max-w-lg aspect-[3/1] relative mb-6 md:mb-8">
+            <div className="w-[70vw] md:w-[45vw] max-w-lg aspect-[3/1] relative mb-6 md:mb-8">
                 <svg viewBox="0 0 300 100" className="w-full h-full">
                     {/* Define the Mask */}
                     <defs>
