@@ -27,39 +27,26 @@ const handleSubscribe = async (e: React.FormEvent) => {
     setStatus('processing');
 
     try {
-      // 1. Send the email to your API
       const response = await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email })
+        body: JSON.stringify({ 
+            email, 
+            resourceId: selectedRes?.id // <--- Pass the ID
+        })
       });
 
-      // Even if the API warns (e.g. "already subscribed"), we generally want to let them download.
-      // But if it's a 500 error, we might want to know. 
-      // For a lead magnet, "Fail Open" (letting them download) is often better UX than blocking them if the API hiccups.
-      
-      if (!response.ok) {
-          console.warn("Subscription issue, but proceeding with download.");
-      }
+      if (!response.ok) throw new Error('API Error');
 
-      // 2. If the network request finished, trigger the download
+      // SUCCESS: Show the "Sent" state
       setStatus('sent');
       
-      if (selectedRes?.link) {
-          const link = document.createElement('a');
-          link.href = selectedRes.link;
-          link.download = selectedRes.title;
-          link.target = "_blank";
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-      }
+      // NOTE: We REMOVED the document.createElement download logic here.
+      // The user must go to their email to get the file.
 
     } catch (error) {
-      console.error("Download flow error:", error);
-      // Optional: setStatus('error') if you want to block the download on failure
-      // For now, we reset so they can try again
-      setStatus('idle'); 
+      console.error(error);
+      setStatus('idle'); // Allow retry
     }
   };
 
@@ -195,10 +182,15 @@ const handleSubscribe = async (e: React.FormEvent) => {
 
                     {status === 'sent' ? (
                         <div className="text-center py-8">
-                            <div className="w-16 h-16 bg-brand-yellow text-brand-navy rounded-full flex items-center justify-center mx-auto mb-6 text-2xl">✓</div>
-                            <h4 className="text-2xl font-bold uppercase text-brand-navy mb-2">It's Yours.</h4>
-                            <p className="font-body text-brand-navy/70">The file is downloading.</p>
-                            <button onClick={handleCloseModal} className="mt-8 font-mono text-xs uppercase tracking-widest border-b border-brand-navy pb-1">Close</button>
+                            <div className="w-16 h-16 bg-brand-yellow text-brand-navy rounded-full flex items-center justify-center mx-auto mb-6 text-2xl">
+                        📬
+                        </div>
+                            <h4 className="text-2xl font-bold uppercase text-brand-navy mb-2">Check Your Inbox.</h4>
+                            <p className="font-body text-brand-navy/70 max-w-xs mx-auto">We've sent the secure download link to <strong>{email}</strong>.
+                        </p>
+                            <button onClick={handleCloseModal} className="mt-8 font-mono text-xs uppercase tracking-widest border-b border-brand-navy pb-1">
+                                Close Terminal
+                            </button>
                         </div>
                     ) : (
                         <form onSubmit={handleSubscribe} className="space-y-6">

@@ -1,4 +1,6 @@
 import { Resend } from 'resend';
+import { ResourceDelivery } from '../components/emails/ResourceDelivery'; // Import new template
+import { FREE_RESOURCES } from '../constants'; // Access your resource data
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -7,15 +9,25 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { email } = req.body;
+  const { email, resourceId } = req.body; // Expect resourceId now
 
   if (!email) {
     return res.status(400).json({ error: 'Email is required' });
   }
 
   try {
-    // 1. Add to Resend Audience
-    // This captures the lead so you can email them later
+    // 1. Find the resource details based on ID
+    // We default to the first one if not found, just for safety
+    const resource = FREE_RESOURCES.find(r => r.id === resourceId) || FREE_RESOURCES[0];
+    
+    // Construct absolute URL (assuming Vercel env or hardcoded domain)
+    // IMPORTANT: Emails need full https:// links
+    const baseUrl = 'https://coolo.co.nz'; 
+    // Remove the leading '.' from './docs/...' to make it '/docs/...'
+    const cleanPath = resource.link.replace(/^\./, ''); 
+    const downloadUrl = `${baseUrl}${cleanPath}`;
+
+    // 2. Add to Audience (Capture the Lead)
     if (process.env.RESEND_AUDIENCE_ID) {
       try {
         await resend.contacts.create({
@@ -24,19 +36,30 @@ export default async function handler(req, res) {
           audienceId: process.env.RESEND_AUDIENCE_ID,
         });
       } catch (e) {
-        // If they are already subscribed, Resend might throw an error. 
-        // We log it but don't stop the download.
-        console.warn("Audience creation warning:", e);
+        console.warn("Already subscribed or error:", e);
       }
     }
 
-    // 2. (Optional) Send yourself a notification that someone downloaded a resource
-    await resend.emails.send({
+    // 3. Send the File Email
+    const emailRequest = resend.emails.send({
+      from: 'COOLO <hey@coolo.co.nz>',
+      to: [email],
+      subject: `Download: ${resource.title}`,
+      react: ResourceDelivery({ 
+        resourceName: resource.title,
+        downloadLink: downloadUrl
+      }),
+    });
+
+    // 4. Notify You (Admin)
+    const adminRequest = resend.emails.send({
       from: 'COOLO Bot <system@coolo.co.nz>',
       to: ['hey@coolo.co.nz'],
       subject: 'New Resource Download',
-      html: `<p>New lead captured: <strong>${email}</strong></p>`
+      html: `<p><strong>${email}</strong> just requested: ${resource.title}</p>`
     });
+
+    await Promise.all([emailRequest, adminRequest]);
 
     return res.status(200).json({ message: 'Success' });
 
