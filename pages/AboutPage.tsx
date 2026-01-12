@@ -145,31 +145,31 @@ const AboutPage: React.FC = () => {
 
                 {/* 2. RECRUITMENT SLOT */}
                 <AnimatedSection delay={300}>
-                    <a href="mailto:hey@coolo.co.nz?subject=Join%20The%20Unit%20%2F%20Portfolio" className="group relative block aspect-[3/4] overflow-hidden bg-brand-offwhite border-2 border-brand-navy/10 hover:border-brand-purple transition-colors duration-500 flex flex-col justify-center items-center text-center p-12">
-                        
+                     <Link to="/join" className="group relative block aspect-[3/4] overflow-hidden bg-brand-offwhite border-2 border-brand-navy/10 hover:border-brand-purple transition-colors duration-500 flex flex-col justify-center items-center text-center p-12">
+        
                         {/* Technical Background Pattern */}
-                        <div className="absolute inset-0 opacity-5 bg-[radial-gradient(#3A0888_1px,transparent_1px)] [background-size:16px_16px]"></div>
-                        
+                       <div className="absolute inset-0 opacity-5 bg-[radial-gradient(#3A0888_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        
                         <div className="relative z-10">
-                             <div className="w-24 h-24 rounded-full border-2 border-brand-navy/10 flex items-center justify-center mx-auto mb-8 group-hover:border-brand-purple group-hover:scale-110 transition-all duration-500">
-                                <svg className="w-8 h-8 text-brand-navy/40 group-hover:text-brand-purple transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v16m8-8H4" />
-                                </svg>
-                             </div>
-                             
-                             <h3 className="text-5xl md:text-6xl font-black uppercase tracking-tight text-brand-navy mb-4 group-hover:text-brand-purple transition-colors">
-                                Join<br/>The Unit
-                             </h3>
-                             
-                             <p className="font-mono text-xs uppercase tracking-widest text-brand-navy/60 max-w-xs mx-auto leading-relaxed">
-                                Seeking Senior Creatives<br/>& Specialists
-                             </p>
-
-                             <span className="inline-block mt-8 border-b-2 border-brand-purple pb-1 font-mono text-xs uppercase font-bold text-brand-purple tracking-widest group-hover:text-brand-navy group-hover:border-brand-navy transition-all">
-                                Send Portfolio via Email
-                             </span>
+                          <div className="w-24 h-24 rounded-full border-2 border-brand-navy/10 flex items-center justify-center mx-auto mb-8 group-hover:border-brand-purple group-hover:scale-110 transition-all duration-500">
+                             <svg className="w-8 h-8 text-brand-navy/40 group-hover:text-brand-purple transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v16m8-8H4" />
+                            </svg>
                         </div>
-                    </a>
+             
+                         <h3 className="text-5xl md:text-6xl font-black uppercase tracking-tight text-brand-navy mb-4 group-hover:text-brand-purple transition-colors">
+                          Join<br/>The Unit
+                         </h3>
+             
+                         <p className="font-mono text-xs uppercase tracking-widest text-brand-navy/60 max-w-xs mx-auto leading-relaxed">
+                             Seeking Senior Creatives<br/>& Specialists
+                         </p>
+
+                         <span className="inline-block mt-8 border-b-2 border-brand-purple pb-1 font-mono text-xs uppercase font-bold text-brand-purple tracking-widest group-hover:text-brand-navy group-hover:border-brand-navy transition-all">
+                          Submit Portfolio
+                         </span>
+                       </div>
+                  </Link>
                 </AnimatedSection>
 
             </div>

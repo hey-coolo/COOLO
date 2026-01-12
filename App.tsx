@@ -8,26 +8,26 @@ import ClarityPage from './pages/ClarityPage';
 import FreeResourcesPage from './pages/clarity/FreeResourcesPage';
 import WorkbookPage from './pages/clarity/WorkbookPage';
 import CoursePage from './pages/clarity/CoursePage';
+import ClarityTierPage from './pages/ClarityTierPage';
 import DesignPowerPage from './pages/DesignPowerPage';
+import TierDetailPage from './pages/TierDetailPage';
 import PartnershipPage from './pages/PartnershipPage';
+import PartnershipDetail from './pages/PartnershipDetail';
 import WorkPage from './pages/WorkPage';
+import ProjectPage from './pages/ProjectPage';
 import TeamPage from './pages/TeamPage';
 import TeamMemberPage from './pages/TeamMemberPage';
-import ProjectPage from './pages/ProjectPage';
-import ContactPage from './pages/ContactPage';
 import JournalPage from './pages/JournalPage';
 import DropsPage from './pages/DropsPage';
 import DropDetailPage from './pages/DropDetailPage';
 import AboutPage from './pages/AboutPage';
-import TierDetailPage from './pages/TierDetailPage';
-import ClarityTierPage from './pages/ClarityTierPage';
-import PartnershipDetail from './pages/PartnershipDetail';
+import ContactPage from './pages/ContactPage';
+import JoinPage from './pages/JoinPage';
 import QAPage from './pages/QAPage';
 import PlaybookPage from './pages/PlaybookPage';
+import UnsubscribePage from './pages/Unsubscribe';
 import CustomCursor from './components/CustomCursor';
 import Loader from './components/Loader';
-import unsubscribePage from './pages/unsubscribe';
-
 
 const pageVariants = {
   initial: { opacity: 0, scale: 0.99, y: 10 },
@@ -105,13 +105,15 @@ const App: React.FC = () => {
                       <Route path="/drops" element={<DropsPage />} />
                       <Route path="/drops/:slug" element={<DropDetailPage />} />
                       <Route path="/contact" element={<ContactPage />} />
+                      <Route path="/join" element={<JoinPage />} /> {/* New Route */}
                       <Route path="/faq" element={<QAPage />} />
-                      <Route path="/unsubscribe" element={<unsubscribe />} />
+                      <Route path="/unsubscribe" element={<UnsubscribePage />} />
+                      <Route path="/join" element={<JoinPage />} />
                     </Routes>
                   </motion.div>
                 </AnimatePresence>
               </main>
-              <Footer />
+            <Footer />
           </motion.div>
       )}
     </div>
