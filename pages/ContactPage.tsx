@@ -149,7 +149,7 @@ const ContactPage: React.FC = () => {
         </AnimatedSection>
       </main>
       
-      <Footer />
+    
     </div>
   );
 };
