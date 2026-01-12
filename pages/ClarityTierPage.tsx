@@ -1,12 +1,12 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { CLARITY_TIERS } from '../constants';
+import { BRAND_CLARITY_TIERS } from '../constants';
 import AnimatedSection from '../components/AnimatedSection';
 import Accordion from '../components/Accordion';
 
 const ClarityTierPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
-  const tier = CLARITY_TIERS.find(t => t.slug === slug);
+  const tier = BRAND_CLARITY_TIERS.find(t => t.slug === slug);
 
   if (!tier) {
     return (
