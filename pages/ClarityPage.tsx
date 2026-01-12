@@ -56,7 +56,7 @@ const ClarityPage: React.FC = () => {
               <h1 className="text-brand-navy text-8xl md:text-[14vw] font-black uppercase tracking-tight leading-[0.9] mt-0">
                 No Magic<br/><span className="text-brand-purple italic">Formula™</span>
               </h1>
-              <p className="font-body text-2xl md:text-4xl text-brand-navy/70 mt-12 leading-tight max-w-3xl italic">
+              <p className="font-body text-2xl md:text-4xl text-brand-navy/70 mt-12 leading-tight max-w-3xl">
                 We don’t invent your brand. 
                 We help you reveal it.
                 <br/><span className="text-brand-navy/40 not-italic text-xl mt-4 block font-normal">
