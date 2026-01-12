@@ -27,7 +27,7 @@ export default async function handler(req, res) {
       });
     }
 
-    return res.status(200).json({ message: 'Unsubscribed' });
+    return res.status(200).json({ message: 'unsubscribed' });
 
   } catch (error) {
     console.error(error);
