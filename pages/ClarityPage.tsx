@@ -99,7 +99,7 @@ const ClarityPage: React.FC = () => {
 
           {/* CORE TIERS */}
           <section className="pb-48 grid grid-cols-1 md:grid-cols-2 gap-8">
-              {CLARITY_TIERS.map((tier, i) => (
+              {BRAND_CLARITY_TIERS.map((tier, i) => (
                   <AnimatedSection key={tier.name} delay={i * 100}>
                       <Link to={`/clarity/${tier.slug}`} className="block border-2 border-brand-navy p-12 hover:bg-brand-navy hover:text-brand-offwhite transition-all duration-500 h-full group relative overflow-hidden bg-white shadow-[12px_12px_0px_0px_#0F0328] hover:shadow-none hover:translate-x-1 hover:translate-y-1">
                           <div className="flex flex-col h-full justify-between relative z-10">

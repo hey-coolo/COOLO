@@ -26,7 +26,7 @@ import QAPage from './pages/QAPage';
 import PlaybookPage from './pages/PlaybookPage';
 import CustomCursor from './components/CustomCursor';
 import Loader from './components/Loader';
-import UnsubscribePage from './pages/unsubscribe';
+import UnsubscribePage from './pages/Unsubscribe';
 
 
 const pageVariants = {
@@ -106,7 +106,7 @@ const App: React.FC = () => {
                       <Route path="/drops/:slug" element={<DropDetailPage />} />
                       <Route path="/contact" element={<ContactPage />} />
                       <Route path="/faq" element={<QAPage />} />
-                      <Route path="/unsubscribe" element={<unsubscribe />} />
+                      <Route path="/unsubscribe" element={<Unsubscribe />} />
                     </Routes>
                   </motion.div>
                 </AnimatePresence>
