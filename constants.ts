@@ -308,8 +308,8 @@ export const NAV_LINKS = [
 
 export const SERVICE_LEGS: ServiceLeg[] = [
   {
-    id: 'clarity',
-    title: 'I Need Clarity',
+    id: 'brand-clarity',
+    title: 'I Need Brand Clarity',
     subtitle: 'The No Magic Formula™',
     hoverText: 'Strategic deconstruction for high-growth brands.',
     visual: 'Minimalist Strategy',
@@ -327,7 +327,7 @@ export const SERVICE_LEGS: ServiceLeg[] = [
   },
   {
     id: 'partner',
-    title: 'I Need a Partner',
+    title: 'I Need a Creative Partner',
     subtitle: 'Technical Partnership',
     hoverText: 'Elite white-label unit for senior agencies.',
     visual: 'Scale Ops',
@@ -336,7 +336,7 @@ export const SERVICE_LEGS: ServiceLeg[] = [
   }
 ];
 
-export const CLARITY_TIERS: ClarityTier[] = [
+export const BRAND_CLARITY_TIERS: ClarityTier[] = [
     { 
         slug: 'the-reality-check',
         name: 'The Brand Reality Check', 
@@ -381,40 +381,44 @@ export const CLARITY_TIERS: ClarityTier[] = [
 
 export const DESIGN_POWER_TIERS: DesignPowerTier[] = [
     {
-        slug: "foundations",
-        name: "Foundations",
-        focus: "Visual Identity System",
-        desc: "The core aesthetic engine. We build the visual rules that make your brand unmistakable.",
-        deliverables: ["Primary & Secondary Logos", "Typography System", "Color Palette", "Basic Brand Guidelines"],
-        timeline: "4-6 Weeks",
-        idealFor: "Startups needing a professional baseline."
+        slug: "the-basics",
+        name: "The Basics",
+        focus: "Identity Only",
+        desc: "You have a business, but you look like a hobby. We fix that. A sharp, professional logo and color system that makes you look expensive.",
+        cta: "Get the Look",
+        deliverables: ["Primary & Secondary Logos", "Color Palette & Type System", "The 'Rulebook' (Mini Guide)", "Social Media Avatars"],
+        timeline: "2–3 Weeks",
+        idealFor: "New founders who are embarrassed to hand out their business card."
     },
     {
-        slug: "flagship",
-        name: "Flagship",
-        focus: "Full Creative Method™",
-        desc: "The complete studio experience. Identity, Custom Webflow build, and signature 3D visuals.",
-        deliverables: ["Identity System", "High-End 3D Renders", "Custom Webflow Site", "Motion Guidelines"],
-        timeline: "10-12 Weeks",
-        idealFor: "Brands ready for market dominance."
+        slug: "the-campaign",
+        name: "The Campaign",
+        focus: "Identity + Story",
+        desc: "A logo isn't enough. You need to say something. We build your identity AND the ads, content, and concepts you need to actually launch.",
+        cta: "Start Speaking",
+        deliverables: ["Everything in 'The Face Lift'", "Campaign Concepts", "Ad Mockups & key Art", "Copywriting Headlines"],
+        timeline: "4–5 Weeks",
+        idealFor: "Brands ready to launch a product or run ads."
     },
     {
-        slug: "viz-plus-motion",
-        name: "Viz + Motion",
-        focus: "Technical Visualization",
-        desc: "Surgical 3D visualization and kinetic typography for product-led brands.",
-        deliverables: ["4K Product Renders", "Kinetic Type System", "Social Motion Templates", "3D Material Library"],
-        timeline: "6-8 Weeks",
-        idealFor: "CPG and Tech Hardware brands."
+        slug: "the-website",
+        name: "The Website",
+        focus: "Identity + Website",
+        desc: "Your only real estate. We build custom sites that move, breathe, and actually convert visitors into customers. No templates.",
+        cta: "Build the HQ",
+        deliverables: ["Everything in 'The Face Lift'", "Custom Webflow Website", "Mobile Optimized", "CMS Training (You own it)"],
+        timeline: "6–8 Weeks",
+        idealFor: "Scale-ups who have outgrown their DIY Squarespace site."
     },
     {
-        slug: "retained-power",
-        name: "Retained Power",
-        focus: "Monthly Senior Unit",
-        desc: "Ongoing high-output design partnership. No junior designers, just senior firepower on tap.",
-        deliverables: ["Dedicated Design Sprints", "Ongoing Campaign Creative", "Web Maintenance", "Weekly Loom Syncs"],
-        timeline: "Monthly",
-        idealFor: "Growing companies needing a reliable design partner."
+        slug: "the-full-flex",
+        name: "The Full Flex",
+        focus: "The Creative Method™",
+        desc: "The nuclear option. We build and rebuild everything. Identity, Website, Product Visuals, and Content Direction. The complete transformation.",
+        cta: "Go All In",
+        deliverables: ["Full Identity System", "Webflow Website", "3D Product Renders", "Motion & Animation"],
+        timeline: "10–12 Weeks",
+        idealFor: "Established players ready to dominate the niche."
     }
 ];
 
@@ -527,52 +531,82 @@ export const FREE_RESOURCES: Resource[] = [
 
 export const FAQ_DATA = [
   {
-    category: 'The Unit',
+    category: 'The Humans (Us)',
     questions: [
       {
-          q: 'What exactly is a "Senior Unit"?',
-          a: "It's a high-output, low-overhead model. You work directly with the experts (Franco and Ariana). No account managers, no junior designers learning on your dime. Just senior design power delivered with surgical precision."
+          q: 'Are you a big agency in disguise?',
+          a: "Nope. It's two humans. Franco (Creative Director) and Ariana (The Boss/Ops). No account managers blocking your calls. No juniors practicing on your project. Just us."
       },
       {
-          q: 'Who am I actually working with?',
-          a: "You work directly with Franco (Strategy & Design) and Ariana (Ops & Execution). We do not have juniors or interns. When you hire COOLO, you hire us."
+          q: 'Are you guys artists or business people?',
+          a: "Both. That’s the point. Artists make cool stuff that doesn't sell. Business people make boring stuff that sells but nobody loves. We sit right in the middle: Cool stuff that actually works."
       },
       {
-          q: 'Where are you based?',
-          a: "Mount Maunganui, New Zealand. We operate globally from a place that preserves our sanity and fuels our deep work. We are a remote-first studio that values clarity over geography."
+          q: 'Where are you based? Do timezones matter?',
+          a: "We are in Mount Maunganui, New Zealand (the beach). We work with clients in the US, Europe, and Aus. We've mastered the art of the 'asynchronous hustle'—while you sleep, we build."
       },
       {
-          q: 'Do you work with agencies?',
-          a: "Yes. We act as an elite white-label 'Design Power' unit for agencies that need to scale their creative output without adding full-time senior headcount."
-      },
-      {
-          q: 'Are you a full-service agency?',
-          a: "No. We are a specialized unit. We do Strategy, Identity, 3D, and Webflow. We don't do SEO, PPC, or social media management. We build the engine; you (or your marketing team) drive it."
+          q: 'Can we meet for coffee?',
+          a: "If you're in the Mount, absolutely. If not, Google Meet is our coffee shop. We prioritize deep work over travel, which keeps your costs down and our focus up."
       }
     ]
   },
   {
-    category: 'Economics & Value',
+    category: 'The Money (Value)',
     questions: [
       { 
-          q: 'Why is the investment higher than a freelancer?', 
-          a: "A freelancer executes tasks. We execute outcomes. You're paying for the strategic seniority that prevents costly re-designs and narrative pivots in 6 months. We build systems, not just assets." 
+          q: 'Why are you more expensive than a freelancer?', 
+          a: "A freelancer asks, 'What do you want me to do?' We ask, 'Where do you want to go?' You aren't paying for hours; you're paying for the 10 years of mistakes we've already made so you don't have to." 
       },
       {
-          q: 'Do you offer fixed pricing?',
-          a: "Our core tiers (Clarity Audit, Brand OS, Flagship) have base starting points, but every project is quoted bespoke based on the complexity of your problem. We don't believe in one-size-fits-all pricing for high-end strategy."
+          q: 'Why are you cheaper than a big agency?',
+          a: "Because you aren't paying for our office rent, our ping-pong table, or the salary of an Account Executive whose only job is to forward emails. Our overhead is low, so your money goes into the work."
       },
       {
-          q: 'What is your typical project lead time?',
-          a: "Most strategic audits take 1-2 weeks. Full Brand OS builds take 8 weeks. Website and 3D flagship builds are typically 10-12 weeks. Quality requires a certain velocity of logic."
+          q: 'Can I just pay for a logo?',
+          a: "No. A logo without a strategy is just a sticker. We don't sell stickers. We build engines. If you want a $50 logo, there are great sites for that. If you want a brand, you're in the right place."
       },
       {
           q: 'Do you offer payment plans?',
-          a: "For our larger builds, we typically structure payments in 2-3 milestones. We are a business partner, and we want the terms to reflect a mutual commitment to excellence."
+          a: "Yes. We usually do 50/50, but for the big 'Full Flex' projects, we can split it into 3 monthly payments. We want to be partners, not a burden on your cash flow."
+      }
+    ]
+  },
+  {
+    category: 'The Work (Process)',
+    questions: [
+      {
+          q: 'What if I don’t like the design?',
+          a: "That almost never happens. Why? Because we don't do 'Ta-Da!' reveals. We show you the messy sketches, the rough ideas, and the bad drafts first. We steer the ship together. By the time we render the final pixels, you've already approved it."
       },
       {
-          q: 'Can I pay for just a logo?',
-          a: "Generally, no. A logo without a strategy is just decoration. We only take on identity projects that include at least a foundational strategy phase to ensure the visuals actually work for your business."
+          q: 'Do you use AI?',
+          a: "We use it to speed up the boring stuff (coding, resizing, file sorting) so we can spend more time on the human stuff (strategy, story, taste). AI is a tool, not the talent."
+      },
+      {
+          q: 'Who owns the work when we’re done?',
+          a: "You do. 100%. Once the final invoice is paid, we hand over every file, every font license, and every login. It’s your car; we just built the engine."
+      },
+      {
+          q: 'Will I be able to update the website myself?',
+          a: "Yes. We hate gatekeeping. We build on Webflow and set up a 'Editor Mode' so you can change text, swap images, and post blogs without calling us. We’ll even teach you how to do it."
+      }
+    ]
+  },
+  {
+    category: 'The Vibe (Fit)',
+    questions: [
+      {
+          q: 'Who is this NOT for?',
+          a: "If you want a 'Yes Man' who just does what they're told, we aren't a fit. If you want the cheapest option, we aren't a fit. If you think branding is 'just a logo,' we definitely aren't a fit."
+      },
+      {
+          q: 'Can we start tomorrow?',
+          a: "Probably not. We usually book 2-4 weeks out to ensure we can give every client our full obsession. Good work takes focus, not rushing."
+      },
+      {
+          q: 'Do you work with boring industries?',
+          a: "We love boring industries. It's easy to make a fashion brand look cool. It's a fun challenge to make a logistics company look cool. If you have an open mind, we can make any industry interesting."
       }
     ]
   }

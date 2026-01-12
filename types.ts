@@ -40,6 +40,7 @@ export interface DesignPowerTier {
     name: string;
     focus: string;
     desc: string;
+    cta: string;
     deliverables: string[];
     timeline: string;
     idealFor: string;
@@ -72,7 +73,7 @@ export interface PartnershipModel {
 }
 
 export interface ServiceLeg {
-  id: 'clarity' | 'design-power' | 'partner';
+  id: 'brand-clarity' | 'design-power' | 'partner';
   title: string;
   subtitle: string;
   hoverText: string;
