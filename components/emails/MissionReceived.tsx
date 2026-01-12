@@ -1,187 +1,84 @@
-import * as React from 'react';
-import { Html, Head, Body, Container, Section, Text, Heading, Link, Hr, Preview } from '@react-email/components';
+import { Body, Container, Head, Heading, Html, Img, Preview, Section, Text, Tailwind, Button } from "@react-email/components";
+import * as React from "react";
 
-const colors = {
-  navy: '#0F0328',
-  offWhite: '#F7F7F7',
-  purple: '#3A0888',
-  yellow: '#FCC803',
-  lavender: '#7670C5',
-};
+const baseUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://coolo.co.nz";
 
-
-interface MissionReceivedEmailProps {
-  name: string;
-}
-
-export const MissionReceivedEmail = ({ name }: MissionReceivedEmailProps) => {
+// NOTE: API calls this "MissionReceivedEmail", do not rename!
+export const MissionReceivedEmail = ({ name = "Client" }: { name: string }) => {
   return (
     <Html>
       <Head>
-        <style dangerouslySetInnerHTML={{__html: `
-          @import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@900&family=Space+Mono:wght@400;700&display=swap');
-        `}} />
+        <style>{`
+          @import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@800;900&family=Space+Mono:wght@400;700&display=swap');
+        `}</style>
       </Head>
-      <Preview>We received your message.</Preview>
-      <Body style={main}>
-        <Container style={container}>
-          {/* HEADER */}
-          <Section style={header}>
-            <Heading style={brandLogo}>COOLO</Heading>
-            <Text style={statusBadge}>STATUS: RECEIVED</Text>
-          </Section>
-
-          {/* CONTENT */}
-          <Section style={contentSection}>
-            <Heading style={h1}>MESSAGE<br/><span style={{color: colors.purple}}>RECEIVED.</span></Heading>
+      <Preview>Mission briefing received</Preview>
+      <Tailwind
+        config={{
+          theme: {
+            extend: {
+              colors: {
+                'brand-purple': '#3A0888',
+                'brand-offwhite': '#F7F7F7',
+                'brand-yellow': '#FCC803',
+                'brand-navy': '#0F0328',
+              },
+              fontFamily: {
+                sans: ['"Big Shoulders Display"', 'Helvetica', 'Arial', 'sans-serif'],
+                mono: ['"Space Mono"', 'Courier', 'monospace'],
+              }
+            },
+          },
+        }}
+      >
+        <Body className="bg-brand-offwhite font-sans my-auto mx-auto px-4 py-12">
+          <Container className="mx-auto w-full max-w-[600px]">
             
-            <Text style={paragraph}>
-              Hey {name},
-            </Text>
-            <Text style={paragraph}>
-              Thanks for reaching out. We've got your details in our system.
-            </Text>
-            <Text style={paragraph}>
-              We usually reply within 24 hours to set up a chat or clarify the next steps. Sit tight.
-            </Text>
-            
-            <Section style={highlightBox}>
-              <Text style={monoText}>TICKET_ID: {Math.floor(Math.random() * 10000)} // COOLO_STUDIO</Text>
+            <Section className="mb-10 text-center">
+               <Img src={`${baseUrl}/assets/logos/logo-dark.svg`} width="100" alt="COOLO" className="mx-auto" />
             </Section>
 
-            <Link href="https://coolo.co.nz" style={button}>
-              RETURN TO SITE
-            </Link>
-          </Section>
+            <Section className="bg-white border-2 border-brand-navy p-10 shadow-[8px_8px_0px_0px_#0F0328]">
+              
+              <Section className="mb-6">
+                <Text className="text-brand-navy font-mono text-[10px] font-bold uppercase tracking-widest border border-brand-navy rounded-full px-3 py-1 inline-block m-0">
+                  PHASE: BRIEFING
+                </Text>
+              </Section>
 
-          <Hr style={divider} />
-
-          {/* FOOTER */}
-          <Section style={footer}>
-              <Text style={footerText}>
-                COOLO STUDIO<br/>
-                MOUNT MAUNGANUI, NZ<br/>
-                <Link href="https://instagram.com/coolo.co" style={link}>INSTAGRAM</Link>
-                {' • '}
-                <Link href="https://coolo.co.nz/unsubscribe" style={{...link, color: '#999', textDecoration: 'none'}}>UNSUBSCRIBE</Link>
+              <Heading className="text-brand-navy font-sans text-[64px] leading-[0.9] font-black uppercase m-0 mb-4">
+                MISSION<br/>
+                <span className="text-brand-purple">CONFIRMED.</span>
+              </Heading>
+              
+              <Text className="text-brand-purple font-mono text-[12px] uppercase tracking-widest mb-8 font-bold">
+                REF: NEW_INTAKE
               </Text>
-          </Section>
-        </Container>
-      </Body>
+
+              <Text className="text-brand-navy/80 font-sans text-[18px] leading-[1.4] mb-8 font-medium">
+                We sit down. We talk. We fix the confusion. Hello {name}, your mission brief has been logged. Our strategists are analyzing the "Brand Reality Check" now.
+              </Text>
+              
+              <Button 
+                className="bg-brand-navy text-brand-offwhite font-mono text-[13px] font-bold py-4 px-8 uppercase tracking-widest hover:bg-brand-purple transition-colors border-2 border-brand-navy w-full text-center"
+                href="https://coolo.co.nz"
+              >
+                RETURN TO BASE
+              </Button>
+
+            </Section>
+
+             <Section className="mt-8 text-center">
+              <Text className="text-brand-navy/40 font-mono text-[10px] uppercase tracking-widest">
+                COOLO STUDIO // MOUNT MAUNGANUI, NZ
+              </Text>
+            </Section>
+
+          </Container>
+        </Body>
+      </Tailwind>
     </Html>
   );
 };
 
 export default MissionReceivedEmail;
-
-// --- STYLES ---
-const main = {
-  backgroundColor: colors.offWhite,
-  fontFamily: 'Helvetica, Arial, sans-serif',
-};
-
-const container = {
-  margin: '0 auto',
-  padding: '40px 0 48px',
-  maxWidth: '580px',
-};
-
-const header = {
-  marginBottom: '32px',
-};
-
-const brandLogo = {
-  fontFamily: '"Big Shoulders Display", Helvetica, Arial, sans-serif',
-  fontSize: '32px',
-  fontWeight: 900,
-  letterSpacing: '-1px',
-  margin: '0',
-  color: colors.navy,
-};
-
-const statusBadge = {
-  fontFamily: '"Space Mono", monospace',
-  fontSize: '10px',
-  letterSpacing: '0.2em',
-  color: colors.purple,
-  fontWeight: 700,
-  marginTop: '4px',
-};
-
-const contentSection = {
-  padding: '0 12px',
-};
-
-const h1 = {
-  fontFamily: '"Big Shoulders Display", Helvetica, Arial, sans-serif',
-  fontSize: '64px',
-  lineHeight: '0.9',
-  fontWeight: 900,
-  color: colors.navy,
-  margin: '0 0 24px',
-  textTransform: 'uppercase' as const,
-};
-
-const paragraph = {
-  fontFamily: 'Helvetica, Arial, sans-serif',
-  fontSize: '16px',
-  lineHeight: '1.6',
-  color: 'rgba(15, 3, 40, 0.7)',
-  margin: '0 0 16px',
-};
-
-const highlightBox = {
-  backgroundColor: 'rgba(15, 3, 40, 0.05)',
-  borderLeft: `2px solid ${colors.purple}`,
-  padding: '16px',
-  margin: '24px 0',
-};
-
-const monoText = {
-  fontFamily: '"Space Mono", monospace',
-  fontSize: '12px',
-  color: colors.navy,
-  margin: 0,
-  letterSpacing: '0.05em',
-};
-
-const button = {
-  backgroundColor: colors.navy,
-  color: colors.offWhite,
-  fontFamily: '"Space Mono", monospace',
-  fontSize: '14px',
-  fontWeight: 700,
-  textDecoration: 'none',
-  padding: '16px 32px',
-  display: 'inline-block',
-  textTransform: 'uppercase' as const,
-  letterSpacing: '0.1em',
-  marginTop: '16px',
-};
-
-const divider = {
-  borderColor: 'rgba(15, 3, 40, 0.1)',
-  margin: '48px 0',
-};
-
-const footer = {
-  textAlign: 'center' as const,
-};
-
-const footerText = {
-  fontFamily: '"Space Mono", monospace',
-  fontSize: '10px',
-  color: 'rgba(15, 3, 40, 0.4)',
-  letterSpacing: '0.1em',
-  lineHeight: '1.8',
-};
-
-const link = {
-  color: colors.purple,
-  textDecoration: 'underline',
-};
-
-const subtleLink = {
-  color: 'rgba(15, 3, 40, 0.3)',
-  textDecoration: 'underline',
-};
