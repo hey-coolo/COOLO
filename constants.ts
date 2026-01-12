@@ -369,7 +369,7 @@ export const CLARITY_TIERS: ClarityTier[] = [
     },
     { 
         slug: 'creative-partner',
-        name: 'The Creative Partner'',
+        name: 'The Creative Partner',
         subtitle: 'Senior Guidance / Ongoing Support',
         desc: "Ongoing strategic partnership. We join your executive team as the 'Strategic Brain'.", 
         cta: "Work With Us", 
