@@ -79,42 +79,73 @@ const ProjectHero: React.FC<{ project: any }> = ({ project }) => {
     );
 };
 
-// --- 3. NEW COMPONENTS FOR FLOW ---
+// --- 3. NEW & UPDATED SECTIONS ---
 
-// New: Brief / Overview Section
-const ProjectBrief: React.FC<{ text: string; tags: string[] }> = ({ text, tags }) => (
-    <section className="py-24 md:py-32 bg-brand-offwhite relative z-20">
-        <div className="container mx-auto px-6 md:px-8">
-            <div className="flex flex-col md:flex-row gap-12 md:gap-24 items-start">
-                <div className="md:w-1/4 pt-2">
-                    <span className="font-mono text-brand-purple uppercase tracking-widest text-xs font-bold mb-6 block border-b border-brand-purple/20 pb-2 w-full">
-                        Project Data
-                    </span>
-                    <div className="flex flex-wrap gap-2">
-                        {tags.map(tag => (
-                            <span key={tag} className="font-mono text-[10px] uppercase border border-brand-navy/20 px-2 py-1 text-brand-navy/60 font-bold">
-                                {tag}
-                            </span>
-                        ))}
+// UPDATED: Studio-style Project Brief (Title Left, Data Right)
+const ProjectBrief: React.FC<{ project: any }> = ({ project }) => {
+    const MetaRow = ({ label, value }: { label: string, value: string }) => (
+        <div className="flex justify-between items-baseline border-b border-brand-navy/10 py-3 mb-2">
+            <span className="font-mono text-[10px] uppercase tracking-widest text-brand-navy/40 font-bold">{label}</span>
+            <span className="font-mono text-xs uppercase tracking-widest text-brand-navy font-bold text-right">{value}</span>
+        </div>
+    );
+
+    return (
+        <section className="py-24 md:py-32 bg-brand-offwhite relative z-20">
+            <div className="container mx-auto px-6 md:px-8">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24">
+                    
+                    {/* LEFT COLUMN: Sticky Title */}
+                    <div className="lg:col-span-4">
+                        <motion.h2 
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            className="text-6xl md:text-8xl font-black uppercase tracking-tighter text-brand-navy leading-[0.9] lg:sticky lg:top-32"
+                        >
+                            {project.title}
+                        </motion.h2>
+                    </div>
+
+                    {/* RIGHT COLUMN: Data & Story */}
+                    <div className="lg:col-span-8 flex flex-col gap-16">
+                        
+                        {/* Data Grid */}
+                        <motion.div 
+                            initial={{ opacity: 0 }} 
+                            whileInView={{ opacity: 1 }} 
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.2 }}
+                            className="w-full"
+                        >
+                            <MetaRow label="Client" value={project.client || "Internal"} />
+                            <MetaRow label="Year" value={project.year.toString()} />
+                            <MetaRow label="Scope" value={project.role} />
+                            <MetaRow label="Sector" value={project.category} />
+                        </motion.div>
+
+                        {/* Description Text */}
+                        <motion.div 
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.4 }}
+                            className="font-body text-xl md:text-2xl text-brand-navy/80 leading-relaxed font-light space-y-8 max-w-3xl"
+                        >
+                            <p>{project.description}</p>
+                            {project.story?.goal && (
+                                <p className="opacity-80">{project.story.goal}</p>
+                            )}
+                        </motion.div>
+
                     </div>
                 </div>
-                <div className="md:w-3/4">
-                    <motion.p 
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8 }}
-                        className="font-sans text-3xl md:text-5xl font-bold uppercase leading-tight text-brand-navy"
-                    >
-                        {text}
-                    </motion.p>
-                </div>
             </div>
-        </div>
-    </section>
-);
+        </section>
+    );
+};
 
-// New: Zoomable Image Wrapper
+// Helper: Zoomable Image
 const ZoomableImage: React.FC<{ src: string; onClick: (src: string) => void }> = ({ src, onClick }) => (
     <motion.div 
         initial={{ opacity: 0, y: 20 }}
@@ -139,7 +170,7 @@ const ZoomableImage: React.FC<{ src: string; onClick: (src: string) => void }> =
     </motion.div>
 );
 
-// Modified: Flexible Story Block (Replaces rigid EditorialSection)
+// New: Dynamic Story Block
 const StoryBlock: React.FC<{ 
     label: string; 
     title: string; 
@@ -190,7 +221,7 @@ const StoryBlock: React.FC<{
     );
 };
 
-// New: Text/Quote Insert
+// New: Quote Block
 const QuoteBlock: React.FC<{ text: string }> = ({ text }) => (
     <section className="py-32 bg-brand-offwhite">
         <div className="container mx-auto px-8 max-w-5xl text-center">
@@ -209,7 +240,7 @@ const QuoteBlock: React.FC<{ text: string }> = ({ text }) => (
     </section>
 );
 
-// --- 4. RESULTS SECTION (DO NOT TOUCH THE BIG QUOTE) ---
+// --- 4. RESULTS SECTION (DO NOT TOUCH) ---
 const ResultsSection: React.FC<{ gain: string }> = ({ gain }) => {
     if (!gain) return null;
     return (
@@ -233,7 +264,7 @@ const ResultsSection: React.FC<{ gain: string }> = ({ gain }) => {
     );
 };
 
-// --- 5. PROCESS ARCHIVE (Replaced MasonryGallery) ---
+// --- 5. PROCESS ARCHIVE (Replaces MasonryGallery) ---
 const ProcessArchive: React.FC<{ images: string[]; onImageClick: (src: string) => void }> = ({ images, onImageClick }) => {
     if (!images || images.length === 0) return null;
     
@@ -297,7 +328,7 @@ const NextProject: React.FC<{ project: any }> = ({ project }) => (
 const ProjectPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const [isRevealing, setIsRevealing] = useState(true); 
-  const [selectedImage, setSelectedImage] = useState<string | null>(null); // For Lightbox
+  const [selectedImage, setSelectedImage] = useState<string | null>(null); 
   
   const currentIndex = PROJECTS.findIndex(p => p.slug === slug);
 
@@ -315,7 +346,6 @@ const ProjectPage: React.FC = () => {
   const project = PROJECTS[currentIndex];
   const nextProject = PROJECTS[(currentIndex + 1) % PROJECTS.length];
   
-  // Destructure story with defaults, handling cases where story parts might be missing
   const { goal, gap, gamble, gain, processImages } = project.story || {
       goal: "",
       gap: "",
@@ -324,11 +354,11 @@ const ProjectPage: React.FC = () => {
       processImages: []
   };
 
-  // Dynamic Image Chunking for Story Flow
+  // Image Management
   const details = project.detailImages || [];
   const allVisuals = details.length > 0 ? details : [project.imageUrl];
   
-  // Logic: Distribute images based on which story sections exist
+  // Distribute images intelligently
   const storySections = [goal, gap, gamble].filter(Boolean);
   const visualsPerSection = Math.ceil(allVisuals.length / (storySections.length || 1));
   
@@ -345,7 +375,6 @@ const ProjectPage: React.FC = () => {
         {isRevealing && <ProjectReveal onComplete={() => setIsRevealing(false)} />}
       </AnimatePresence>
 
-      {/* Lightbox Overlay */}
       <AnimatePresence>
         {selectedImage && (
             <ImageOverlay src={selectedImage} onClose={() => setSelectedImage(null)} />
@@ -356,8 +385,8 @@ const ProjectPage: React.FC = () => {
         
         <ProjectHero project={project} />
         
-        {/* NEW: Project Brief / Description */}
-        <ProjectBrief text={project.description} tags={project.tags} />
+        {/* NEW: Studio-style Project Brief */}
+        <ProjectBrief project={project} />
 
         {/* Dynamic Story Flow */}
         <div className="flex flex-col">
@@ -382,7 +411,6 @@ const ProjectPage: React.FC = () => {
                 />
             )}
 
-            {/* Optional Quote Insert between Gap and Gamble */}
             <QuoteBlock text="Logic determines the path. Design builds the vehicle." />
 
             {gamble && (
@@ -398,7 +426,6 @@ const ProjectPage: React.FC = () => {
 
         <ResultsSection gain={gain} />
 
-        {/* Enhanced Process Section */}
         {processImages && processImages.length > 0 && (
             <ProcessArchive images={processImages} onImageClick={setSelectedImage} />
         )}
