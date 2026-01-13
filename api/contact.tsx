@@ -24,20 +24,24 @@ export default async function handler(req: any, res: any) {
     }
 
     // 2. Personal auto-reply to user
-    const emailRequest = resend.emails.send({
-      from: 'COOLO <hey@coolo.co.nz>',
-      to: [email],
-      subject: 'Talk soon // COOLO',
-      react: MissionReceivedEmail({ name }),
-    });
+  const emailRequest = resend.emails.send({
+    from: 'COOLO <hey@send.coolo.co.nz>', 
+    to: [email],
+    reply_to: 'hey@coolo.co.nz', 
+    subject: 'Talk soon // COOLO',
+    react: MissionReceivedEmail({ name }),
+  });
 
     // 3. Stylized brief receipt to hey@coolo.co.nz
-    const adminRequest = resend.emails.send({
-      from: 'COOLO Bot <system@coolo.co.nz>',
-      to: ['bogni.3@gmail.com'],
-      subject: `New Lead Brief: ${name} (${vibe})`,
-      react: NewLeadAlert({ name, email, vibe, budget, message }),
-    });
+  const adminRequest = resend.emails.send({
+    from: 'COOLO Bot <system@send.coolo.co.nz>', 
+    to: ['hey@coolo.co.nz'], 
+    reply_to: email, 
+    subject: `New Lead Brief: ${name} (${vibe})`,
+    react: NewLeadAlert({ name, email, vibe, budget, message }),
+  });
+
+    
 
     await Promise.all([emailRequest, adminRequest]);
     return res.status(200).json({ success: true });

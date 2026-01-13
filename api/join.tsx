@@ -24,20 +24,21 @@ export default async function handler(req: any, res: any) {
     }
 
     // 2. Send Confirmation to Applicant
-    const emailRequest = resend.emails.send({
-      from: 'COOLO Careers <hey@coolo.co.nz>',
-      to: [email],
-      subject: 'Application Received // COOLO',
-      react: ApplicationReceived({ name }),
+  const emailRequest = resend.emails.send({
+    from: 'COOLO Careers <hey@send.coolo.co.nz>',
+    to: [email],
+    reply_to: 'hey@coolo.co.nz',
+    subject: 'Application Received // COOLO',
+    react: ApplicationReceived({ name }),
     });
 
-    // 3. Send Alert to Studio Admin
-    const adminRequest = resend.emails.send({
-      from: 'COOLO Bot <system@coolo.co.nz>',
-      to: ['hey@coolo.co.nz'],
-      subject: `New Talent: ${name} (${role})`,
-      react: NewTalentAlert({ name, email, role, rate, portfolio }),
-    });
+  const adminRequest = resend.emails.send({
+    from: 'COOLO Bot <system@send.coolo.co.nz>',
+    to: ['hey@coolo.co.nz'],
+    reply_to: email,
+    subject: `New Talent: ${name} (${role})`,
+    react: NewTalentAlert({ name, email, role, rate, portfolio }),
+  });
 
     await Promise.all([emailRequest, adminRequest]);
     return res.status(200).json({ success: true });

@@ -21,19 +21,20 @@ export default async function handler(req: any, res: any) {
       } catch (e) { /* skip */ }
     }
 
-    const emailRequest = resend.emails.send({
-      from: 'COOLO <hey@coolo.co.nz>',
-      to: [email],
-      subject: `Your tool is ready: ${resourceTitle}`,
-      react: ResourceDelivery({ resourceName: resourceTitle, downloadLink: absoluteUrl }),
-    });
+  const emailRequest = resend.emails.send({
+    from: 'COOLO <hey@send.coolo.co.nz>',
+    to: [email],
+    reply_to: 'hey@coolo.co.nz',
+    subject: `Your tool is ready: ${resourceTitle}`,
+    react: ResourceDelivery({ resourceName: resourceTitle, downloadLink: absoluteUrl }),
+  });
 
-    const adminRequest = resend.emails.send({
-      from: 'COOLO Site <system@coolo.co.nz>',
-      to: ['hey@coolo.co.nz'],
-      subject: 'New Tool Downloaded',
-      html: `<p><strong>${email}</strong> just grabbed the <strong>${resourceTitle}</strong>.</p>`
-    });
+  const adminRequest = resend.emails.send({
+    from: 'COOLO Site <system@send.coolo.co.nz>',
+    to: ['hey@coolo.co.nz'],
+    subject: 'New Tool Downloaded',
+    html: `<p><strong>${email}</strong> just grabbed the <strong>${resourceTitle}</strong>.</p>`
+  });
 
     await Promise.all([emailRequest, adminRequest]);
     return res.status(200).json({ success: true });
