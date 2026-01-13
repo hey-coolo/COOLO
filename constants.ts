@@ -118,7 +118,7 @@ export const PROJECTS: Project[] = [
     }
   },
 {
-    id: 5,
+    id: 4,
     title: 'Pablo Creative',
     slug: 'pablo-creative',
     description: 'Multidisciplinary design studio partnership. Covering photography, graphic design, web, and motion.',
@@ -156,7 +156,7 @@ export const PROJECTS: Project[] = [
   },
 
 {
-    id: 4,
+    id: 5,
     title: 'The Cartridges',
     slug: 'the-cartridges',
     description: 'Vintage classic snes cartridges. The cartridges popular in the late 80s and early 90s include games using 8-bits, low-resolution pixel matrix screens. Games like super mario, contra ii, mortal kombat, donkey kong, and more.',
@@ -185,7 +185,7 @@ export const PROJECTS: Project[] = [
     }
   },
  {
-    id: 7,
+    id: 6,
     title: 'Johney’s Dumpling House',
     slug: 'johneys-dumpling-house',
     description: 'High-energy hospitality branding with a contemporary street-food edge.',
@@ -214,7 +214,7 @@ export const PROJECTS: Project[] = [
     }
   },
  {
-    id: 6,
+    id: 7,
     title: 'Franca Austral',
     slug: 'franca-austral',
     description: 'Editorial-led identity design inspired by Southern landscapes.',

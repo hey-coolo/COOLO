@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { PROJECTS } from '../constants';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { ImageOverlay } from '../components/ImageOverlay';
 
 // --- 1. PRELOADER (DO NOT TOUCH) ---
 const ProjectReveal: React.FC<{ onComplete: () => void }> = ({ onComplete }) => {
@@ -15,23 +16,15 @@ const ProjectReveal: React.FC<{ onComplete: () => void }> = ({ onComplete }) => 
             <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
                 <defs>
                     <mask id="logo-mask">
-                        {/* 1. Black Background = Transparent (Reveals the Page) */}
                         <rect x="0" y="0" width="100" height="100" fill="black" />
-                        
-                        {/* 2. White Shapes = Opaque (Shows the Overlay Color) */}
                         <g transform="translate(50 50)">
                             <motion.g
-                                initial={{ scale: 60 }} // Start Huge (Covers Screen)
-                                animate={{ scale: 1 }}  // Shrink to Logo Size
+                                initial={{ scale: 60 }}
+                                animate={{ scale: 1 }}
                                 transition={{ duration: 1.2, ease: [0.19, 1, 0.22, 1] }}
                             >
-                                {/* Left Pill */}
                                 <rect x="-12" y="-40" width="10" height="80" rx="5" fill="white" />
-                                
-                                {/* Right Pill */}
                                 <rect x="2" y="-40" width="10" height="80" rx="5" fill="white" />
-
-                                {/* GAP FILLER: Ensures total coverage at start, then splits open */}
                                 <motion.rect 
                                     x="-2" y="-40" width="4" height="80" fill="white"
                                     initial={{ scaleX: 1 }}
@@ -42,13 +35,7 @@ const ProjectReveal: React.FC<{ onComplete: () => void }> = ({ onComplete }) => 
                         </g>
                     </mask>
                 </defs>
-
-                {/* The Visible Overlay Layer (Brand Off-White) */}
-                <rect 
-                    x="0" y="0" width="100" height="100" 
-                    fill="#F7F7F7" 
-                    mask="url(#logo-mask)" 
-                />
+                <rect x="0" y="0" width="100" height="100" fill="#F7F7F7" mask="url(#logo-mask)" />
             </svg>
         </motion.div>
     );
@@ -92,76 +79,137 @@ const ProjectHero: React.FC<{ project: any }> = ({ project }) => {
     );
 };
 
-// --- 3. NEW EDITORIAL SECTION (Clean Scrolling Gallery) ---
-const EditorialSection: React.FC<{ 
-    step: string; 
+// --- 3. NEW COMPONENTS FOR FLOW ---
+
+// New: Brief / Overview Section
+const ProjectBrief: React.FC<{ text: string; tags: string[] }> = ({ text, tags }) => (
+    <section className="py-24 md:py-32 bg-brand-offwhite relative z-20">
+        <div className="container mx-auto px-6 md:px-8">
+            <div className="flex flex-col md:flex-row gap-12 md:gap-24 items-start">
+                <div className="md:w-1/4 pt-2">
+                    <span className="font-mono text-brand-purple uppercase tracking-widest text-xs font-bold mb-6 block border-b border-brand-purple/20 pb-2 w-full">
+                        Project Data
+                    </span>
+                    <div className="flex flex-wrap gap-2">
+                        {tags.map(tag => (
+                            <span key={tag} className="font-mono text-[10px] uppercase border border-brand-navy/20 px-2 py-1 text-brand-navy/60 font-bold">
+                                {tag}
+                            </span>
+                        ))}
+                    </div>
+                </div>
+                <div className="md:w-3/4">
+                    <motion.p 
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8 }}
+                        className="font-sans text-3xl md:text-5xl font-bold uppercase leading-tight text-brand-navy"
+                    >
+                        {text}
+                    </motion.p>
+                </div>
+            </div>
+        </div>
+    </section>
+);
+
+// New: Zoomable Image Wrapper
+const ZoomableImage: React.FC<{ src: string; onClick: (src: string) => void }> = ({ src, onClick }) => (
+    <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-10%" }}
+        transition={{ duration: 0.8 }}
+        whileHover={{ scale: 0.99 }}
+        className="w-full bg-brand-navy/5 relative group cursor-zoom-in overflow-hidden"
+        onClick={() => onClick(src)}
+    >
+        <img 
+            src={src} 
+            alt="Detail" 
+            className="w-full h-auto shadow-2xl block transition-transform duration-700 group-hover:scale-105" 
+        />
+        <div className="absolute inset-0 bg-brand-purple/0 group-hover:bg-brand-purple/10 transition-colors duration-300 pointer-events-none" />
+        <div className="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+            <span className="bg-brand-offwhite text-brand-navy font-mono text-[9px] uppercase font-bold px-3 py-1 tracking-widest border border-brand-navy">
+                View Source [+]
+            </span>
+        </div>
+    </motion.div>
+);
+
+// Modified: Flexible Story Block (Replaces rigid EditorialSection)
+const StoryBlock: React.FC<{ 
+    label: string; 
     title: string; 
     text: string; 
     images: string[];
     inverted?: boolean;
-}> = ({ step, title, text, images, inverted = false }) => {
+    onImageClick: (src: string) => void;
+}> = ({ label, title, text, images, inverted = false, onImageClick }) => {
     if (!text) return null;
 
     return (
-        <section className="py-24 md:py-40 border-b border-brand-navy/5">
+        <section className="py-24 border-t border-brand-navy/5">
             <div className="container mx-auto px-6 md:px-8">
                 <div className={`flex flex-col ${inverted ? 'md:flex-row-reverse' : 'md:flex-row'} gap-12 md:gap-24`}>
                     
-                    {/* TEXT COLUMN - Sticky behavior for better reading experience */}
+                    {/* Text Side */}
                     <div className="md:w-1/3 flex flex-col pt-8 md:sticky md:top-32 md:h-fit">
                         <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, margin: "-10%" }}
+                            initial={{ opacity: 0, x: inverted ? 20 : -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
                             transition={{ duration: 0.8 }}
                         >
                             <div className="flex items-center gap-4 mb-8">
-                                <span className="font-mono text-brand-purple text-xs font-bold border border-brand-purple px-2 py-1 rounded-full">
-                                    {step}
-                                </span>
-                                <span className="font-mono text-brand-navy/40 text-xs uppercase tracking-widest">
-                                    Phase
+                                <span className="w-2 h-2 bg-brand-purple rounded-full"></span>
+                                <span className="font-mono text-brand-navy/40 text-xs uppercase tracking-widest font-bold">
+                                    {label}
                                 </span>
                             </div>
-                            
                             <h2 className="text-4xl md:text-5xl font-black text-brand-navy mb-8 uppercase tracking-tight leading-[0.9]">
                                 {title}
                             </h2>
-                            
                             <p className="font-body text-lg md:text-xl text-brand-navy/80 leading-relaxed">
                                 {text}
                             </p>
                         </motion.div>
                     </div>
 
-                    {/* IMAGES COLUMN - Natural Aspect Ratios (No Cropping) */}
-                    <div className="md:w-2/3 flex flex-col gap-12 md:gap-24">
+                    {/* Image Side */}
+                    <div className="md:w-2/3 flex flex-col gap-16">
                         {images && images.map((img, i) => (
-                            <motion.div
-                                key={i}
-                                initial={{ opacity: 0, y: 40 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true, margin: "-10%" }}
-                                transition={{ duration: 0.8, delay: i * 0.1 }}
-                                className="w-full bg-brand-navy/5" 
-                            >
-                                {/* w-full + h-auto ensures NO cropping */}
-                                <img 
-                                    src={img} 
-                                    alt={`${title} detail ${i}`} 
-                                    className="w-full h-auto shadow-2xl block" 
-                                />
-                            </motion.div>
+                            <ZoomableImage key={i} src={img} onClick={onImageClick} />
                         ))}
                     </div>
-
                 </div>
             </div>
         </section>
     );
 };
 
-// --- 4. RESULTS SECTION (High Impact) ---
+// New: Text/Quote Insert
+const QuoteBlock: React.FC<{ text: string }> = ({ text }) => (
+    <section className="py-32 bg-brand-offwhite">
+        <div className="container mx-auto px-8 max-w-5xl text-center">
+            <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+                className="border-y border-brand-navy/10 py-16"
+            >
+                <p className="font-sans font-black text-3xl md:text-6xl text-brand-navy uppercase leading-tight italic opacity-90">
+                    "{text}"
+                </p>
+            </motion.div>
+        </div>
+    </section>
+);
+
+// --- 4. RESULTS SECTION (DO NOT TOUCH THE BIG QUOTE) ---
 const ResultsSection: React.FC<{ gain: string }> = ({ gain }) => {
     if (!gain) return null;
     return (
@@ -185,42 +233,32 @@ const ResultsSection: React.FC<{ gain: string }> = ({ gain }) => {
     );
 };
 
-// --- 5. MASONRY GALLERY (For Process Images) ---
-const MasonryGallery: React.FC<{ images: string[] }> = ({ images }) => {
+// --- 5. PROCESS ARCHIVE (Replaced MasonryGallery) ---
+const ProcessArchive: React.FC<{ images: string[]; onImageClick: (src: string) => void }> = ({ images, onImageClick }) => {
     if (!images || images.length === 0) return null;
     
     return (
-        <section className="py-32 bg-brand-offwhite border-t border-brand-navy/5">
+        <section className="py-32 bg-brand-offwhite">
             <div className="container mx-auto px-6 md:px-8">
-                <div className="mb-24">
-                    <h3 className="text-brand-navy font-black text-5xl md:text-8xl uppercase tracking-tighter opacity-10">
-                        Process
-                    </h3>
-                    <p className="font-mono text-brand-navy text-xs uppercase tracking-widest -mt-6 ml-2">
-                        Archive // {images.length} Assets Found
-                    </p>
+                <div className="mb-24 flex flex-col md:flex-row justify-between items-end border-b border-brand-navy/10 pb-8">
+                    <div>
+                        <h3 className="text-brand-navy font-black text-5xl md:text-8xl uppercase tracking-tighter opacity-10 leading-none">
+                            Process
+                        </h3>
+                        <p className="font-mono text-brand-navy text-xs uppercase tracking-widest -mt-4 ml-2 font-bold">
+                            Humans behind the machine
+                        </p>
+                    </div>
+                    <div className="font-mono text-[10px] uppercase tracking-widest text-brand-navy/40 mb-2">
+                        Sketches / Moodboards / Exploration
+                    </div>
                 </div>
 
-                {/* CSS Columns for true Masonry layout */}
                 <div className="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8">
                     {images.map((img, i) => (
-                        <motion.div 
-                            key={i}
-                            initial={{ opacity: 0, y: 50 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.6, delay: i * 0.05 }}
-                            className="break-inside-avoid"
-                        >
-                            <div className="group relative overflow-hidden bg-brand-navy/5">
-                                <img 
-                                    src={img} 
-                                    className="w-full h-auto grayscale group-hover:grayscale-0 transition-all duration-700 ease-out block" 
-                                    alt="Process" 
-                                />
-                                <div className="absolute inset-0 bg-brand-purple/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-                            </div>
-                        </motion.div>
+                        <div key={i} className="break-inside-avoid">
+                            <ZoomableImage src={img} onClick={onImageClick} />
+                        </div>
                     ))}
                 </div>
             </div>
@@ -255,9 +293,12 @@ const NextProject: React.FC<{ project: any }> = ({ project }) => (
     </Link>
 );
 
+// --- MAIN COMPONENT ---
 const ProjectPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const [isRevealing, setIsRevealing] = useState(true); 
+  const [selectedImage, setSelectedImage] = useState<string | null>(null); // For Lightbox
+  
   const currentIndex = PROJECTS.findIndex(p => p.slug === slug);
 
   useEffect(() => {
@@ -273,23 +314,30 @@ const ProjectPage: React.FC = () => {
   
   const project = PROJECTS[currentIndex];
   const nextProject = PROJECTS[(currentIndex + 1) % PROJECTS.length];
+  
+  // Destructure story with defaults, handling cases where story parts might be missing
   const { goal, gap, gamble, gain, processImages } = project.story || {
-      goal: project.description,
+      goal: "",
       gap: "",
       gamble: "",
       gain: "",
       processImages: []
   };
 
-  // --- IMAGE LOGIC (Distribute images across sections) ---
+  // Dynamic Image Chunking for Story Flow
   const details = project.detailImages || [];
   const allVisuals = details.length > 0 ? details : [project.imageUrl];
   
-  // Split logic: Divide images roughly into 3 parts for the 3 sections
-  const chunkSize = Math.ceil(allVisuals.length / 3);
-  const goalImages = allVisuals.slice(0, chunkSize);
-  const gapImages = allVisuals.slice(chunkSize, chunkSize * 2);
-  const gambleImages = allVisuals.slice(chunkSize * 2);
+  // Logic: Distribute images based on which story sections exist
+  const storySections = [goal, gap, gamble].filter(Boolean);
+  const visualsPerSection = Math.ceil(allVisuals.length / (storySections.length || 1));
+  
+  let visualCursor = 0;
+  const getVisuals = () => {
+      const slice = allVisuals.slice(visualCursor, visualCursor + visualsPerSection);
+      visualCursor += visualsPerSection;
+      return slice;
+  };
 
   return (
     <>
@@ -297,44 +345,62 @@ const ProjectPage: React.FC = () => {
         {isRevealing && <ProjectReveal onComplete={() => setIsRevealing(false)} />}
       </AnimatePresence>
 
+      {/* Lightbox Overlay */}
+      <AnimatePresence>
+        {selectedImage && (
+            <ImageOverlay src={selectedImage} onClose={() => setSelectedImage(null)} />
+        )}
+      </AnimatePresence>
+
       <div className="bg-brand-offwhite text-brand-navy min-h-screen selection:bg-brand-purple selection:text-white">
         
         <ProjectHero project={project} />
         
-        {/* NEW LAYOUT: Editorial Sections */}
-        
-        <EditorialSection 
-            step="01"
-            title="The Goal" 
-            text={goal} 
-            images={goalImages.length > 0 ? goalImages : [project.imageUrl]} 
-            inverted={false}
-        />
+        {/* NEW: Project Brief / Description */}
+        <ProjectBrief text={project.description} tags={project.tags} />
 
-        {gap && (
-            <EditorialSection 
-                step="02"
-                title="The Gap" 
-                text={gap} 
-                images={gapImages.length > 0 ? gapImages : [project.imageUrl]} 
-                inverted={true}
-            />
-        )}
+        {/* Dynamic Story Flow */}
+        <div className="flex flex-col">
+            {goal && (
+                <StoryBlock 
+                    label="Phase 01" 
+                    title="The Goal" 
+                    text={goal} 
+                    images={getVisuals()} 
+                    onImageClick={setSelectedImage}
+                />
+            )}
 
-        {gamble && (
-            <EditorialSection 
-                step="03"
-                title="The Gamble" 
-                text={gamble} 
-                images={gambleImages.length > 0 ? gambleImages : [project.imageUrl]} 
-                inverted={false}
-            />
-        )}
+            {gap && (
+                <StoryBlock 
+                    label="Phase 02" 
+                    title="The Gap" 
+                    text={gap} 
+                    images={getVisuals()} 
+                    inverted={true}
+                    onImageClick={setSelectedImage}
+                />
+            )}
+
+            {/* Optional Quote Insert between Gap and Gamble */}
+            <QuoteBlock text="Logic determines the path. Design builds the vehicle." />
+
+            {gamble && (
+                <StoryBlock 
+                    label="Phase 03" 
+                    title="The Gamble" 
+                    text={gamble} 
+                    images={getVisuals().length > 0 ? getVisuals() : [project.imageUrl]} 
+                    onImageClick={setSelectedImage}
+                />
+            )}
+        </div>
 
         <ResultsSection gain={gain} />
 
+        {/* Enhanced Process Section */}
         {processImages && processImages.length > 0 && (
-            <MasonryGallery images={processImages} />
+            <ProcessArchive images={processImages} onImageClick={setSelectedImage} />
         )}
     
         <NextProject project={nextProject} />
