@@ -468,10 +468,10 @@ export const BRAND_CLARITY_TIERS: ClarityTier[] = [
     { 
         slug: 'brand-garage-guide',
         name: 'The Brand Garage Guide', 
-        subtitle: 'The DIY Kit ($99)',
-        desc: "You aren't ready to hire us yet? Cool. Stop guessing and use our guide to define your story yourself. Simple English, no fluff.", 
+        subtitle: 'The DIY Brand Voice Kit ($99)',
+        desc: "You aren't ready to hire us yet? Cool. Stop guessing and use our guide to define your story yourself. Simple English.", 
         cta: "Get the Guide", 
-        features: ["7-Day Step-by-Step Plan", "Audience Definition Tools", "Brand Voice Cheatsheet", "No Video Fluff"],
+        features: ["7-Day Plan", "Target Audience Tools", "Brand Voice Cheatsheet", "No Video Fluff (Content Generation)"],
         timeline: "1 Week (Self-Paced)",
         idealFor: "DIY Founders ready to move out of 'Garage Mode'."
     },
@@ -481,15 +481,15 @@ export const BRAND_CLARITY_TIERS: ClarityTier[] = [
         subtitle: 'No Magic Formula™',
         desc: "We sit down. We talk. We fix the confusion. Two sessions to find your truth and write the Playbook that guides your business.", 
         cta: "Book a Chat", 
-        features: ["2x Strategy Calls", "The Brand Playbook (PDF)", "The One-Page Cheat Sheet", "Jargon-Free Messaging"],
+        features: ["2x Strategy Calls", "The Brand Playbook", "Your Brad Cheat Codes", "Easy Messaging"],
         timeline: "2–4 Weeks",
         idealFor: "Business owners tired of generic marketing."
     },
     { 
         slug: 'creative-partner',
         name: 'The Creative Partner',
-        subtitle: 'Senior Guidance / Ongoing Support',
-        desc: "Ongoing strategic partnership. We join your executive team as the 'Strategic Brain'.", 
+        subtitle: 'Senior Guidance / Support',
+        desc: "Ongoing strategic partnership. We join your executive team as the 'Creative Brain'.", 
         cta: "Work With Us", 
         features: ["Visual Identity Design", "Website & Content Direction", "Monthly Creative Support", "Quality Control"],
         timeline: "Ongoing",
@@ -504,27 +504,27 @@ export const DESIGN_POWER_TIERS: DesignPowerTier[] = [
         focus: "Identity Only",
         desc: "You have a business, but you look like a hobby. We fix that. A sharp, professional logo and color system that makes you look expensive.",
         cta: "Get the Look",
-        deliverables: ["Primary & Secondary Logos", "Color Palette & Type System", "The 'Rulebook' (Mini Guide)", "Social Media Avatars"],
-        timeline: "2–3 Weeks",
+        deliverables: ["Primary & Secondary Logos", "Color Palette & Type System", "The 'Rulebook' (Brand Guidelines)", "Social Media Starter"],
+        timeline: "2–4 Weeks",
         idealFor: "New founders who are embarrassed to hand out their business card."
     },
     {
         slug: "the-campaign",
         name: "The Campaign",
-        focus: "Identity + Story",
+        focus: "Identity & Story",
         desc: "A logo isn't enough. You need to say something. We build your identity AND the ads, content, and concepts you need to actually launch.",
         cta: "Start Speaking",
-        deliverables: ["Everything in 'The Face Lift'", "Campaign Concepts", "Ad Mockups & key Art", "Copywriting Headlines"],
+        deliverables: ["Everything in 'The Basics'", "Campaign Concepts", "Ad Mockups & Key Artwork", "Brand Applications", "Copywriting Headlines"],
         timeline: "4–5 Weeks",
         idealFor: "Brands ready to launch a product or run ads."
     },
     {
         slug: "the-website",
         name: "The Website",
-        focus: "Identity + Website",
+        focus: "Identity & Website",
         desc: "Your only real estate. We build custom sites that move, breathe, and actually convert visitors into customers. No templates.",
         cta: "Build the HQ",
-        deliverables: ["Everything in 'The Face Lift'", "Custom Webflow Website", "Mobile Optimized", "CMS Training (You own it)"],
+        deliverables: ["Everything in 'The Basics'", "Custom Website", "Webflow CMS", "Mobile Optimized", "CMS Training (Easy Edit)"],
         timeline: "6–8 Weeks",
         idealFor: "Scale-ups who have outgrown their DIY Squarespace site."
     },
@@ -534,7 +534,7 @@ export const DESIGN_POWER_TIERS: DesignPowerTier[] = [
         focus: "The Creative Method™",
         desc: "The nuclear option. We build and rebuild everything. Identity, Website, Product Visuals, and Content Direction. The complete transformation.",
         cta: "Go All In",
-        deliverables: ["Full Identity System", "Webflow Website", "3D Product Renders", "Motion & Animation"],
+        deliverables: ["Full Identity System", "Webflow Website", "Social Media Templates", "Product Renders", "Photography Direction"],
         timeline: "10–12 Weeks",
         idealFor: "Established players ready to dominate the niche."
     }
