@@ -18,6 +18,18 @@ export default defineConfig(({ mode }) => {
         alias: {
           '@': path.resolve(__dirname, '.'),
         }
+      },
+      build: {
+        outDir: 'dist',
+        sourcemap: false, // Save bandwidth in prod
+        rollupOptions: {
+          output: {
+            manualChunks: {
+              vendor: ['react', 'react-dom', 'react-router-dom', 'framer-motion', 'react-helmet-async'],
+              icons: ['lucide-react']
+            }
+          }
+        }
       }
     };
 });
