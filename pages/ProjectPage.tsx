@@ -1,8 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
+import ReactDOM from 'react-dom';
 import { useParams, Link } from 'react-router-dom';
 import { PROJECTS } from '../constants';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { ImageOverlay } from '../components/ImageOverlay';
 
 // --- 1. PRELOADER (DO NOT TOUCH) ---
 const ProjectReveal: React.FC<{ onComplete: () => void }> = ({ onComplete }) => {
@@ -79,9 +79,63 @@ const ProjectHero: React.FC<{ project: any }> = ({ project }) => {
     );
 };
 
-// --- 3. NEW & UPDATED SECTIONS ---
+// --- 3. FIXED IMAGE MODAL (Uses document.body to prevent crashes) ---
+const ImageModal: React.FC<{ src: string | null; onClose: () => void }> = ({ src, onClose }) => {
+    // Only render if we have an image, or if we want to animate out (handled by AnimatePresence)
+    // Note: We move AnimatePresence *inside* the portal so it persists during exit animations
+    
+    return ReactDOM.createPortal(
+        <AnimatePresence>
+            {src && (
+                <motion.div 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    onClick={onClose}
+                    className="fixed inset-0 z-[99999] bg-brand-navy/95 backdrop-blur-3xl flex items-center justify-center p-4 md:p-12 cursor-zoom-out"
+                    style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}
+                >
+                    <motion.div 
+                        initial={{ scale: 0.9, opacity: 0, y: 20 }}
+                        animate={{ scale: 1, opacity: 1, y: 0 }}
+                        exit={{ scale: 0.9, opacity: 0, y: 20 }}
+                        transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+                        className="relative w-full h-full flex items-center justify-center pointer-events-none"
+                    >
+                        {/* Content Wrapper */}
+                        <div 
+                            className="relative flex flex-col items-center pointer-events-auto"
+                            onClick={(e) => e.stopPropagation()} 
+                        >
+                            <img 
+                                src={src} 
+                                className="w-auto h-auto max-w-[90vw] max-h-[85vh] object-contain shadow-[0_50px_100px_rgba(0,0,0,0.5)] border border-white/10" 
+                                alt="Full Resolution" 
+                            />
+                            
+                            <div className="w-full mt-6 flex flex-col md:flex-row justify-between items-center gap-6">
+                                <div className="font-mono text-[10px] uppercase tracking-widest text-brand-offwhite/50 font-bold">
+                                    Source Inspection // Studio Capture
+                                </div>
+                                <button 
+                                    onClick={onClose}
+                                    className="font-mono text-[11px] uppercase tracking-widest text-brand-yellow font-black border-b-2 border-brand-yellow pb-1 hover:text-brand-offwhite hover:border-brand-offwhite transition-all"
+                                >
+                                    CLOSE_DOSS_ [ESC]
+                                </button>
+                            </div>
+                        </div>
+                    </motion.div>
+                </motion.div>
+            )}
+        </AnimatePresence>,
+        document.body // This renders the modal directly into the <body>, escaping all layout issues
+    );
+};
 
-// UPDATED: Studio-style Project Brief (Title Left, Data Right)
+// --- 4. AGENCY BRIEF & STORY BLOCKS ---
+
+// Project Brief: Clean, Agency Style
 const ProjectBrief: React.FC<{ project: any }> = ({ project }) => {
     const MetaRow = ({ label, value }: { label: string, value: string }) => (
         <div className="flex justify-between items-baseline border-b border-brand-navy/10 py-3 mb-2">
@@ -95,7 +149,7 @@ const ProjectBrief: React.FC<{ project: any }> = ({ project }) => {
             <div className="container mx-auto px-6 md:px-8">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24">
                     
-                    {/* LEFT COLUMN: Sticky Title */}
+                    {/* LEFT: Sticky Title */}
                     <div className="lg:col-span-4">
                         <motion.h2 
                             initial={{ opacity: 0, y: 20 }}
@@ -107,10 +161,9 @@ const ProjectBrief: React.FC<{ project: any }> = ({ project }) => {
                         </motion.h2>
                     </div>
 
-                    {/* RIGHT COLUMN: Data & Story */}
+                    {/* RIGHT: Data & Story */}
                     <div className="lg:col-span-8 flex flex-col gap-16">
                         
-                        {/* Data Grid */}
                         <motion.div 
                             initial={{ opacity: 0 }} 
                             whileInView={{ opacity: 1 }} 
@@ -124,7 +177,6 @@ const ProjectBrief: React.FC<{ project: any }> = ({ project }) => {
                             <MetaRow label="Sector" value={project.category} />
                         </motion.div>
 
-                        {/* Description Text */}
                         <motion.div 
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
@@ -145,40 +197,14 @@ const ProjectBrief: React.FC<{ project: any }> = ({ project }) => {
     );
 };
 
-// Helper: Zoomable Image
-const ZoomableImage: React.FC<{ src: string; onClick: (src: string) => void }> = ({ src, onClick }) => (
-    <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-10%" }}
-        transition={{ duration: 0.8 }}
-        whileHover={{ scale: 0.99 }}
-        className="w-full bg-brand-navy/5 relative group cursor-zoom-in overflow-hidden"
-        onClick={() => onClick(src)}
-    >
-        <img 
-            src={src} 
-            alt="Detail" 
-            className="w-full h-auto shadow-2xl block transition-transform duration-700 group-hover:scale-105" 
-        />
-        <div className="absolute inset-0 bg-brand-purple/0 group-hover:bg-brand-purple/10 transition-colors duration-300 pointer-events-none" />
-        <div className="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-            <span className="bg-brand-offwhite text-brand-navy font-mono text-[9px] uppercase font-bold px-3 py-1 tracking-widest border border-brand-navy">
-                View Source [+]
-            </span>
-        </div>
-    </motion.div>
-);
-
-// New: Dynamic Story Block
+// Story Block: STATIC Images (No click to open)
 const StoryBlock: React.FC<{ 
     label: string; 
     title: string; 
     text: string; 
     images: string[];
     inverted?: boolean;
-    onImageClick: (src: string) => void;
-}> = ({ label, title, text, images, inverted = false, onImageClick }) => {
+}> = ({ label, title, text, images, inverted = false }) => {
     if (!text) return null;
 
     return (
@@ -186,7 +212,7 @@ const StoryBlock: React.FC<{
             <div className="container mx-auto px-6 md:px-8">
                 <div className={`flex flex-col ${inverted ? 'md:flex-row-reverse' : 'md:flex-row'} gap-12 md:gap-24`}>
                     
-                    {/* Text Side */}
+                    {/* Text */}
                     <div className="md:w-1/3 flex flex-col pt-8 md:sticky md:top-32 md:h-fit">
                         <motion.div
                             initial={{ opacity: 0, x: inverted ? 20 : -20 }}
@@ -209,10 +235,23 @@ const StoryBlock: React.FC<{
                         </motion.div>
                     </div>
 
-                    {/* Image Side */}
+                    {/* Images - Non-interactive */}
                     <div className="md:w-2/3 flex flex-col gap-16">
                         {images && images.map((img, i) => (
-                            <ZoomableImage key={i} src={img} onClick={onImageClick} />
+                            <motion.div
+                                key={i}
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, margin: "-10%" }}
+                                transition={{ duration: 0.8 }}
+                                className="w-full bg-brand-navy/5"
+                            >
+                                <img 
+                                    src={img} 
+                                    alt="Detail" 
+                                    className="w-full h-auto shadow-2xl block" 
+                                />
+                            </motion.div>
                         ))}
                     </div>
                 </div>
@@ -221,7 +260,6 @@ const StoryBlock: React.FC<{
     );
 };
 
-// New: Quote Block
 const QuoteBlock: React.FC<{ text: string }> = ({ text }) => (
     <section className="py-32 bg-brand-offwhite">
         <div className="container mx-auto px-8 max-w-5xl text-center">
@@ -240,7 +278,6 @@ const QuoteBlock: React.FC<{ text: string }> = ({ text }) => (
     </section>
 );
 
-// --- 4. RESULTS SECTION (DO NOT TOUCH) ---
 const ResultsSection: React.FC<{ gain: string }> = ({ gain }) => {
     if (!gain) return null;
     return (
@@ -264,7 +301,8 @@ const ResultsSection: React.FC<{ gain: string }> = ({ gain }) => {
     );
 };
 
-// --- 5. PROCESS ARCHIVE (Replaces MasonryGallery) ---
+// --- 5. PROCESS ARCHIVE (INTERACTIVE) ---
+// This is the ONLY section where images will open in the modal.
 const ProcessArchive: React.FC<{ images: string[]; onImageClick: (src: string) => void }> = ({ images, onImageClick }) => {
     if (!images || images.length === 0) return null;
     
@@ -287,9 +325,25 @@ const ProcessArchive: React.FC<{ images: string[]; onImageClick: (src: string) =
 
                 <div className="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8">
                     {images.map((img, i) => (
-                        <div key={i} className="break-inside-avoid">
-                            <ZoomableImage src={img} onClick={onImageClick} />
-                        </div>
+                        <motion.div 
+                            key={i} 
+                            className="break-inside-avoid group cursor-zoom-in relative"
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: i * 0.05 }}
+                            onClick={() => onImageClick(img)}
+                        >
+                            <img src={img} alt="Process" className="w-full h-auto grayscale group-hover:grayscale-0 transition-all duration-700 ease-out border border-transparent group-hover:border-brand-purple/20" />
+                            
+                            {/* Hover Overlay */}
+                            <div className="absolute inset-0 bg-brand-purple/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                            <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                                <span className="bg-white text-brand-navy font-mono text-[9px] uppercase font-bold px-2 py-1 tracking-widest border border-brand-navy shadow-lg">
+                                    [+]
+                                </span>
+                            </div>
+                        </motion.div>
                     ))}
                 </div>
             </div>
@@ -337,6 +391,15 @@ const ProjectPage: React.FC = () => {
       setIsRevealing(true);
   }, [slug]);
 
+  // Handle ESC key for modal
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') setSelectedImage(null);
+    };
+    window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
+  }, []);
+
   if (currentIndex === -1) return (
       <div className="min-h-screen flex items-center justify-center bg-brand-navy text-brand-offwhite">
           <h1 className="text-4xl font-mono uppercase">Case File Missing</h1>
@@ -354,11 +417,9 @@ const ProjectPage: React.FC = () => {
       processImages: []
   };
 
-  // Image Management
   const details = project.detailImages || [];
   const allVisuals = details.length > 0 ? details : [project.imageUrl];
   
-  // Distribute images intelligently
   const storySections = [goal, gap, gamble].filter(Boolean);
   const visualsPerSection = Math.ceil(allVisuals.length / (storySections.length || 1));
   
@@ -375,20 +436,14 @@ const ProjectPage: React.FC = () => {
         {isRevealing && <ProjectReveal onComplete={() => setIsRevealing(false)} />}
       </AnimatePresence>
 
-      <AnimatePresence>
-        {selectedImage && (
-            <ImageOverlay src={selectedImage} onClose={() => setSelectedImage(null)} />
-        )}
-      </AnimatePresence>
+      <ImageModal src={selectedImage} onClose={() => setSelectedImage(null)} />
 
       <div className="bg-brand-offwhite text-brand-navy min-h-screen selection:bg-brand-purple selection:text-white">
         
         <ProjectHero project={project} />
         
-        {/* NEW: Studio-style Project Brief */}
         <ProjectBrief project={project} />
 
-        {/* Dynamic Story Flow */}
         <div className="flex flex-col">
             {goal && (
                 <StoryBlock 
@@ -396,7 +451,6 @@ const ProjectPage: React.FC = () => {
                     title="The Goal" 
                     text={goal} 
                     images={getVisuals()} 
-                    onImageClick={setSelectedImage}
                 />
             )}
 
@@ -407,7 +461,6 @@ const ProjectPage: React.FC = () => {
                     text={gap} 
                     images={getVisuals()} 
                     inverted={true}
-                    onImageClick={setSelectedImage}
                 />
             )}
 
@@ -419,7 +472,6 @@ const ProjectPage: React.FC = () => {
                     title="The Gamble" 
                     text={gamble} 
                     images={getVisuals().length > 0 ? getVisuals() : [project.imageUrl]} 
-                    onImageClick={setSelectedImage}
                 />
             )}
         </div>
