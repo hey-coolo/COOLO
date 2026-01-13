@@ -28,6 +28,7 @@ import PlaybookPage from './pages/PlaybookPage';
 import UnsubscribePage from './pages/Unsubscribe';
 import CustomCursor from './components/CustomCursor';
 import Loader from './components/Loader';
+import { Analytics } from './components/Analytics';
 
 const pageVariants = {
   initial: { opacity: 0, scale: 0.99, y: 10 },
@@ -72,6 +73,7 @@ const App: React.FC = () => {
              className="flex flex-col min-h-screen"
           >
               <Header />
+              <Analytics />
               <main className="flex-grow">
                 <AnimatePresence mode="wait">
                   <motion.div

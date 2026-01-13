@@ -79,6 +79,26 @@ const ProjectHero: React.FC<{ project: any }> = ({ project }) => {
     );
 };
 
+const project = PROJECTS[currentIndex];
+
+return (
+  <>
+    <Helmet>
+      <title>{project.title} | COOLO Work</title>
+      <meta name="description" content={project.description.substring(0, 150)} />
+      
+      {/* Social Media Tags */}
+      <meta property="og:title" content={`${project.title} | COOLO`} />
+      <meta property="og:description" content={project.description.substring(0, 150)} />
+      <meta property="og:image" content={`https://coolo.co.nz${project.imageUrl}`} />
+    </Helmet>
+
+    <div className="bg-brand-offwhite...">
+       {/* ... page content ... */}
+    </div>
+  </>
+);
+
 // --- 3. MODAL (SAFE MODE) ---
 const ImageModal: React.FC<{ src: string | null; onClose: () => void }> = ({ src, onClose }) => {
     return ReactDOM.createPortal(

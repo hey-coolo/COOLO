@@ -3,6 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { HashRouter } from 'react-router-dom';
 import App from './App';
+import { HelmetProvider } from 'react-helmet-async';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
@@ -15,5 +16,15 @@ root.render(
     <HashRouter>
       <App />
     </HashRouter>
+  </React.StrictMode>
+);
+
+root.render(
+  <React.StrictMode>
+    <HelmetProvider>  {/* <--- Wrap everything */}
+      <HashRouter>
+        <App />
+      </HashRouter>
+    </HelmetProvider>
   </React.StrictMode>
 );
