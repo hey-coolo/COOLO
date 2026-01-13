@@ -21,10 +21,12 @@ export const PROJECTS: Project[] = [
     title: 'UNMPLYNMT',
     slug: 'unmplynmt',
     description: `
-    Most 3D surfboard renders look like plastic toys. They miss the 'soul' of the board—
-    the way light bends through thick resin and fiberglass. We spent two weeks building 
-    a custom 'Hydro-Logic' shader in Blender to mimic the exact refractive index of 
-    hand-shaped glassing.`,
+    A Brand Built Like Culture, Not a Logo. Streetwear is often just a logo slapped on a blank. 
+    We wanted to build a brand that felt like a uniform for a new workforce—one that rejects 
+    the traditional 9-to-5. We stripped away the polish and embraced "Typographic Brutality," 
+    using raw, industrial typefaces and stark, high-contrast imagery. This wasn't about 
+    looking pretty; it was about looking inevitable. The result is a visual system that 
+    feels less like a clothing brand and more like a movement.`,
     category: 'Brand Identity', 
     tags: ['Brutalism', 'Typography', 'Strategy'],
     year: 2025,
