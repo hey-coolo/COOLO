@@ -312,7 +312,10 @@ export const PROJECTS: Project[] = [
             '/assets/cases/franca-austral/process-1.webp',
             '/assets/cases/franca-austral/process-2.webp',
             '/assets/cases/franca-austral/process-3.webp',
-            '/assets/cases/franca-austral/process-4.webp'
+            '/assets/cases/franca-austral/process-4.webp',
+            '/assets/cases/franca-austral/process-5.png',
+            '/assets/cases/franca-austral/process-6.jpg'
+
             ]
     }
   },
