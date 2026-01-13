@@ -80,7 +80,6 @@ const ProjectHero: React.FC<{ project: any }> = ({ project }) => {
 };
 
 // --- 3. MODAL (SAFE MODE) ---
-// Renders to document.body to ensure it always has a valid target.
 const ImageModal: React.FC<{ src: string | null; onClose: () => void }> = ({ src, onClose }) => {
     return ReactDOM.createPortal(
         <AnimatePresence>
@@ -182,7 +181,7 @@ const ProjectBrief: React.FC<{ project: any }> = ({ project }) => {
     );
 };
 
-// --- 5. THE WORK (Polished Gallery) ---
+// --- 5. THE WORK (Main Gallery - Updated to Grid/Masonry) ---
 const MainGallery: React.FC<{ images: string[]; onImageClick: (src: string) => void }> = ({ images, onImageClick }) => {
     if (!images || images.length === 0) return null;
 
@@ -194,7 +193,8 @@ const MainGallery: React.FC<{ images: string[]; onImageClick: (src: string) => v
                     <span className="font-mono text-brand-navy/40 text-xs uppercase tracking-widest font-bold">The Work</span>
                 </div>
                 
-                <div className="space-y-16 md:space-y-32">
+                {/* UPDATED: CSS Columns for Aspect-Ratio Respecting Grid */}
+                <div className="columns-1 md:columns-2 gap-8 space-y-8">
                     {images.map((img, i) => (
                         <motion.div 
                             key={i}
@@ -202,11 +202,10 @@ const MainGallery: React.FC<{ images: string[]; onImageClick: (src: string) => v
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, margin: "-10%" }}
                             transition={{ duration: 0.8 }}
-                            className="w-full group cursor-zoom-in relative"
+                            className="break-inside-avoid w-full group cursor-zoom-in relative mb-8"
                             onClick={() => onImageClick(img)}
                         >
-                            {/* Visual Polish: Slight border or shadow for "Finished" work */}
-                            <div className="relative overflow-hidden bg-brand-navy/5 shadow-2xl">
+                            <div className="relative overflow-hidden bg-brand-navy/5 shadow-xl">
                                 <img 
                                     src={img} 
                                     alt={`Output ${i}`} 
@@ -215,7 +214,7 @@ const MainGallery: React.FC<{ images: string[]; onImageClick: (src: string) => v
                                 <div className="absolute inset-0 bg-brand-purple/0 group-hover:bg-brand-purple/5 transition-colors duration-500 pointer-events-none" />
                             </div>
                             
-                            <div className="mt-4 flex justify-between items-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                            <div className="mt-3 flex justify-between items-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                                 <span className="font-mono text-[9px] uppercase tracking-widest text-brand-navy/40">Fig. 0{i + 1}</span>
                                 <span className="font-mono text-[9px] uppercase tracking-widest font-bold text-brand-purple">[ EXPAND ]</span>
                             </div>
@@ -271,26 +270,21 @@ const ProcessGallery: React.FC<{ images: string[]; onImageClick: (src: string) =
                     {images.map((img, i) => (
                         <motion.div 
                             key={i} 
-                            className="break-inside-avoid group cursor-zoom-in relative"
+                            className="break-inside-avoid group cursor-zoom-in relative bg-brand-navy/5 mb-8"
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: i * 0.05 }}
                             onClick={() => onImageClick(img)}
                         >
-                            <div className="bg-brand-navy/5 relative overflow-hidden">
-                                <img 
-                                    src={img} 
-                                    alt="Process" 
-                                    className="w-full h-auto grayscale group-hover:grayscale-0 transition-all duration-700 ease-out block" 
-                                />
-                                <div className="absolute inset-0 bg-brand-purple/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none mix-blend-multiply" />
-                            </div>
+                            <img 
+                                src={img} 
+                                alt="Process" 
+                                className="w-full h-auto grayscale group-hover:grayscale-0 transition-all duration-700 ease-out border border-transparent group-hover:border-brand-purple/20 block" 
+                            />
                             
-                            <div className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-                                <span className="bg-brand-navy text-brand-offwhite font-mono text-[9px] uppercase font-bold px-2 py-1 tracking-widest">
-                                    RAW_FILE
-                                </span>
+                            <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                <span className="bg-brand-purple text-brand-offwhite text-[10px] font-mono px-2 py-1 font-bold">RAW_FILE</span>
                             </div>
                         </motion.div>
                     ))}
@@ -300,7 +294,31 @@ const ProcessGallery: React.FC<{ images: string[]; onImageClick: (src: string) =
     );
 };
 
-// --- 8. NEXT PROJECT (DO NOT TOUCH) ---
+// --- 8. OUTCOME SECTION ---
+const ResultsSection: React.FC<{ gain: string }> = ({ gain }) => {
+    if (!gain) return null;
+    return (
+        <section className="py-40 bg-brand-navy text-brand-offwhite relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-brand-purple to-transparent opacity-50" />
+             <div className="container mx-auto px-6 md:px-8 relative z-10 text-center">
+                <motion.div
+                    initial={{ opacity: 0, y: 40 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                >
+                    <span className="font-mono text-brand-purple uppercase tracking-[0.3em] text-xs font-bold mb-12 block">
+                        Final Status
+                    </span>
+                    <h2 className="text-4xl md:text-7xl font-black uppercase tracking-tight leading-tight max-w-5xl mx-auto text-brand-offwhite">
+                        "{gain}"
+                    </h2>
+                </motion.div>
+            </div>
+        </section>
+    );
+};
+
+// --- 9. NEXT PROJECT (DO NOT TOUCH) ---
 const NextProject: React.FC<{ project: any }> = ({ project }) => (
     <Link to={`/work/${project.slug}`} className="block relative h-screen overflow-hidden group bg-brand-navy z-20">
         <div className="absolute inset-0 opacity-40 group-hover:opacity-60 transition-opacity duration-1000 ease-out">
@@ -361,6 +379,7 @@ const ProjectPage: React.FC = () => {
   // Data extraction
   const detailImages = project.detailImages || [];
   const processImages = project.story?.processImages || [];
+  const gain = project.story?.gain || "";
 
   return (
     <>
@@ -375,10 +394,10 @@ const ProjectPage: React.FC = () => {
         {/* 1. Hero */}
         <ProjectHero project={project} />
         
-        {/* 2. Agency Brief (No Gaps/Goals text anymore, just the description) */}
+        {/* 2. Agency Brief (Title, Data, Desc) */}
         <ProjectBrief project={project} />
 
-        {/* 3. The Work (Polished) */}
+        {/* 3. The Work (Main Gallery - Polished) */}
         <MainGallery images={detailImages} onImageClick={setSelectedImage} />
 
         {/* 4. Quote / Interlude */}
@@ -388,8 +407,11 @@ const ProjectPage: React.FC = () => {
         {processImages.length > 0 && (
             <ProcessGallery images={processImages} onImageClick={setSelectedImage} />
         )}
+
+        {/* 6. Results/Outcome */}
+        <ResultsSection gain={gain} />
     
-        {/* 6. Footer Nav */}
+        {/* 7. Footer Nav */}
         <NextProject project={nextProject} />
       </div>
     </>
