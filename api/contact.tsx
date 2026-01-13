@@ -26,7 +26,7 @@ export default async function handler(req: any, res: any) {
 
     // 2. Personal auto-reply to user (CONFIRMATION)
     const emailRequest = resend.emails.send({
-      from: 'COOLO <system@coolo.co.nz>', 
+      from: 'COOLO <hey@coolo.co.nz>', 
       to: [email],
       reply_to: 'hey@coolo.co.nz', 
       subject: 'Talk soon // COOLO',
