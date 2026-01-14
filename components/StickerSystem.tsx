@@ -129,7 +129,7 @@ const StickerSystem: React.FC = () => {
                     <img 
                         src={sticker.src} 
                         alt="sticker" 
-                        className="w-32 md:w-48 h-auto pointer-events-none drop-shadow-[0_15px_35px_rgba(0,0,0,0.3)]"
+                        className="w-32 md:w-48 h-auto pointer-events-none"
                         draggable={false}
                     />
                 </div>
